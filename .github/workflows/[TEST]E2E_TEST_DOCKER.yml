@@ -21,6 +21,8 @@ jobs:
 
       - name: where we are
         run: pwd
+            cat ./home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
+
 
       - name: BE application var injection
         uses: microsoft/variable-substitution@v1
