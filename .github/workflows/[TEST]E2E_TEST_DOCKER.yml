@@ -20,9 +20,10 @@ jobs:
           java-version: "11"
 
       - name: where we are
-        run: pwd ||
-            rm -rf /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml ||
-            mv /home/runner/work/longs-backend/longs-backend/src/main/resources/application_prod.yml /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml ||
+        run: |
+            pwd
+            rm -rf /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
+            mv /home/runner/work/longs-backend/longs-backend/src/main/resources/application_prod.yml /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
             cat /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
       - name: BE application var injection
         uses: microsoft/variable-substitution@v1
