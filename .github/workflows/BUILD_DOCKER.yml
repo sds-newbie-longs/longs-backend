@@ -3,7 +3,7 @@ name: '[PR]도커 E2E 테스트'
 on:
   push:
     branches:
-      - sprint1
+      - NO-ISSUE/E2ETEST
 
 jobs:
   build-and-deploy:
