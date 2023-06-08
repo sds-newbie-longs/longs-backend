@@ -3,7 +3,7 @@ name: '[PR]도커 E2E 테스트'
 on:
   push:
     branches:
-      - NO-ISSUE/E2ETEST
+      - sprint1
 
 jobs:
   build-and-deploy:
@@ -19,16 +19,18 @@ jobs:
           distribution: 'adopt'
           java-version: "11"
 
-      - name: where we are
-        run: |
-            pwd
-            rm -rf /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
-            mv /home/runner/work/longs-backend/longs-backend/src/main/resources/application_test.yml /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
-            cat /home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml
-      - name: BE application var injection
+      - name: BE application var injection[local]
         uses: microsoft/variable-substitution@v1
         with:
-          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application.yml'
+          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application-local.yml'
+        env:
+          cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
+          cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
+      
+      - name: BE application var injection[dev]
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application-dev.yml'
         env:
           cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
           cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
