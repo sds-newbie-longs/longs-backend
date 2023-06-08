@@ -3,7 +3,7 @@ name: '[PR]도커 E2E 테스트'
 on:
   push:
     branches:
-      - dev
+      - NO-ISSUE/E2ETEST
 
 jobs:
   build-and-deploy:
@@ -18,7 +18,15 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: "11"
-          
+
+      - name: BE application var injection
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: 'D:/a/longs-backend/logs-backend/src\main\resources\application.yml'
+        env:
+          cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
+          cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
+
       - name: set +x
         run: chmod +x ./gradlew
 
