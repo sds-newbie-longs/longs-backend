@@ -13,11 +13,13 @@ import javax.validation.ConstraintViolation;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@ApiModel(description = "응답 결과 공통 모델(예외)")
 @Getter
 @NoArgsConstructor
 public class ErrorResponse {
