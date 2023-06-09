@@ -3,10 +3,10 @@ package com.sds.actlongs.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 import com.sds.actlongs.model.ErrorCode;
 import com.sds.actlongs.model.ErrorResponse.FieldError;
-
-import lombok.Getter;
 
 @Getter
 public abstract class BusinessException extends RuntimeException {

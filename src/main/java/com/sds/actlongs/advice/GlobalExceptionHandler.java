@@ -29,8 +29,8 @@ public class GlobalExceptionHandler {
 	 * @see <a href="https://medium.com/javarevisited/are-you-using-valid-and-validated-annotations-wrong-b4a35ac1bca4">@Valid vs @Validated</a>
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException e) {
-		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, e.getConstraintViolations());
+	protected ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException exception) {
+		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, exception.getConstraintViolations());
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
@@ -39,8 +39,9 @@ public class GlobalExceptionHandler {
 	 * @see <a href="https://medium.com/javarevisited/are-you-using-valid-and-validated-annotations-wrong-b4a35ac1bca4">@Valid vs @Validated</a>
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, e.getBindingResult());
+	protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+		MethodArgumentNotValidException exception) {
+		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, exception.getBindingResult());
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
@@ -49,8 +50,8 @@ public class GlobalExceptionHandler {
 	 * @see <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args">@ModelAttribute</a>
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
-		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, e.getBindingResult());
+	protected ResponseEntity<ErrorResponse> handleBindException(BindException exception) {
+		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, exception.getBindingResult());
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
@@ -58,8 +59,8 @@ public class GlobalExceptionHandler {
 	 * <b>@RequestParam</b> or <b>@RequestPart</b> 필수 파라미터가 결여된 경우 예외 처리
 	 */
 	@ExceptionHandler({MissingServletRequestParameterException.class, MissingServletRequestPartException.class})
-	protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(Exception e) {
-		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, getRequestParam(e));
+	protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(Exception exception) {
+		final ErrorResponse response = ErrorResponse.of(INPUT_VALUE_INVALID, getRequestParam(exception));
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
@@ -68,8 +69,8 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler
 	protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(
-		MethodArgumentTypeMismatchException e) {
-		final ErrorResponse response = ErrorResponse.of(e);
+		MethodArgumentTypeMismatchException exception) {
+		final ErrorResponse response = ErrorResponse.of(exception);
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
@@ -77,7 +78,8 @@ public class GlobalExceptionHandler {
 	 * <b>@RequestBody</b> 형식과 불일치하거나, <b>JSON</b> 형식에 맞지 않을 경우 예외 처리
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+	protected ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
+		HttpMessageNotReadableException exception) {
 		final ErrorResponse response = ErrorResponse.of(HTTP_MESSAGE_NOT_READABLE);
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
@@ -87,7 +89,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler
 	protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
-		HttpRequestMethodNotSupportedException e) {
+		HttpRequestMethodNotSupportedException exception) {
 		final ErrorResponse response = ErrorResponse.of(METHOD_NOT_ALLOWED);
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
@@ -96,7 +98,7 @@ public class GlobalExceptionHandler {
 	 * 존재하지 않는 Entity를 조회하려는 경우 예외 처리
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
+	protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
 		final ErrorResponse response = ErrorResponse.of(ENTITY_NOT_FOUND);
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
@@ -105,9 +107,9 @@ public class GlobalExceptionHandler {
 	 * <b>Business logic</b>에서 발생하는 모든 예외 처리
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-		final ErrorCode errorCode = e.getErrorCode();
-		final ErrorResponse response = ErrorResponse.of(errorCode, e.getErrors());
+	protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException exception) {
+		final ErrorCode errorCode = exception.getErrorCode();
+		final ErrorResponse response = ErrorResponse.of(errorCode, exception.getErrors());
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
@@ -115,16 +117,16 @@ public class GlobalExceptionHandler {
 	 * 위에 해당하지 않는 모든 예외 처리
 	 */
 	@ExceptionHandler
-	protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+	protected ResponseEntity<ErrorResponse> handleException(Exception exception) {
 		final ErrorResponse response = ErrorResponse.of(INTERNAL_SERVER_ERROR);
 		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	private String getRequestParam(Exception e) {
-		if (e instanceof MissingServletRequestParameterException) {
-			return ((MissingServletRequestParameterException)e).getParameterName();
+	private String getRequestParam(Exception exception) {
+		if (exception instanceof MissingServletRequestParameterException) {
+			return ((MissingServletRequestParameterException)exception).getParameterName();
 		} else {
-			return ((MissingServletRequestPartException)e).getRequestPartName();
+			return ((MissingServletRequestPartException)exception).getRequestPartName();
 		}
 	}
 
