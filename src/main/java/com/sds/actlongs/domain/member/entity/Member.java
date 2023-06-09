@@ -9,11 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.sds.actlongs.domain.BaseEntity;
-import com.sds.actlongs.vo.ImageExtension;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import com.sds.actlongs.domain.BaseEntity;
+import com.sds.actlongs.vo.ImageExtension;
 
 @Entity
 @Table(name = "members")
