@@ -1,0 +1,39 @@
+name: '[PR] BUILD TEST FOR CONVENTIONS AND TEST CODE'
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: "11"
+
+      - name: BE application var injection[local]
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application-local.yml'
+        env:
+          cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
+          cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
+      
+      - name: BE application var injection[dev]
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application-dev.yml'
+        env:
+          cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
+          cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
+
+      - name: set +x
+        run: chmod +x ./gradlew
+
+      - name: Gradle Build For Convention Check 
+        run: ./gradlew build
