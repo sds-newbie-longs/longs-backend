@@ -14,7 +14,8 @@ public enum ErrorCode {
 	METHOD_NOT_ALLOWED(405, "E-G004", "허용되지 않은 HTTP method 입니다."),
 	HTTP_MESSAGE_NOT_READABLE(400, "E-G005", "HTTP Request Body 형식이 올바르지 않습니다."),
 	REQUEST_PARAMETER_MISSING(400, "E-G006", "요청 파라미터는 필수입니다."),
-	REQUEST_HEADER_MISSING(400, "E-G007", "요청 헤더는 필수입니다.");
+	REQUEST_HEADER_MISSING(400, "E-G007", "요청 헤더는 필수입니다."),
+	ENTITY_NOT_FOUND(404, "E-G008", "존재하지 않는 Entity입니다.");
 
 	private final int status;
 	private final String code;
