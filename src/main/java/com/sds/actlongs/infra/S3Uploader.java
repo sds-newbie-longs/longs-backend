@@ -26,7 +26,7 @@ public class S3Uploader {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
-	public String uploadFile(MultipartFile multipartFile, String dirPath) {
+	public void uploadFile(MultipartFile multipartFile, String dirPath) {
 		validateFileExists(multipartFile);
 
 		String fileName = createFileName(multipartFile.getOriginalFilename(), dirPath);
@@ -42,7 +42,6 @@ public class S3Uploader {
 		} catch (IOException e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
 		}
-		return amazonS3.getUrl(bucket, fileName).toString();
 	}
 
 	private void validateFileExists(MultipartFile multipartFile) {
