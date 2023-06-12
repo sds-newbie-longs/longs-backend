@@ -34,16 +34,16 @@ public class Channel extends BaseEntity {
 	private String name;
 
 	@Column(unique = true, length = 36)
-	private String ImageUuid;
+	private String imageUuid;
 
 	@Enumerated(EnumType.STRING)
-	private ImageExtension ImageType;
+	private ImageExtension imageType;
 
-	public Channel(String name, Member owner, String ImageUuid, ImageExtension ImageType) {
+	public Channel(String name, Member owner, String imageUuid, ImageExtension imageType) {
 		this.name = name;
 		this.owner = owner;
-		this.ImageUuid = ImageUuid;
-		this.ImageType = ImageType;
+		this.imageUuid = imageUuid;
+		this.imageType = imageType;
 	}
 
 	public static Channel createNewChannel(String name, Member owner) {
