@@ -1,4 +1,4 @@
-package com.sds.actlongs.domain.group.repository;
+package com.sds.actlongs.domain.channel.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,32 +9,33 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import com.sds.actlongs.config.JpaAuditingConfig;
-import com.sds.actlongs.domain.group.entity.Group;
+import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
 
 @Import(JpaAuditingConfig.class)
 @DataJpaTest
-class GroupRepositoryTest {
+class ChannelRepositoryTest {
 
 	@Autowired
-	private GroupRepository subject;
+	private ChannelRepository subject;
 
 	@Nested
 	class Save {
 
 		@Test
-		@DisplayName("새로운 그룹을 생성하면, DB에서 ID를 자동적으로 부여한다.")
-		void ifCreateGroupThenIdIsAutomaticallyGiven() {
+		@DisplayName("DB에 새로운 채널을 추가하면, DB에서 ID를 자동적으로 부여한다.")
+		void ifCreateChannelThenIdIsAutomaticallyGiven() {
 			// given
 			Member member = Member.createNewMember("Harry");
-			Group group = Group.createNewGroup("Knox SRE", member);
+			Channel channel = Channel.createNewChannel("Knox SRE", member);
 
 			// when
-			Group result = subject.save(group);
+			Channel result = subject.save(channel);
 
 			// then
 			Assertions.assertThat(result.getId()).isNotNull();
 			Assertions.assertThat(result.getOwner().getUsername()).isEqualTo("Harry");
+			Assertions.assertThat(result.getName()).isEqualTo("Knox SRE");
 		}
 
 	}
