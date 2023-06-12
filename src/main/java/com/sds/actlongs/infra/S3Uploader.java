@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class S3Uploader {
+
 	private final AmazonS3 amazonS3;
 
 	@Value("${cloud.aws.s3.bucket}")
@@ -58,4 +59,5 @@ public class S3Uploader {
 
 		return dirPath + CATEGORY_PREFIX + fileName + TIME_SEPARATOR + now + fileExtension;
 	}
+
 }
