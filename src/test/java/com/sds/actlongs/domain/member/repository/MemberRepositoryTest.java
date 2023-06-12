@@ -22,10 +22,10 @@ class MemberRepositoryTest {
 	class Save {
 
 		@Test
-		@DisplayName("DB에 사용자를 추가하면, DB에서 ID를 자동적으로 부여한다.")
-		void ifSaveMemberThenIdIsAutomaticallyGiven() {
+		@DisplayName("DB에 새로운 회원을 추가하면, DB에서 ID를 자동적으로 부여한다.")
+		void ifCreateMemberThenIdIsAutomaticallyGiven() {
 			// given
-			Member member = Member.createNewMember("mandoo");
+			Member member = Member.createNewMember("Harry");
 
 			// when
 			Member result = subject.save(member);
