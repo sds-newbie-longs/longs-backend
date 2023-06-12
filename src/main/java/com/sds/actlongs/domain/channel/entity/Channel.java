@@ -1,4 +1,4 @@
-package com.sds.actlongs.domain.group.entity;
+package com.sds.actlongs.domain.channel.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +17,10 @@ import com.sds.actlongs.domain.BaseEntity;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.vo.ImageExtension;
 
-@Entity(name = "groups")
+@Entity(name = "channels")
 @Getter
 @NoArgsConstructor
-public class Group extends BaseEntity {
+public class Channel extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,20 +34,20 @@ public class Group extends BaseEntity {
 	private String name;
 
 	@Column(unique = true, length = 36)
-	private String groupImageUuid;
+	private String ImageUuid;
 
 	@Enumerated(EnumType.STRING)
-	private ImageExtension groupImageType;
+	private ImageExtension ImageType;
 
-	public Group(String name, Member owner, String groupImageUuid, ImageExtension groupImageType) {
+	public Channel(String name, Member owner, String ImageUuid, ImageExtension ImageType) {
 		this.name = name;
 		this.owner = owner;
-		this.groupImageUuid = groupImageUuid;
-		this.groupImageType = groupImageType;
+		this.ImageUuid = ImageUuid;
+		this.ImageType = ImageType;
 	}
 
-	public static Group createNewGroup(String name, Member owner) {
-		return new Group(name, owner, null, null);
+	public static Channel createNewChannel(String name, Member owner) {
+		return new Channel(name, owner, null, null);
 	}
 
 }
