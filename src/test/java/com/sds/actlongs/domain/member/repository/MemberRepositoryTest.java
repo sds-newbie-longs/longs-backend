@@ -25,7 +25,7 @@ class MemberRepositoryTest {
 		@DisplayName("DB에 사용자를 추가하면, DB에서 ID를 자동적으로 부여한다.")
 		void ifSaveMemberThenIdIsAutomaticallyGiven() {
 			// given
-			Member member = new Member("mandoo");
+			Member member = Member.createNewMember("mandoo");
 
 			// when
 			Member result = subject.save(member);

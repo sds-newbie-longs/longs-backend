@@ -34,10 +34,14 @@ public class Member extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ImageExtension profileImageType;
 
-	public Member(String username) {
+	public Member(String username, String profileImageUuid, ImageExtension profileImageType) {
 		this.username = username;
-		this.profileImageUuid = null;
-		this.profileImageType = null;
+		this.profileImageUuid = profileImageUuid;
+		this.profileImageType = profileImageType;
+	}
+
+	public static Member createNewMember(String username) {
+		return new Member(username, null, null);
 	}
 
 }
