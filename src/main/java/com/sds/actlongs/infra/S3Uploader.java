@@ -1,6 +1,6 @@
 package com.sds.actlongs.infra;
 
-import static com.sds.actlongs.util.FileNameConstants.*;
+import static com.sds.actlongs.util.Constants.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,7 @@ public class S3Uploader {
 	}
 
 	private String createFileName(String originalFileName, String dirPath) {
-		int fileExtensionIndex = originalFileName.lastIndexOf(FILE_EXTENSION_SEPARATOR);
+		int fileExtensionIndex = originalFileName.lastIndexOf(DOT);
 		String fileExtension = originalFileName.substring(fileExtensionIndex);
 		String fileName = originalFileName.substring(0, fileExtensionIndex);
 		String now = String.valueOf(System.currentTimeMillis());
