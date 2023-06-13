@@ -1,4 +1,4 @@
-package com.sds.actlongs.domain.channelMember.entity;
+package com.sds.actlongs.domain.channelmember.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
