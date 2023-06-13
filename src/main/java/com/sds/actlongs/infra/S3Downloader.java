@@ -1,5 +1,7 @@
 package com.sds.actlongs.infra;
 
+import static com.sds.actlongs.util.Constants.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class S3Downloader {
 
 		try {
 			InputStream in = s3Object.getObjectContent();
-			File outputFile = new File(path + "/" + keyName);
+			File outputFile = new File(path + CATEGORY_PREFIX + keyName);
 			if (!Files.exists(outputFile.toPath().getParent())) {
 				Files.createDirectories(outputFile.toPath().getParent());
 			}
