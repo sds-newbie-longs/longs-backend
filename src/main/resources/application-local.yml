@@ -5,19 +5,19 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/longs
+    url: jdbc:mysql://localhost:3306/longs?serverTimezone=UTC&useSSL=false
     username: root
     password: 1234
 
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     open-in-view: false
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL55Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
   servlet:
     multipart:
@@ -25,6 +25,12 @@ spring:
       location: C:/Temp
       max-file-size: 100MB
       max-request-size: 100MB
+
+  sql:
+    init:
+      data-locations: classpath:data.sql
+      schema-locations: classpath:schema.sql
+      mode: always
 
 cloud:
   aws:
