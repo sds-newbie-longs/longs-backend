@@ -1,6 +1,5 @@
 package com.sds.actlongs.controller.member.dto;
 
-import lombok.Data;
 import lombok.Getter;
 
 import com.sds.actlongs.model.ResultCode;
