@@ -44,6 +44,15 @@ public class S3Uploader {
 		}
 	}
 
+	public void deleteFile(String fileName) {
+		boolean isFileExist = amazonS3.doesObjectExist(bucket, fileName);
+		if (isFileExist) {
+			amazonS3.deleteObject(bucket, fileName);
+		} else {
+			throw new RuntimeException("파일이 존재하지 않습니다.");
+		}
+	}
+
 	private void validateFileExists(MultipartFile multipartFile) {
 		if (multipartFile.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "업로드할 파일이 존재하지 않습니다.");
