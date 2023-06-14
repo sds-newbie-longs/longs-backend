@@ -3,10 +3,10 @@ name: '[PR]도커 E2E 테스트'
 on:
   push:
     branches:
-      - sprint1
+      - chore/SL-133
 
 jobs:
-  build-and-deploy:
+  build-and-push-docker:
     runs-on: ubuntu-latest
 
     steps:
@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew build --exclude-task test
 
       - name: Build Docker image
-        run: docker build -t vidigummy/longs-svr .
+        run: docker build -t vidigummy/longs-svr:${{ github.ref }} .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -54,4 +54,18 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push vidigummy/longs-svr
+        run: docker push vidigummy/longs-svr:${{ github.ref }} 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: excute docker compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_GCE_HOST }}
+          username: ${{ secrets.GCE_USERNAME }}
+          key: ${{ secrets.GCE_SSH_KEY }}
+          password: ${{ secrets.GCE_ROOT_PW }}
+          port: 22
+          script: |
+            cd /app/longs-env/env-dev
+            docker compose up -d
