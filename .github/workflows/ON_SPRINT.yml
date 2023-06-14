@@ -3,7 +3,7 @@ name: '[SPRINT]도커 DEV SVR 배포'
 on:
   push:
     branches:
-      - chore/SL-133
+      - sprint1
 
 jobs:
   build-and-push-docker:
@@ -18,22 +18,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: "11"
-
-      - name: BE application var injection[local]
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application-local.yml'
-        env:
-          cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
-          cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
-      
-      - name: BE application var injection[dev]
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: '/home/runner/work/longs-backend/longs-backend/src/main/resources/application-dev.yml'
-        env:
-          cloud.aws.credentials.access-key: ${{secrets.AWS_ACCESS_KEY}}
-          cloud.aws.credentials.secret-key: ${{secrets.AWS_SECRET_KEY}}
 
       - name: set +x
         run: chmod +x ./gradlew
@@ -58,7 +42,7 @@ jobs:
 
       - name: Push Docker image latest
         run: docker push vidigummy/longs-svr:latest
-        
+
   deploy:
     needs: build-and-push-docker
     runs-on: ubuntu-latest
