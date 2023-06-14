@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew build --exclude-task test
 
       - name: Build Docker image
-        run: docker build -t vidigummy/longs-svr:${{ github.run_id }} -vidigummy/longs-svr:latest .
+        run: docker build -t vidigummy/longs-svr:${{ github.run_id }} -t vidigummy/longs-svr:latest .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -58,6 +58,7 @@ jobs:
 
       - name: Push Docker image latest
         run: docker push vidigummy/longs-svr:latest
+        
   deploy:
     needs: build-and-push-docker
     runs-on: ubuntu-latest
