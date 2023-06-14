@@ -26,10 +26,10 @@ public class S3Uploader {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
-	public void uploadFile(MultipartFile multipartFile, String dirPath) {
+	public void uploadFile(MultipartFile multipartFile, String path) {
 		validateFileExists(multipartFile);
 
-		String fileName = createFileName(multipartFile.getOriginalFilename(), dirPath);
+		String fileName = createFileName(multipartFile.getOriginalFilename(), path);
 
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(multipartFile.getSize());
@@ -50,13 +50,13 @@ public class S3Uploader {
 		}
 	}
 
-	private String createFileName(String originalFileName, String dirPath) {
+	private String createFileName(String originalFileName, String path) {
 		int fileExtensionIndex = originalFileName.lastIndexOf(DOT);
 		String fileExtension = originalFileName.substring(fileExtensionIndex);
 		String fileName = originalFileName.substring(0, fileExtensionIndex);
 		String now = String.valueOf(System.currentTimeMillis());
 
-		return dirPath + CATEGORY_PREFIX + fileName + TIME_SEPARATOR + now + fileExtension;
+		return path + CATEGORY_PREFIX + fileName + TIME_SEPARATOR + now + fileExtension;
 	}
 
 }
