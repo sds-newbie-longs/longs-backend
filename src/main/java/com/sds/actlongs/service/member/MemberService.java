@@ -1,7 +1,9 @@
 package com.sds.actlongs.service.member;
 
-import com.sds.actlongs.domain.member.entity.Member;
+import javax.servlet.http.HttpSession;
 
 public interface MemberService {
-	Member login(final String username);
+
+	boolean login(final String username, final HttpSession session);
+
 }
