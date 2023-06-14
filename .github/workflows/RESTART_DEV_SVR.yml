@@ -15,6 +15,7 @@ jobs:
           host: ${{ secrets.DEV_GCE_HOST }}
           username: ${{ secrets.GCE_USERNAME }}
           key: ${{ secrets.GCE_SSH_KEY }}
+          password: ${{ secrets.GCE_ROOT_PW }}
           port: 22
           script: |
             cd /app/longs-env/env-dev
