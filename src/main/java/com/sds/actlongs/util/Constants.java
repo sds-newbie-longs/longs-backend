@@ -11,6 +11,5 @@ public final class Constants {
 	public static final String WILDCARD = "*";
 	public static final String ALL_PATH = "/**";
 	public static final String CATEGORY_PREFIX = "/";
-	public static final String TIME_SEPARATOR = "_";
 
 }

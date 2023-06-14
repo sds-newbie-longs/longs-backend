@@ -29,7 +29,7 @@ public class S3Uploader {
 	public void uploadFile(MultipartFile multipartFile, String path) {
 		validateFileExists(multipartFile);
 
-		String fileName = createFileName(multipartFile.getOriginalFilename(), path);
+		String fileName = path + CATEGORY_PREFIX + multipartFile.getOriginalFilename();
 
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(multipartFile.getSize());
@@ -48,15 +48,6 @@ public class S3Uploader {
 		if (multipartFile.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "업로드할 파일이 존재하지 않습니다.");
 		}
-	}
-
-	private String createFileName(String originalFileName, String path) {
-		int fileExtensionIndex = originalFileName.lastIndexOf(DOT);
-		String fileExtension = originalFileName.substring(fileExtensionIndex);
-		String fileName = originalFileName.substring(0, fileExtensionIndex);
-		String now = String.valueOf(System.currentTimeMillis());
-
-		return path + CATEGORY_PREFIX + fileName + TIME_SEPARATOR + now + fileExtension;
 	}
 
 }

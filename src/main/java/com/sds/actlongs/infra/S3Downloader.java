@@ -45,8 +45,8 @@ public class S3Downloader {
 		}
 	}
 
-	private void validateFileExistsAtUrl(String path) throws FileNotFoundException {
-		if (!amazonS3.doesObjectExist(bucket, path)) {
+	private void validateFileExistsAtUrl(String fileName) throws FileNotFoundException {
+		if (!amazonS3.doesObjectExist(bucket, fileName)) {
 			throw new FileNotFoundException();
 		}
 	}
