@@ -29,8 +29,3 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-
-ffmpeg:
-  path: ${FFMPEG_PATH}
-ffprobe:
-  path: ${FFMPROBE_PATH}
