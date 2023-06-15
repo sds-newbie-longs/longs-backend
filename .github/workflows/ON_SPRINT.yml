@@ -58,3 +58,4 @@ jobs:
           script: |
             cd /app/longs-env/env-dev
             docker compose up -d
+
