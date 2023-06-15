@@ -34,7 +34,7 @@ public class FileManageImpl implements FileManage {
 		} catch (IOException exception) {
 			//TODO THROW EXCEPTION
 		}
-		return uploadPath + fileName;
+		return uploadPath + fileName + videoExtension;
 	}
 
 	@Override
