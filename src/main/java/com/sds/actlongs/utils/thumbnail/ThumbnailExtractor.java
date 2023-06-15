@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public interface ThumbnailExtractor {
 
-	String extract(File source) throws IOException;
-	String generateDefaultThumbnail(File source) throws IOException;
+	String extract(String fileName);
+
+	String generateDefaultThumbnail(String fileName);
 }
