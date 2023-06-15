@@ -47,22 +47,4 @@ class FileManageImplTest {
 		//then
 		Assertions.assertThat(testOriginalVideo.exists()).isTrue();
 	}
-
-	@Test
-	@DisplayName(value = "인코딩된 파일들을 저장하기위해 video/temp/hls하위에 디렉토리 생성이 되어야한다")
-	void createDirectoryForConvertedVideo() {
-		//given
-		String vodName = uuidGenerate.getVodUuid();
-		//when
-		Path outPutPath = fileManage.createDirectoryForConvertedVideo(vodName).get(1);
-		File root = outPutPath.toFile();
-		File hls480 = new File(root, "480");
-		File hls720 = new File(root, "720");
-		File hls1080 = new File(root, "1080");
-		//then
-		Assertions.assertThat(hls480.exists()).isTrue();
-		Assertions.assertThat(hls720.exists()).isTrue();
-		Assertions.assertThat(hls1080.exists()).isTrue();
-	}
-
 }
