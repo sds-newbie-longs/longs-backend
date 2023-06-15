@@ -15,7 +15,7 @@ public class LoginRequest {
 
 	@NotBlank
 	@Size(max = 20)
-	@ApiModelProperty(value = "아이디", example = "harry", required = true)
+	@ApiModelProperty(value = "아이디(최대 20자, 공백 불가)", example = "harry", required = true)
 	private String username;
 
 }

@@ -1,9 +1,9 @@
 package com.sds.actlongs.controller.member;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,6 @@ import com.sds.actlongs.controller.member.dto.LoginResponse;
 import com.sds.actlongs.service.member.MemberService;
 
 @Api(tags = "회원 API")
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
@@ -26,10 +25,13 @@ public class MemberController {
 
 	private final MemberService memberService;
 
-	@ApiOperation(value = "로그인 API")
+	@ApiOperation(value = "로그인 API", notes = ""
+		+ "M001: 로그인에 성공하였습니다.\n"
+		+ "M002: 로그인에 실패하였습니다.")
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody final LoginRequest dto, final HttpServletRequest request) {
-		final boolean result = memberService.login(dto.getUsername(), request.getSession());
+	public ResponseEntity<LoginResponse> login(@Valid @RequestBody final LoginRequest request,
+		final HttpServletRequest servletRequest) {
+		final boolean result = memberService.login(request.getUsername(), servletRequest.getSession());
 		return ResponseEntity.ok(LoginResponse.of(result));
 	}
 
