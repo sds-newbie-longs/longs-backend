@@ -49,9 +49,9 @@ jobs:
     steps:
       - name: make pem file
         run: |
-          echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} >> ~/longs.pem
-          chmod 400 ~/longs.pem
-          cd ~/
+          echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} >> /home/runner/longs.pem
+          chmod 400 /home/runner/longs.pem
+          cd /home/runner/
           ls -al
           pwd
 
@@ -60,7 +60,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_VM_BS_HOST }}
           username: ubuntu
-          key_path: /home/runner/longs.pem
+          key_path: /home/ubuntu/longs.pem
           script: |
             cd /home/ubuntu/.ssh
             ./loginToMaster.sh
