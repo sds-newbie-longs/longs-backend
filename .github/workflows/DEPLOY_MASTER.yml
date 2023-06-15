@@ -44,7 +44,7 @@ jobs:
         run: docker push vidigummy/longs-svr-pub:latest
   
   deploy:
-    needs: build-and-push-docker
+    needs: build-and-deploy
     runs-on: ubuntu-latest
     steps:
       - name: excute docker compose
