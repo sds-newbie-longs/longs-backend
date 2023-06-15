@@ -26,8 +26,7 @@ class ExecutionTimeAspectTest {
 	@Mock
 	private ProceedingJoinPoint joinPoint;
 
-	private Logger logger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(
-		"com.sds.actlongs.advice.ExecutionTimeAspect");
+	private Logger logger = (Logger)LoggerFactory.getLogger(ExecutionTimeAspect.class);
 
 	@InjectMocks
 	private ExecutionTimeAspect subject;
