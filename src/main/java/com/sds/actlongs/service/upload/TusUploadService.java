@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import com.sds.actlongs.utils.manage.file.FileManage;
 import com.sds.actlongs.utils.thumbnail.ThumbnailExtractor;
 import com.sds.actlongs.utils.uuid.UuidGenerate;
 
+@Profile({"local", "dev"})
 @Service
 @RequiredArgsConstructor
 public class TusUploadService implements UploadService {

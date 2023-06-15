@@ -2,6 +2,7 @@ package com.sds.actlongs.utils.duration;
 
 import java.io.IOException;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import net.bramp.ffmpeg.FFprobe;
@@ -10,6 +11,7 @@ import net.bramp.ffmpeg.probe.FFmpegStream;
 
 import lombok.RequiredArgsConstructor;
 
+@Profile({"local", "dev"})
 @Component
 @RequiredArgsConstructor
 public class FFmpegDurationExtractor implements DurationExtractor {
