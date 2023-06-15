@@ -12,9 +12,9 @@ import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import net.bramp.ffmpeg.builder.FFmpegOutputBuilder;
 import net.bramp.ffmpeg.progress.Progress;
 
-import com.sds.actlongs.utils.manage.file.FileManage;
-
 import lombok.RequiredArgsConstructor;
+
+import com.sds.actlongs.utils.manage.file.FileManage;
 
 @Service
 @RequiredArgsConstructor

@@ -15,7 +15,7 @@ class FFmpegThumbnailExtractorTest {
 	@Autowired
 	FFmpegThumbnailExtractor fFmpegThumbnailExtractor;
 
-	private final String sampleVideoUuid = "2a2aa3fa035f44fc93aa9019d0e932cb";
+	private final String sampleVideoUuid = "3cc20d2df4bf4ef1b2fa6ee84913716f";
 	private final String sampleVideoUuidNotExist = "2a2aa3fa035f44fc93aa9019d0e932cb80";
 
 	@BeforeEach
