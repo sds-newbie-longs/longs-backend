@@ -15,7 +15,7 @@ public class TimeUtils {
 	private static final int MINUTE = SECOND * SECONDS_PER_MINUTE;
 	private static final int HOUR = MINUTE * SECONDS_PER_MINUTE;
 
-	public static String formatMilliseconds(long milliseconds) {
+	public static String formatMilliseconds(final long milliseconds) {
 		if (milliseconds < SECOND) {
 			return milliseconds + MILLISECONDS_UNIT;
 		} else if (milliseconds < MINUTE) {
