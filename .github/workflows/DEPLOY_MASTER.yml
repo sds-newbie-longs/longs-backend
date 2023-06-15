@@ -6,7 +6,7 @@ on:
       - cicd/deploy
 
 jobs:
-  build-and-deploy:
+  build-and-push-docker:
     runs-on: ubuntu-latest
 
     steps:
