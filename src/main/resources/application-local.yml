@@ -51,3 +51,8 @@ logging:
       hibernate:
         SQL: debug
         type: trace
+
+ffmpeg:
+  path: ${FFMPEG_PATH}
+ffprobe:
+  path: ${FFPROBE_PATH}
