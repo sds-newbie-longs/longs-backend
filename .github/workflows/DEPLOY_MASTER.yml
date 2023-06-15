@@ -3,7 +3,7 @@ name: '[MASTER]배포'
 on:
   push:
     branches:
-      - cicd/deploy
+      - master
 
 jobs:
   build-and-deploy:
