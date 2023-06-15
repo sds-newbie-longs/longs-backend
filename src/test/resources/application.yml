@@ -29,8 +29,8 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-#SETTING FFMPEG PROGRAM BEFORE TEST!!
+
 ffmpeg:
-  path: /opt/homebrew/bin/ffmpeg
+  path: ${FFMPEG_PATH}
 ffprobe:
-  path: /opt/homebrew/bin/ffprobe
+  path: ${FFMPROBE_PATH}
