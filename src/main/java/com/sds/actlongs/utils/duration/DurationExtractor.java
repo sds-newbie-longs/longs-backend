@@ -4,5 +4,5 @@ import java.io.File;
 import java.io.IOException;
 
 public interface DurationExtractor {
-	Double extract(File source) throws IOException;
+	Double extract(String sourcePath);
 }

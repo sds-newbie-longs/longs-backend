@@ -12,7 +12,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create    
+      ddl-auto: create
     open-in-view: false
     properties:
       hibernate:
@@ -38,3 +38,8 @@ logging:
       hibernate:
         SQL: debug
         type: trace
+
+ffmpeg:
+  path: ${FFMPEG_PATH}
+ffprobe:
+  path: ${FFPROBE_PATH}
