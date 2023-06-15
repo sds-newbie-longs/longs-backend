@@ -50,8 +50,9 @@ jobs:
       - name: make pem file
         run: |
           echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} >> /home/runner/longs.pem
-          chmod 400 /home/runner/longs.pem
+          chmod 600 /home/runner/longs.pem
           cat /home/runner/longs.pem
+          ssh-copy-id -i /home/runner/longs.pem ${{ secrets.AWS_VM_USERNAME }}@${{ secrets.AWS_VM_BS_HOST }}
           ssh -o StrictHostKeyChecking=no -i /home/runner/longs.pem ${{ secrets.AWS_VM_USERNAME }}@${{ secrets.AWS_VM_BS_HOST }} '/home/ubuntu/.ssh/loginToMaster.sh' 
 
       # - name: excute docker compose
