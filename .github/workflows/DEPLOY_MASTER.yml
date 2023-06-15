@@ -49,8 +49,10 @@ jobs:
     steps:
       - name: make pem file
         run: |
-          echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} >> /longs.pem
-          chmod 400 /longs.pem
+          echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} >> ~/longs.pem
+          chmod 400 ~/longs.pem
+          cd ~/
+          pwd
 
       - name: excute docker compose
         uses: appleboy/ssh-action@master
