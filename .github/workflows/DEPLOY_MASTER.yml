@@ -53,7 +53,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.4.1
         with:
-          ssh-private-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          ssh-private-key: ${{ secrets.AWS_SVR_SECRET_KEY }}
       
       - name: Connect to remote server and run command
         uses: appleboy/ssh-action@master
