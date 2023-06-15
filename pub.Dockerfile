@@ -12,4 +12,7 @@ EXPOSE 8080
 # 애플리케이션 실행 명령어를 지정합니다
 CMD ["sh", "-c", "java -jar -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE \
     -DAWS_ACCESS_KEY=$AWS_ACCESS_KEY \
-    -DAWS_SECRET_KEY=$AWS_SECRET_KEY /app/act-longs-0.0.1-SNAPSHOT.jar"]
+    -DAWS_SECRET_KEY=$AWS_SECRET_KEY \
+    -DMYSQL_HOST=$MYSQL_HOST \
+    -DMYSQL_USERNAME=$MYSQL_USERNAME \
+    -DMYSQL_PASSWORD=$MYSQL_PASSWORD /app/act-longs-0.0.1-SNAPSHOT.jar"]
