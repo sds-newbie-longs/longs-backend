@@ -26,10 +26,10 @@ public class S3Uploader {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
-	public void uploadFile(MultipartFile multipartFile, String dirPath) {
+	public void uploadFile(MultipartFile multipartFile, String path) {
 		validateFileExists(multipartFile);
 
-		String fileName = createFileName(multipartFile.getOriginalFilename(), dirPath);
+		String fileName = path + CATEGORY_PREFIX + multipartFile.getOriginalFilename();
 
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(multipartFile.getSize());
@@ -44,19 +44,19 @@ public class S3Uploader {
 		}
 	}
 
+	public void deleteFile(String fileName) {
+		boolean isFileExist = amazonS3.doesObjectExist(bucket, fileName);
+		if (isFileExist) {
+			amazonS3.deleteObject(bucket, fileName);
+		} else {
+			throw new RuntimeException("파일이 존재하지 않습니다.");
+		}
+	}
+
 	private void validateFileExists(MultipartFile multipartFile) {
 		if (multipartFile.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "업로드할 파일이 존재하지 않습니다.");
 		}
-	}
-
-	private String createFileName(String originalFileName, String dirPath) {
-		int fileExtensionIndex = originalFileName.lastIndexOf(DOT);
-		String fileExtension = originalFileName.substring(fileExtensionIndex);
-		String fileName = originalFileName.substring(0, fileExtensionIndex);
-		String now = String.valueOf(System.currentTimeMillis());
-
-		return dirPath + CATEGORY_PREFIX + fileName + TIME_SEPARATOR + now + fileExtension;
 	}
 
 }

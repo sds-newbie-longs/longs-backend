@@ -28,14 +28,14 @@ public class S3Downloader {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
-	public void downloadFile(String keyName, String path) throws IOException {
-		validateFileExistsAtUrl(keyName);
+	public void downloadFile(String fileName, String path) throws IOException {
+		validateFileExistsAtUrl(fileName);
 
-		S3Object s3Object = amazonS3.getObject(new GetObjectRequest(bucket, keyName));
+		S3Object s3Object = amazonS3.getObject(new GetObjectRequest(bucket, fileName));
 
 		try {
 			InputStream in = s3Object.getObjectContent();
-			File outputFile = new File(path + CATEGORY_PREFIX + keyName);
+			File outputFile = new File(path + CATEGORY_PREFIX + fileName);
 			if (!Files.exists(outputFile.toPath().getParent())) {
 				Files.createDirectories(outputFile.toPath().getParent());
 			}
@@ -45,8 +45,8 @@ public class S3Downloader {
 		}
 	}
 
-	private void validateFileExistsAtUrl(String filePath) throws FileNotFoundException {
-		if (!amazonS3.doesObjectExist(bucket, filePath)) {
+	private void validateFileExistsAtUrl(String fileName) throws FileNotFoundException {
+		if (!amazonS3.doesObjectExist(bucket, fileName)) {
 			throw new FileNotFoundException();
 		}
 	}
