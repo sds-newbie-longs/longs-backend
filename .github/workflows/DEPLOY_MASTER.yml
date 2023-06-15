@@ -60,7 +60,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_VM_BS_HOST }}
           username: ubuntu
-          key_path: /home/ubuntu/longs.pem
+          key_path: /home/runner/longs.pem
           script: |
             cd /home/ubuntu/.ssh
             ./loginToMaster.sh
