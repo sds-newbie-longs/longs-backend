@@ -6,7 +6,6 @@ import static org.mockito.BDDMockito.*;
 import java.util.List;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -38,9 +37,6 @@ class ExecutionTimeAspectTest {
 		@DisplayName("메소드의 실행 시간을 Debug level log로 출력한다.")
 		void measureExecutionTime() throws Throwable {
 			// given
-			final MethodSignature methodSignature = mock(MethodSignature.class);
-			given(joinPoint.getSignature()).willReturn(methodSignature);
-
 			final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
 			listAppender.start();
 			logger.addAppender(listAppender);
