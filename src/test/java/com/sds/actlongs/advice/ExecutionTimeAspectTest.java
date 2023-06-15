@@ -39,8 +39,6 @@ class ExecutionTimeAspectTest {
 		void measureExecutionTime() throws Throwable {
 			// given
 			final MethodSignature methodSignature = mock(MethodSignature.class);
-			final String mockMethodSignature = "mockMethod";
-			given(methodSignature.toString()).willReturn(mockMethodSignature);
 			given(joinPoint.getSignature()).willReturn(methodSignature);
 
 			final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
