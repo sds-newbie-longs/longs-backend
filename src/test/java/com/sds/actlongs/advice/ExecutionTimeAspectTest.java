@@ -47,7 +47,6 @@ class ExecutionTimeAspectTest {
 
 			// then
 			then(joinPoint).should(times(1)).proceed();
-			System.out.println("size : " + loggingEvents.size());
 			assertThat("DEBUG").isEqualTo(loggingEvents.get(0).getLevel().toString());
 			assertThat("DEBUG").isEqualTo(loggingEvents.get(1).getLevel().toString());
 			assertThat("Start to measure execution time of {}").isEqualTo(loggingEvents.get(0).getMessage());
