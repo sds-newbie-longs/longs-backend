@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sds.actlongs.controller.member.dto.LoginRequest;
 import com.sds.actlongs.controller.member.dto.LoginResponse;
+import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
 import com.sds.actlongs.service.member.MemberService;
 
 @Api(tags = "회원 API")
@@ -26,13 +27,20 @@ public class MemberController {
 	private final MemberService memberService;
 
 	@ApiOperation(value = "로그인 API", notes = ""
-		+ "M001: 로그인에 성공하였습니다.\n"
-		+ "M002: 로그인에 실패하였습니다.")
+		+ "L001: 로그인에 성공하였습니다.\n"
+		+ "L002: 로그인에 실패하였습니다.")
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@Valid @RequestBody final LoginRequest request,
 		final HttpServletRequest servletRequest) {
 		final boolean result = memberService.login(request.getUsername(), servletRequest.getSession());
 		return ResponseEntity.ok(LoginResponse.of(result));
+	}
+
+	@ApiOperation(value = "회원정보 조회 API", notes = ""
+		+ "MI001: 회원정보 조회에 성공하였습니다.")
+	@PostMapping("/member-info")
+	public ResponseEntity<MemberInfoResponse> memberInfo() {
+		return ResponseEntity.ok(MemberInfoResponse.of(1L, "Harry"));
 	}
 
 }
