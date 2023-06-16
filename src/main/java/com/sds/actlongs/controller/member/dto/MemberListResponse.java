@@ -3,10 +3,12 @@ package com.sds.actlongs.controller.member.dto;
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
 
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
+@Getter
 public class MemberListResponse extends ResultResponse {
 
 	@ApiModelProperty(value = "그룹원 목록")

@@ -21,6 +21,8 @@ import com.sds.actlongs.controller.member.dto.LoginResponse;
 import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
 import com.sds.actlongs.controller.member.dto.MemberListRequest;
 import com.sds.actlongs.controller.member.dto.MemberListResponse;
+import com.sds.actlongs.controller.member.dto.MemberSearchRequest;
+import com.sds.actlongs.controller.member.dto.MemberSearchResponse;
 import com.sds.actlongs.service.member.MemberService;
 
 @Api(tags = "회원 API")
@@ -61,6 +63,22 @@ public class MemberController {
 			new MemberListResponse.MemberResponse("Null")
 		);
 		MemberListResponse listResponse = new MemberListResponse(memberList);
+		return ResponseEntity.ok(listResponse);
+	}
+
+	@ApiOperation(value = "회원 검색 API", notes = ""
+		+ "MS001: 회원 검색에 성공하였습니다.")
+	@GetMapping("/search")
+	public ResponseEntity<MemberSearchResponse> searchMember(
+		@Valid @RequestBody final MemberSearchRequest request) {
+
+		List<MemberSearchResponse.SearchedMember> searchList = List.of(
+			new MemberSearchResponse.SearchedMember(101L, "Din"),
+			new MemberSearchResponse.SearchedMember(102L, "diedie"),
+			new MemberSearchResponse.SearchedMember(103L, "DIN_DEAN"),
+			new MemberSearchResponse.SearchedMember(104L, "dIabcd")
+		);
+		MemberSearchResponse listResponse = new MemberSearchResponse(searchList);
 		return ResponseEntity.ok(listResponse);
 	}
 
