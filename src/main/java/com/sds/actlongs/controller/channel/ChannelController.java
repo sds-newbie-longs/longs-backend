@@ -1,7 +1,5 @@
 package com.sds.actlongs.controller.channel;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
