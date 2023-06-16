@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class BoardRequest {
 
 	@NotBlank
-	@ApiModelProperty(value = "게시글 pk", example = "1", required = true)
+	@ApiModelProperty(value = "게시글 pk(공백불가)", example = "1", required = true)
 	private Long boardId;
 
 }
