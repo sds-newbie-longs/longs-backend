@@ -20,7 +20,9 @@ public class WebConfig {
 				registry
 					.addMapping(ALL_PATH)
 					.allowedMethods(WILDCARD)
-					.allowedOrigins("http://localhost:3000");
+					.allowedOrigins("http://localhost:3000")
+					.allowedHeaders(WILDCARD)
+					.allowCredentials(true);
 			}
 		};
 	}
