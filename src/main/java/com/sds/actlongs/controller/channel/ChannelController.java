@@ -30,11 +30,13 @@ public class ChannelController {
 	@GetMapping
 	public ResponseEntity<ChannelListResponse> findChannelList() {
 		// List<Channel> channelList = channelService.findChannelList();
-		List<ChannelListResponse.ChannelResponse> channelList = List.of(
-			new ChannelListResponse.ChannelResponse(1L, 11L, "Know SRE"),
-			new ChannelListResponse.ChannelResponse(2L, 12L, "Know Common"),
-			new ChannelListResponse.ChannelResponse(3L, 13L, "Know Portal")
+
+		List<ChannelListResponse.JoinedChannel> channelList = List.of(
+			// ChannelListResponse.JoinedChannel.of(1L, 1L, "Know SRE"),
+			// ChannelListResponse.JoinedChannel.of(2L, 1L, "Know Common"),
+			// ChannelListResponse.JoinedChannel.of(3L, 1L, "Know Portal")
 		);
+
 		ChannelListResponse listResponse = new ChannelListResponse(channelList);
 		return ResponseEntity.ok(listResponse);
 	}
@@ -45,7 +47,7 @@ public class ChannelController {
 	@PostMapping
 	public ResponseEntity<ChannelCreateResponse> createChannel(@Valid @RequestBody final ChannelCreateRequest request) {
 		// final boolean result = channelService.createChannel(request.getUsername()); //채널생성 여부 (중복확인)
-		return ResponseEntity.ok(ChannelCreateResponse.of(true));
+		return ResponseEntity.ok(ChannelCreateResponse.from(true));
 	}
 
 }

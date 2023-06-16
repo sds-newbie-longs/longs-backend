@@ -11,7 +11,12 @@ import com.sds.actlongs.model.ResultResponse;
 @Getter
 public class MemberListResponse extends ResultResponse {
 
-	@ApiModelProperty(value = "그룹원 목록")
+	@ApiModelProperty(position = 4, value = "그룹원 목록", example = ""
+		+ "["
+		+ "{ username: Din },"
+		+ "{ username: Ari },"
+		+ "{ username: Kang }"
+		+ "]")
 	private List<MemberResponse> memberList;
 
 	public MemberListResponse(List<MemberResponse> memberList) {
