@@ -13,7 +13,7 @@ public class BoardDeleteResponse extends ResultResponse {
 	}
 
 	public static BoardDeleteResponse of() {
-		return new BoardDeleteResponse(ResultCode.BOARDUPDATE_SUCCESS);
+		return new BoardDeleteResponse(ResultCode.DELETE_BOARD_SUCCESS);
 	}
 
 }

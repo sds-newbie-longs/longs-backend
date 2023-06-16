@@ -27,7 +27,7 @@ public class BoardListResponse extends ResultResponse {
 	}
 
 	public static BoardListResponse of(List<Video> videoList) {
-		return new BoardListResponse(ResultCode.BOARDDETAIL_SUCCESS, videoList);
+		return new BoardListResponse(ResultCode.SEARCH_BOARDLIST_SUCCESS, videoList);
 	}
 
 	@Getter

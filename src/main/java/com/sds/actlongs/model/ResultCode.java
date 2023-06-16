@@ -11,10 +11,10 @@ public enum ResultCode {
 	LOGIN_SUCCESS(200, "M001", "로그인에 성공하였습니다."),
 	LOGIN_FAILURE(200, "M002", "로그인에 실패하였습니다."),
 	// Board
-	BOARDDETAIL_SUCCESS(200, "B001", "게시글 상세정보 조회에 성공하였습니다."),
-	BOARDUPDATE_SUCCESS(200, "B002", "게시글 수정에 성공하였습니다."),
-	BOARDDELETE_SUCCESS(200, "B003", "게시글 삭제에 성공하였습니다."),
-	BOARDLIST_SUCCESS(200, "B004", "게시글 검색에 성공하였습니다.");
+	GET_BOARDDETAIL_SUCCESS(200, "B001", "게시글 상세정보 조회에 성공하였습니다."),
+	UPDATE_BOARD_SUCCESS(200, "B002", "게시글 수정에 성공하였습니다."),
+	DELETE_BOARD_SUCCESS(200, "B003", "게시글 삭제에 성공하였습니다."),
+	SEARCH_BOARDLIST_SUCCESS(200, "B004", "게시글 검색에 성공하였습니다.");
 
 	private final int status;
 	private final String code;

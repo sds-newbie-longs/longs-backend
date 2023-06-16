@@ -41,7 +41,7 @@ public class BoardDetailResponse extends ResultResponse {
 	}
 
 	public static BoardDetailResponse of(Video video) {
-		return new BoardDetailResponse(ResultCode.BOARDDETAIL_SUCCESS, video);
+		return new BoardDetailResponse(ResultCode.GET_BOARDDETAIL_SUCCESS, video);
 	}
 
 }
