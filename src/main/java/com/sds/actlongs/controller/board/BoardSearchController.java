@@ -30,7 +30,7 @@ import com.sds.actlongs.vo.VideoExtension;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/search")
-public class SearchController {
+public class BoardSearchController {
 
 	@ApiOperation(value = "검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
 	@GetMapping
