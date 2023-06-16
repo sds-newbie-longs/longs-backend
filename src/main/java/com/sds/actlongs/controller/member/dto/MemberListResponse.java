@@ -24,6 +24,7 @@ public class MemberListResponse extends ResultResponse {
 		this.memberList = memberList;
 	}
 
+	@Getter
 	public static class MemberResponse {
 
 		@ApiModelProperty(value = "아이디", example = "Harry")

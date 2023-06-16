@@ -57,10 +57,10 @@ public class MemberController {
 	public ResponseEntity<MemberListResponse> findMemberList(@PathVariable("groupId") final Long channelId) {
 
 		List<MemberListResponse.MemberResponse> memberList = List.of(
-			// new MemberListResponse.MemberResponse("Sean"),
-			// new MemberListResponse.MemberResponse("Ari"),
-			// new MemberListResponse.MemberResponse("Jin"),
-			// new MemberListResponse.MemberResponse("Null")
+			new MemberListResponse.MemberResponse("Sean"),
+			new MemberListResponse.MemberResponse("Ari"),
+			new MemberListResponse.MemberResponse("Jin"),
+			new MemberListResponse.MemberResponse("Null")
 		);
 		MemberListResponse listResponse = new MemberListResponse(memberList);
 		return ResponseEntity.ok(listResponse);
@@ -75,10 +75,10 @@ public class MemberController {
 	) {
 
 		List<MemberSearchResponse.SearchedMember> searchList = List.of(
-			// new MemberSearchResponse.SearchedMember(101L, "Din"),
-			// new MemberSearchResponse.SearchedMember(102L, "diedie"),
-			// new MemberSearchResponse.SearchedMember(103L, "DIN_DEAN"),
-			// new MemberSearchResponse.SearchedMember(104L, "dIabcd")
+			new MemberSearchResponse.SearchedMember(101L, "Din"),
+			new MemberSearchResponse.SearchedMember(102L, "diedie"),
+			new MemberSearchResponse.SearchedMember(103L, "DIN_DEAN"),
+			new MemberSearchResponse.SearchedMember(104L, "dIabcd")
 		);
 		MemberSearchResponse listResponse = new MemberSearchResponse(searchList);
 		return ResponseEntity.ok(listResponse);

@@ -32,11 +32,10 @@ public class ChannelController {
 		// List<Channel> channelList = channelService.findChannelList();
 
 		List<ChannelListResponse.JoinedChannel> channelList = List.of(
-			// ChannelListResponse.JoinedChannel.of(1L, 1L, "Know SRE"),
-			// ChannelListResponse.JoinedChannel.of(2L, 1L, "Know Common"),
-			// ChannelListResponse.JoinedChannel.of(3L, 1L, "Know Portal")
+			ChannelListResponse.JoinedChannel.of(1L, 1L, "Know SRE"),
+			ChannelListResponse.JoinedChannel.of(2L, 1L, "Know Common"),
+			ChannelListResponse.JoinedChannel.of(3L, 1L, "Know Portal")
 		);
-
 		ChannelListResponse listResponse = new ChannelListResponse(channelList);
 		return ResponseEntity.ok(listResponse);
 	}

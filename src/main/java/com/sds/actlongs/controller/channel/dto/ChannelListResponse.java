@@ -25,6 +25,7 @@ public class ChannelListResponse extends ResultResponse {
 		this.channelList = channelList;
 	}
 
+	@Getter
 	public static class JoinedChannel {
 
 		@ApiModelProperty(value = "그룹PK", example = "1")

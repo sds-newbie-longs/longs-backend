@@ -25,6 +25,7 @@ public class MemberSearchResponse extends ResultResponse {
 		this.searchList = searchList;
 	}
 
+	@Getter
 	public static class SearchedMember {
 
 		@ApiModelProperty(value = "회원PK", example = "1")
