@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sds.actlongs.controller.channel.dto.ChannelCreateRequest;
 import com.sds.actlongs.controller.channel.dto.ChannelCreateResponse;
-import com.sds.actlongs.controller.channel.dto.ChannelResponse;
+import com.sds.actlongs.controller.channel.dto.ChannelListResponse;
 
 @Api(tags = "그룹 API")
 @RestController
@@ -28,9 +28,15 @@ public class ChannelController {
 	@ApiOperation(value = "그룹목록 조회 API", notes = ""
 		+ "CL001: 그룹목록 조회에 성공하였습니다.")
 	@GetMapping
-	public ResponseEntity<List<ChannelResponse>> findChannelList() {
-		// List<ChannelResponse> channelList = channelService.findChannelList();
-		return ResponseEntity.ok(List.of());
+	public ResponseEntity<ChannelListResponse> findChannelList() {
+		// List<Channel> channelList = channelService.findChannelList();
+		List<ChannelListResponse.ChannelResponse> channelList = List.of(
+			new ChannelListResponse.ChannelResponse(1L, 11L, "Know SRE"),
+			new ChannelListResponse.ChannelResponse(2L, 12L, "Know Common"),
+			new ChannelListResponse.ChannelResponse(3L, 13L, "Know Portal")
+		);
+		ChannelListResponse listResponse = new ChannelListResponse(channelList);
+		return ResponseEntity.ok(listResponse);
 	}
 
 	@ApiOperation(value = "그룹생성 API", notes = ""
