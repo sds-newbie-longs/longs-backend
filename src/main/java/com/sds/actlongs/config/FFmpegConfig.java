@@ -13,6 +13,7 @@ import net.bramp.ffmpeg.FFprobe;
 @Profile({"local", "dev"})
 @Configuration
 public class FFmpegConfig {
+
 	@Value("${ffmpeg.path}")
 	private String ffmpegPath;
 
@@ -28,4 +29,5 @@ public class FFmpegConfig {
 	public FFprobe ffProbe() throws IOException {
 		return new FFprobe(ffprobePath);
 	}
+
 }

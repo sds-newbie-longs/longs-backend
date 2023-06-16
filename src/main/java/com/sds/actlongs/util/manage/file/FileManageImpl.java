@@ -1,5 +1,7 @@
 package com.sds.actlongs.util.manage.file;
 
+import static com.sds.actlongs.util.Constants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:upload.properties")
 public class FileManageImpl implements FileManage {
+
 	@Value("${temp.video.original.path}")
 	private String saveOriginalPath;
 
@@ -25,9 +28,13 @@ public class FileManageImpl implements FileManage {
 	@Value("${temp.video.extension}")
 	private String videoExtension;
 
+	private static final String HLS_480 = "480";
+	private static final String HLS_720 = "720";
+	private static final String HLS_1080 = "1080";
+
 	@Override
 	public String createTempVideoFileInLocal(InputStream input, String fileName) {
-		String uploadPath = saveOriginalPath + "/";
+		String uploadPath = saveOriginalPath + CATEGORY_PREFIX;
 		try {
 			File video = new File(uploadPath + fileName + videoExtension);
 			FileUtils.copyInputStreamToFile(input, video);
@@ -39,14 +46,13 @@ public class FileManageImpl implements FileManage {
 
 	@Override
 	public List<Path> createDirectoryForConvertedVideo(String fileName) {
-		Path inputFilePath = Paths.get(saveOriginalPath + "/" + fileName + videoExtension);
-		Path outputFolderPath = Paths.get(saveHlsPath + "/" + fileName);
+		Path inputFilePath = Paths.get(saveOriginalPath + CATEGORY_PREFIX + fileName + videoExtension);
+		Path outputFolderPath = Paths.get(saveHlsPath + CATEGORY_PREFIX + fileName);
 
 		File preFix = outputFolderPath.toFile();
-		File hls480 = new File(preFix, "480");
-		File hls720 = new File(preFix, "720");
-		File hls1080 = new File(preFix, "1080");
-
+		File hls480 = new File(preFix, HLS_480);
+		File hls720 = new File(preFix, HLS_720);
+		File hls1080 = new File(preFix, HLS_1080);
 
 		if (!hls480.exists()) {
 			hls480.mkdirs();

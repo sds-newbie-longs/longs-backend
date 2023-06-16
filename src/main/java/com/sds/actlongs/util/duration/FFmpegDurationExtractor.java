@@ -16,19 +16,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FFmpegDurationExtractor implements DurationExtractor {
 
+	private static final Integer START_POINT = 0;
 	private final FFprobe fFprobe;
-
-	private final Integer startPoint = 0;
 
 	@Override
 	public Double extract(String sourcePath) {
 		try {
 			FFmpegProbeResult probeResult = fFprobe.probe(sourcePath);
-			FFmpegStream videoStream = probeResult.getStreams().get(startPoint);
+			FFmpegStream videoStream = probeResult.getStreams().get(START_POINT);
 			return videoStream.duration;
 		} catch (IOException exception) {
 			//TODO THROW EXCEPTION
 		}
-		return 0.0;
+		return 0.0; // 예외 상황 발생 시 반환하는 default value
 	}
+
 }

@@ -1,4 +1,4 @@
-package com.sds.actlongs.domain.video.respository;
+package com.sds.actlongs.domain.video.repository;
 
 import java.sql.Time;
 

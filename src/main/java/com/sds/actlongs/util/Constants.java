@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 public final class Constants {
 
 	public static final String EMPTY = "";
+	public static final String HYPHEN = "-";
 	public static final String DOT = ".";
 	public static final String WILDCARD = "*";
 	public static final String ALL_PATH = "/**";

@@ -1,5 +1,7 @@
 package com.sds.actlongs.util.thumbnail;
 
+import static com.sds.actlongs.util.Constants.*;
+
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
@@ -38,10 +40,11 @@ public class FFmpegThumbnailExtractor implements ThumbnailExtractor {
 	@Value("${temp.default.thumbnail.path}")
 	private String defaultImgPath;
 
+	// TODO - refactor
 	@Override
 	public String extract(String fileName) {
-		String sourcePath = originalVideoPath + "/" + fileName + videoExtension;
-		final String outputPath = imgSavePath + "/" + fileName + imgExtension;
+		String sourcePath = originalVideoPath + CATEGORY_PREFIX + fileName + videoExtension;
+		final String outputPath = imgSavePath + CATEGORY_PREFIX + fileName + imgExtension;
 
 		try {
 			FFmpegBuilder builder = new FFmpegBuilder()
@@ -62,7 +65,7 @@ public class FFmpegThumbnailExtractor implements ThumbnailExtractor {
 
 	@Override
 	public String generateDefaultThumbnail(String fileName) {
-		String outputPath = imgSavePath + "/" + fileName + imgExtension;
+		String outputPath = imgSavePath + CATEGORY_PREFIX + fileName + imgExtension;
 		File thumbnail = new File(outputPath);
 		File defaultImage = new File(defaultImgPath);
 
