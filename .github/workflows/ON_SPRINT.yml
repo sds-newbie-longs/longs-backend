@@ -16,7 +16,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'oracle'
           java-version: "11"
 
       - name: set +x
@@ -59,4 +59,3 @@ jobs:
             cd /app/longs-env/env-dev
             docker image rm --force vidigummy/svr
             docker compose up -d --force-recreate
-
