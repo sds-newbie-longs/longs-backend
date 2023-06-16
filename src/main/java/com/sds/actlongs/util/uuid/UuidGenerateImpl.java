@@ -1,4 +1,4 @@
-package com.sds.actlongs.utils.uuid;
+package com.sds.actlongs.util.uuid;
 
 import java.util.UUID;
 

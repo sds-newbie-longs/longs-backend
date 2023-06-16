@@ -1,4 +1,4 @@
-package com.sds.actlongs.utils.thumbnail;
+package com.sds.actlongs.util.thumbnail;
 
 import java.io.File;
 import java.io.IOException;

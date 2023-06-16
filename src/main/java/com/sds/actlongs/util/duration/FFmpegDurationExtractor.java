@@ -1,4 +1,4 @@
-package com.sds.actlongs.utils.duration;
+package com.sds.actlongs.util.duration;
 
 import java.io.IOException;
 

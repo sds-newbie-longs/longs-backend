@@ -1,4 +1,4 @@
-package com.sds.actlongs.utils.manage.file;
+package com.sds.actlongs.util.manage.file;
 
 import java.io.File;
 import java.io.IOException;

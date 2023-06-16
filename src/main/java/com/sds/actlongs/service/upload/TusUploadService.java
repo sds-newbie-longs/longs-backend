@@ -14,9 +14,9 @@ import me.desair.tus.server.exception.TusException;
 import me.desair.tus.server.upload.UploadInfo;
 
 import com.sds.actlongs.service.upload.dto.UploadResponseDto;
-import com.sds.actlongs.utils.manage.file.FileManage;
-import com.sds.actlongs.utils.thumbnail.ThumbnailExtractor;
-import com.sds.actlongs.utils.uuid.UuidGenerate;
+import com.sds.actlongs.util.manage.file.FileManage;
+import com.sds.actlongs.util.thumbnail.ThumbnailExtractor;
+import com.sds.actlongs.util.uuid.UuidGenerate;
 
 @Profile({"local", "dev"})
 @Service
