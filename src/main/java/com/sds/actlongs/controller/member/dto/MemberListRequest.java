@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class MemberListRequest {
 
 	@NotNull
-	@ApiModelProperty(value = "그룹 ID", example = "1", required = true)
+	@ApiModelProperty(value = "그룹PK", example = "1", required = true)
 	private Long channelId;
 
 }
