@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig {
 
 	@Bean
-	@Profile("local")
+	@Profile({"local", "dev"})
 	public WebMvcConfigurer localCorsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
