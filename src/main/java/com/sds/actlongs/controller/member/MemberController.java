@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class MemberController {
 
 	@ApiOperation(value = "회원정보 조회 API", notes = ""
 		+ "MI001: 회원정보 조회에 성공하였습니다.")
-	@PostMapping("/member-info")
+	@GetMapping("/info")
 	public ResponseEntity<MemberInfoResponse> memberInfo() {
 		return ResponseEntity.ok(MemberInfoResponse.of(1L, "Harry"));
 	}
