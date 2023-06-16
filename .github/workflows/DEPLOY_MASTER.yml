@@ -64,4 +64,5 @@ jobs:
           port: 22
           command: |
             cd /home/ubuntu/.ssh
-            ./loginToMaster.sh
+            result=$(./loginToMaster.sh)
+            echo "$result"
