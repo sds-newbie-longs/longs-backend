@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.member;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -17,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import com.sds.actlongs.controller.member.dto.LoginRequest;
 import com.sds.actlongs.controller.member.dto.LoginResponse;
 import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
+import com.sds.actlongs.controller.member.dto.MemberListRequest;
+import com.sds.actlongs.controller.member.dto.MemberListResponse;
 import com.sds.actlongs.service.member.MemberService;
 
 @Api(tags = "회원 API")
@@ -42,6 +46,22 @@ public class MemberController {
 	@GetMapping("/info")
 	public ResponseEntity<MemberInfoResponse> memberInfo() {
 		return ResponseEntity.ok(MemberInfoResponse.of(1L, "Harry"));
+	}
+
+	@ApiOperation(value = "그룹원 목록 조회 API", notes = ""
+		+ "ML001: 그룹원 목록 조회에 성공하였습니다.")
+	@GetMapping
+	public ResponseEntity<MemberListResponse> findMemberList(
+		@Valid @RequestBody final MemberListRequest request) {
+
+		List<MemberListResponse.MemberResponse> memberList = List.of(
+			new MemberListResponse.MemberResponse("Sean"),
+			new MemberListResponse.MemberResponse("Ari"),
+			new MemberListResponse.MemberResponse("Jin"),
+			new MemberListResponse.MemberResponse("Null")
+		);
+		MemberListResponse listResponse = new MemberListResponse(memberList);
+		return ResponseEntity.ok(listResponse);
 	}
 
 }
