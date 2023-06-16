@@ -1,6 +1,6 @@
 package com.sds.actlongs.controller.channel.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChannelCreateRequest {
 
-	@NotNull
+	@NotBlank
 	@Size(max = 20)
-	@ApiModelProperty(value = "그룹명(최대 20자)", example = "Knox SRE", required = true)
+	@ApiModelProperty(value = "그룹명(최대 20자, 공백 불가)", example = "Knox SRE", required = true)
 	private String name;
 
 }

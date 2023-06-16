@@ -1,7 +1,5 @@
 package com.sds.actlongs.controller.channel;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -28,8 +26,8 @@ public class ChannelController {
 		+ "CC002: 그룹 생성에 실패하였습니다.")
 	@PostMapping
 	public ResponseEntity<ChannelCreateResponse> createChannel(@Valid @RequestBody final ChannelCreateRequest request) {
-		// final Optional<Channel> channelOptional = channelService.uniqueName(request.getUsername()); //중복확인 후 채널생성
-		return ResponseEntity.ok(ChannelCreateResponse.of(Optional.empty()));
+		// final boolean result = channelService.uniqueName(request.getUsername()); //채널생성 여부 (중복확인)
+		return ResponseEntity.ok(ChannelCreateResponse.of(true));
 	}
 
 }
