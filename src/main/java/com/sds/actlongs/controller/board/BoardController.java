@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
 import com.sds.actlongs.controller.board.dto.BoardDeleteResponse;
@@ -32,12 +34,13 @@ import com.sds.actlongs.vo.VideoExtension;
 @Api(tags = "게시글 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/boards")
+@RequestMapping("/board")
 public class BoardController {
 
 	@ApiOperation(value = "상세 조회 API", notes = "B001: 게시글 상세정보 조회에 성공하였습니다.")
 	@GetMapping
-	public ResponseEntity<BoardDetailResponse> getBoardDetail(@Valid @RequestBody final BoardRequest request) {
+	public ResponseEntity<BoardDetailResponse> getBoardDetail(
+		@Valid @NotBlank @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
 		return ResponseEntity.ok(BoardDetailResponse.of(new Video(
 			new Board(
 				new Member("harry", null, null),
