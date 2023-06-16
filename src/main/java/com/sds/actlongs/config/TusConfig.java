@@ -11,11 +11,10 @@ import me.desair.tus.server.TusFileUploadService;
 @PropertySource("classpath:upload.properties")
 public class TusConfig {
 
+	@Value("${temp.chunk.expiration}")
+	private Long dataExpiration;
 	@Value("${temp.chunk.path}")
 	private String dataPath;
-
-	@Value("${temp.chunk.expiration}")
-	Long dataExpiration;
 
 	@Bean
 	public TusFileUploadService tus() {
@@ -26,4 +25,5 @@ public class TusConfig {
 			.withThreadLocalCache(true)
 			.withUploadURI("/video/upload");
 	}
+
 }

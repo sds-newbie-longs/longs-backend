@@ -40,6 +40,6 @@ logging:
         type: trace
 
 ffmpeg:
-    path: ${FFMPEG_PATH}
+  path: ${FFMPEG_PATH}
 ffprobe:
-    path: ${FFMPROBE_PATH}
+  path: ${FFPROBE_PATH}
