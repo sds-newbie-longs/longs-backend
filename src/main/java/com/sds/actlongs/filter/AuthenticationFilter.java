@@ -63,6 +63,7 @@ public class AuthenticationFilter implements Filter {
 			os.flush();
 		} catch (Exception exception) {
 			exception.printStackTrace();
+			throw new RuntimeException(exception.getMessage(), exception.getCause());
 		}
 	}
 
