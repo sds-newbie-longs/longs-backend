@@ -28,18 +28,14 @@ public class AuthenticationFilter implements Filter {
 
 	private static final String[] API_WHITELIST = {"/members/login"};
 	private static final String[] SWAGGER_WHITELIST = {"/v2/api-docs/**", "/configuration/ui/**",
-		"/swagger-resources/**",
-		"/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**"};
+		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**"};
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 		throws ServletException, IOException {
-		final HttpServletRequest httpRequest = (HttpServletRequest)request;
-		final HttpServletResponse httpResponse = (HttpServletResponse)response;
-
-		if (processAuthenticationAndGetResult(httpRequest, httpResponse)) {
+		if (processAuthenticationAndGetResult((HttpServletRequest)request, (HttpServletResponse)response)) {
 			chain.doFilter(request, response);
 		}
 	}
