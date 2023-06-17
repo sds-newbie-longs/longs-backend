@@ -67,8 +67,8 @@ public class AuthenticationFilter implements Filter {
 		}
 	}
 
-	private boolean isAuthenticationPath(String requestURI) {
-		return getWhitelistStream().noneMatch(uri -> antPathMatcher.match(uri, requestURI));
+	private boolean isAuthenticationPath(String requestUri) {
+		return getWhitelistStream().noneMatch(uri -> antPathMatcher.match(uri, requestUri));
 	}
 
 	private Stream<String> getWhitelistStream() {

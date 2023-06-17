@@ -34,7 +34,7 @@ public class WebConfig {
 	}
 
 	@Bean
-	public FilterRegistrationBean<Filter> AuthenticationFilter(){
+	public FilterRegistrationBean<Filter> authenticationFilter() {
 		final FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new AuthenticationFilter());
 		filterRegistrationBean.setOrder(1);
