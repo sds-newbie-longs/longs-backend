@@ -37,7 +37,7 @@ public class WebConfig {
 	public FilterRegistrationBean<Filter> AuthenticationFilter(){
 		final FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new AuthenticationFilter());
-		filterRegistrationBean.setOrder(2);
+		filterRegistrationBean.setOrder(1);
 		filterRegistrationBean.addUrlPatterns(ALL_PATHS);
 		return filterRegistrationBean;
 	}
