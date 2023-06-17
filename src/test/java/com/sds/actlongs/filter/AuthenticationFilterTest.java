@@ -20,8 +20,8 @@ import com.sds.actlongs.util.SessionConstants;
 @ExtendWith(MockitoExtension.class)
 class AuthenticationFilterTest {
 
-	private final static String AUTHENTICATION_PATH = "/members/info";
-	private final static String AUTHENTICATION_WHITELIST_PATH = "/members/login";
+	private static final String AUTHENTICATION_PATH = "/members/info";
+	private static final String AUTHENTICATION_WHITELIST_PATH = "/members/login";
 	@InjectMocks
 	private AuthenticationFilter subject;
 	@Mock

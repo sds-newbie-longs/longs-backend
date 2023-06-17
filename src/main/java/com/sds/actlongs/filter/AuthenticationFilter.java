@@ -42,8 +42,8 @@ public class AuthenticationFilter implements Filter {
 
 	private boolean processAuthenticationAndGetResult(HttpServletRequest httpRequest,
 		HttpServletResponse httpResponse) {
-		if (isAuthenticationPath(httpRequest.getRequestURI()) &&
-			isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
+		if (isAuthenticationPath(httpRequest.getRequestURI())
+			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
 		}
