@@ -20,16 +20,15 @@ import org.springframework.http.MediaType;
 import org.springframework.util.AntPathMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 
 import com.sds.actlongs.model.ErrorResponse;
 import com.sds.actlongs.util.SessionConstants;
 
-@Slf4j
 public class AuthenticationFilter implements Filter {
 
 	private static final String[] API_WHITELIST = {"/members/login"};
-	private static final String[] SWAGGER_WHITELIST = {"/v2/api-docs/**", "/configuration/ui/**", "/swagger-resources/**",
+	private static final String[] SWAGGER_WHITELIST = {"/v2/api-docs/**", "/configuration/ui/**",
+		"/swagger-resources/**",
 		"/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**"};
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
