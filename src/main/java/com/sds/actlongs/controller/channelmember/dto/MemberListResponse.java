@@ -1,4 +1,4 @@
-package com.sds.actlongs.controller.member.dto;
+package com.sds.actlongs.controller.channelmember.dto;
 
 import java.util.List;
 
