@@ -18,6 +18,7 @@ public enum ResultCode {
 	CHANNELCREATE_SUCCESS(200, "CC001", "그룹 생성에 성공하였습니다."),
 	CHANNELCREATE_FAILURE(200, "CC002", "그룹 생성에 실패하였습니다."),
 	CHANNELLIST_SUCCESS(200, "CL001", "그룹목록 조회에 성공하였습니다."),
+	CHANNELDELETE_SUCCESS(200, "CD001", "그룹 삭제에 성공하였습니다."),
 
 	// ChannelMember
 	MEMBERINVITE_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다."),
