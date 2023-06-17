@@ -20,7 +20,8 @@ public enum ResultCode {
 	CHANNELLIST_SUCCESS(200, "CL001", "그룹목록 조회에 성공하였습니다."),
 
 	// ChannelMember
-	MEMBERINVITE_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다.");
+	MEMBERINVITE_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다."),
+	CHANNELLEAVE_SUCCESS(200, "LV001", "그룹 탈퇴에 성공하였습니다.");
 
 	private final int status;
 	private final String code;

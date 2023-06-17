@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
@@ -62,6 +64,12 @@ public class ChannelMemberController {
 	@PostMapping
 	public ResponseEntity<MemberInviteResponse> inviteMember(@Valid @RequestBody final MemberInviteRequest request) {
 		return ResponseEntity.ok(new MemberInviteResponse());
+	}
+
+	@ApiOperation(value = "그룹 탈퇴 API", notes = "LV001: 그룹 탈퇴에 성공하였습니다.")
+	@DeleteMapping("/{groupId}")
+	public ResponseEntity<ChannelLeaveResponse> leaveChannel(@PathVariable("groupId") final Long channelId) {
+		return ResponseEntity.ok(new ChannelLeaveResponse());
 	}
 
 }
