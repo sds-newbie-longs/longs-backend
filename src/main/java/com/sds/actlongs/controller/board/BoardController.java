@@ -2,9 +2,11 @@ package com.sds.actlongs.controller.board;
 
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sds.actlongs.controller.board.dto.BoardDeleteResponse;
 import com.sds.actlongs.controller.board.dto.BoardDetailResponse;
+import com.sds.actlongs.controller.board.dto.BoardListSearchResponse;
 import com.sds.actlongs.controller.board.dto.BoardRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateResponse;
@@ -71,6 +74,43 @@ public class BoardController {
 	@DeleteMapping
 	public ResponseEntity<BoardDeleteResponse> deleteBoard(@Valid @RequestBody final BoardRequest request) {
 		return ResponseEntity.ok(BoardDeleteResponse.of());
+	}
+
+	@ApiOperation(value = "검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
+	@GetMapping("/channels/{channelId}/boards/search?keyword={input}")
+	public ResponseEntity<BoardListSearchResponse> searchBoardList(
+		@ApiParam(value = "그룹 ID", example = "1", required = true)
+		@PathVariable("channelId") Long channelId,
+		@ApiParam(value = "검색 키워드", example = "재진스", required = true) @Size(max = 50)
+		@PathVariable("input") String input) {
+
+		Video video1 = new Video(
+			new Board(
+				new Member("harry", null, null),
+				new Channel("Knox SRE", new Member("din", null, null), null, null),
+				"재진스",
+				"재진스의 뉴진스 플레이리스트 입니다."),
+			"static/스크린샷(11)_1686513849288",
+			ImageExtension.PNG,
+			"data/test_1686534272185",
+			VideoExtension.MP4,
+			Time.valueOf(LocalTime.now()));
+		Video video2 = new Video(
+			new Board(
+				new Member("ari", null, null),
+				new Channel("Knox SRE", new Member("din", null, null), null, null),
+				"재진스2",
+				"재진스2의 뉴진스 플레이리스트 입니다."),
+			"static/스크린샷(11)_1686513849288",
+			ImageExtension.PNG,
+			"data/test_1686534272185",
+			VideoExtension.MP4,
+			Time.valueOf(LocalTime.now()));
+		List<Video> videoList = List.of(
+			video1, video2
+		);
+
+		return ResponseEntity.ok(BoardListSearchResponse.of(videoList));
 	}
 
 }
