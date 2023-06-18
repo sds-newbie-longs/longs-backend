@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -80,12 +81,12 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
-	@GetMapping("/channels/{channelId}/boards/search?keyword={input}")
+	@GetMapping("/groups/{groupId}/search")
 	public ResponseEntity<BoardListSearchResponse> searchBoardList(
 		@NotNull @ApiParam(value = "그룹 ID", example = "1", required = true)
-		@PathVariable("channelId") Long channelId,
+		@PathVariable("groupId") Long channelId,
 		@ApiParam(value = "검색 키워드", example = "재진스", required = true) @Size(max = 50)
-		@PathVariable("input") String input) {
+		@RequestParam String keyword) {
 
 		Video video1 = new Video(
 			new Board(
