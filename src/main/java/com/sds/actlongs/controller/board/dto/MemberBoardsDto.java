@@ -19,9 +19,7 @@ public class MemberBoardsDto {
 	public MemberBoardsDto(String username, List<Video> videoList) {
 		this.username = username;
 		List<BoardDto> boardDtoList = new ArrayList<>();
-		for (Video video : videoList) {
-			boardDtoList.add(new BoardDto(video));
-		}
+		videoList.forEach(video -> boardDtoList.add(new BoardDto(video)));
 		this.boardList = boardDtoList;
 	}
 
