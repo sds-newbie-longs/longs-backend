@@ -4,12 +4,14 @@ import java.sql.Time;
 import java.time.LocalTime;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +36,14 @@ import com.sds.actlongs.vo.VideoExtension;
 @Api(tags = "게시글 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@Validated
+@RequestMapping("/boards")
 public class BoardController {
 
 	@ApiOperation(value = "상세 조회 API", notes = "B001: 게시글 상세정보 조회에 성공하였습니다.")
-	@GetMapping
+	@GetMapping("/{boardId}")
 	public ResponseEntity<BoardDetailResponse> getBoardDetail(
-		@Valid @NotBlank @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
+		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
 		return ResponseEntity.ok(BoardDetailResponse.of(new Video(
 			new Board(
 				new Member("harry", null, null),
