@@ -22,7 +22,7 @@ public class BoardUpdateResponse extends ResultResponse {
 	}
 
 	public static BoardUpdateResponse of(Board board) {
-		return new BoardUpdateResponse(ResultCode.BOARDUPDATE_SUCCESS, board);
+		return new BoardUpdateResponse(ResultCode.UPDATE_BOARD_SUCCESS, board);
 	}
 
 }
