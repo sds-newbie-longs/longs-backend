@@ -3,6 +3,7 @@ package com.sds.actlongs.service.convert;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import net.bramp.ffmpeg.FFmpeg;
@@ -14,8 +15,9 @@ import net.bramp.ffmpeg.progress.Progress;
 
 import lombok.RequiredArgsConstructor;
 
-import com.sds.actlongs.utils.manage.file.FileManage;
+import com.sds.actlongs.util.manage.file.FileManage;
 
+@Profile({"local", "dev"})
 @Service
 @RequiredArgsConstructor
 public class FFmpegConvertService implements ConvertService {

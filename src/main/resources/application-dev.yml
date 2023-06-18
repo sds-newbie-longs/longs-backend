@@ -5,7 +5,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:3306/longs?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://${MYSQL_HOST}:3306/longs?serverTimezone=UTC
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
 
@@ -40,6 +40,6 @@ logging:
         type: trace
 
 ffmpeg:
-    path: ${FFMPEG_PATH}
+  path: ${FFMPEG_PATH}
 ffprobe:
-    path: ${FFMPROBE_PATH}
+  path: ${FFPROBE_PATH}

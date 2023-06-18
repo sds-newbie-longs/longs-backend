@@ -30,7 +30,10 @@ cloud:
     stack:
       auto: false
 
-ffmpeg:
-  path: ${FFMPEG_PATH}
-ffprobe:
-  path: ${FFMPROBE_PATH}
+logging:
+  level:
+    root: debug
+    org:
+      hibernate:
+        SQL: debug
+        type: trace
