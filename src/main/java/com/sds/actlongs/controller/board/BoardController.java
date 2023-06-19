@@ -113,10 +113,10 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시글 목록 (메인페이지) API", notes = "B005: 게시글 리스트 조회에 성공하였습니다.")
-	@GetMapping("channels/{channelId}")
+	@GetMapping("groups/{groupId}")
 	public ResponseEntity<BoardListResponse> getBoardList(
 		@NotNull @ApiParam(value = "그룹 id", example = "1", required = true)
-		@PathVariable("channelId") Long channelId) {
+		@PathVariable("groupId") Long channelId) {
 		Video video1 = new Video(
 			new Board(
 				new Member("harry", null, null),
