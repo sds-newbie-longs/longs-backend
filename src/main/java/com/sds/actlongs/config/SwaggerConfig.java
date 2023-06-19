@@ -31,8 +31,7 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-			.useDefaultResponseMessages(false)
+		return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
 			.apiInfo(apiInfo())
 			.select()
 			.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
@@ -42,11 +41,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder()
-			.title("Longs's API Docs")
-			.version("1.0")
-			.description("API 명세서")
-			.build();
+		return new ApiInfoBuilder().title("Longs's API Docs").version("1.0").description("API 명세서").build();
 	}
 
 	@Bean
