@@ -3,6 +3,7 @@ package com.sds.actlongs.controller.board;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -37,6 +38,7 @@ import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
+import com.sds.actlongs.service.board.BoardService;
 import com.sds.actlongs.vo.ImageExtension;
 import com.sds.actlongs.vo.VideoExtension;
 
@@ -47,21 +49,14 @@ import com.sds.actlongs.vo.VideoExtension;
 @RequestMapping("/boards")
 public class BoardController {
 
+	private final BoardService boardService;
+
 	@ApiOperation(value = "상세 조회 API", notes = "B001: 게시글 상세정보 조회에 성공하였습니다.")
 	@GetMapping("/{boardId}")
 	public ResponseEntity<BoardDetailResponse> getBoardDetail(
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
-		return ResponseEntity.ok(BoardDetailResponse.of(new Video(
-			new Board(
-				new Member("harry", null, null),
-				new Channel("Knox SRE", new Member("din", null, null), null, null),
-				"재진스 플레이리스트",
-				"재진스의 뉴진스 플레이리스트 입니다."),
-			"static/스크린샷(11)_1686513849288",
-			ImageExtension.PNG,
-			"data/test_1686534272185",
-			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()))));
+		Optional<Video> result = boardService.getBoardDetail(boardId);
+		return ResponseEntity.ok(BoardDetailResponse.of(result));
 	}
 
 	@ApiOperation(value = "수정 API", notes = "B002: 게시글 수정에 성공하였습니다.")
@@ -118,10 +113,10 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시글 목록 (메인페이지) API", notes = "B005: 게시글 리스트 조회에 성공하였습니다.")
-	@GetMapping("channels/{channelId}")
+	@GetMapping("groups/{groupId}")
 	public ResponseEntity<BoardListResponse> getBoardList(
 		@NotNull @ApiParam(value = "그룹 id", example = "1", required = true)
-		@PathVariable("channelId") Long channelId) {
+		@PathVariable("groupId") Long channelId) {
 		Video video1 = new Video(
 			new Board(
 				new Member("harry", null, null),
