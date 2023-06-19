@@ -127,34 +127,9 @@ public class BoardController {
 	@GetMapping("/boardList")
 	public ResponseEntity<BoardListResponse> getBoardList(
 		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId) {
-		Video video1 = new Video(
-			new Board(
-				new Member("harry", null, null),
-				new Channel("Knox SRE", new Member("din", null, null), null, null),
-				"재진스",
-				"재진스의 뉴진스 플레이리스트 입니다."),
-			"static/스크린샷(11)_1686513849288",
-			ImageExtension.PNG,
-			"data/test_1686534272185",
-			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
-		Video video2 = new Video(
-			new Board(
-				new Member("ari", null, null),
-				new Channel("Knox SRE", new Member("din", null, null), null, null),
-				"재진스2",
-				"재진스2의 뉴진스 플레이리스트 입니다."),
-			"static/스크린샷(11)_1686513849288",
-			ImageExtension.PNG,
-			"data/test_1686534272185",
-			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
-		BoardDto board1 = new BoardDto(video1);
-		BoardDto board2 = new BoardDto(video2);
-
-		MemberBoardsDto memberBoard1 = new MemberBoardsDto("harry", List.of(video1));
-		MemberBoardsDto memberBoard2 = new MemberBoardsDto("ari", List.of(video2));
-		return ResponseEntity.ok(BoardListResponse.of(List.of(board1, board2), List.of(memberBoard1, memberBoard2)));
+		List<BoardDto> boardList = boardService.getBoardList(channelId);
+		List<MemberBoardsDto> memberBoardsList = boardService.getMemberBoardsList(channelId);
+		return ResponseEntity.ok(BoardListResponse.of(boardList, memberBoardsList));
 	}
 
 }

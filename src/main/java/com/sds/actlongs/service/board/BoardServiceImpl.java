@@ -2,6 +2,8 @@ package com.sds.actlongs.service.board;
 
 import static com.sds.actlongs.model.ErrorCode.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -9,8 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.board.dto.BoardDto;
+import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
 import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.board.repository.BoardRepository;
+import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.domain.video.repository.VideoRepository;
 import com.sds.actlongs.exception.BoardNotMatchedMemberException;
@@ -21,6 +27,7 @@ public class BoardServiceImpl implements BoardService {
 
 	private final BoardRepository boardRepository;
 	private final VideoRepository videoRepository;
+	private final ChannelMemberRepository channelMemberRepository;
 
 	@Override
 	public Optional<Video> getBoardDetail(final Long boardId) {
@@ -58,6 +65,26 @@ public class BoardServiceImpl implements BoardService {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public List<BoardDto> getBoardList(final Long channelId) {
+		List<Video> videoList = videoRepository.findByBoardChannelIdOrderByCreatedAtDesc(channelId);
+		List<BoardDto> boardList = new ArrayList<>();
+		videoList.forEach(video -> boardList.add(new BoardDto(video)));
+		return boardList;
+	}
+
+	@Override
+	public List<MemberBoardsDto> getMemberBoardsList(final Long channelId) {
+		List<ChannelMember> channelMemberList = channelMemberRepository.findByChannelId(channelId);
+		List<MemberBoardsDto> memberBoardsList = new ArrayList<>();
+		channelMemberList.forEach(channelMember -> {
+			List<Video> videoList = videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(
+				channelMember.getMember().getId());
+			memberBoardsList.add(new MemberBoardsDto(channelMember.getMember().getUsername(), videoList));
+		});
+		return memberBoardsList;
 	}
 
 }
