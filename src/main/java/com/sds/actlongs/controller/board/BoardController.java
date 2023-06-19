@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.board;
 
+import static com.sds.actlongs.util.SessionConstants.*;
+
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +33,6 @@ import com.sds.actlongs.controller.board.dto.BoardDetailResponse;
 import com.sds.actlongs.controller.board.dto.BoardDto;
 import com.sds.actlongs.controller.board.dto.BoardListResponse;
 import com.sds.actlongs.controller.board.dto.BoardListSearchResponse;
-import com.sds.actlongs.controller.board.dto.BoardRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateResponse;
 import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
@@ -51,7 +53,8 @@ public class BoardController {
 
 	private final BoardService boardService;
 
-	@ApiOperation(value = "상세 조회 API", notes = "B001: 게시글 상세정보 조회에 성공하였습니다.")
+	@ApiOperation(value = "상세 조회 API", notes = "B001: 게시글 상세정보 조회에 성공하였습니다.\n"
+		+ "BOO6: 게시글 상세정보 조회에 실패하였습니다.")
 	@GetMapping("/{boardId}")
 	public ResponseEntity<BoardDetailResponse> getBoardDetail(
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
@@ -59,19 +62,22 @@ public class BoardController {
 		return ResponseEntity.ok(BoardDetailResponse.of(result));
 	}
 
-	@ApiOperation(value = "수정 API", notes = "B002: 게시글 수정에 성공하였습니다.")
-	@PatchMapping
-	public ResponseEntity<BoardUpdateResponse> updateBoard(@Valid @RequestBody final BoardUpdateRequest request) {
-		return ResponseEntity.ok(BoardUpdateResponse.of(new Board(
-			new Member("harry", null, null),
-			new Channel("Knox SRE", new Member("din", null, null), null, null),
-			"재진스(수정)",
-			"재진스의 뉴진스 플레이리스트 입니다.(수정)")));
+	@ApiOperation(value = "수정 API", notes = "B002: 게시글 수정에 성공하였습니다.\n"
+		+ "B007: 게시글 수정에 실패하였습니다.")
+	@PatchMapping("/{boardId}")
+	public ResponseEntity<BoardUpdateResponse> updateBoard(
+		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId,
+		@Valid @RequestBody final BoardUpdateRequest request,
+		@SessionAttribute(MEMBER_ID) Long memberId) {
+		Board updateBoard = new Board(boardId, request.getTitle(), request.getDescription());
+		Optional<Board> result = boardService.updateBoard(updateBoard, memberId);
+		return ResponseEntity.ok(BoardUpdateResponse.of(result));
 	}
 
 	@ApiOperation(value = "삭제 API", notes = "B003: 게시글 삭제에 성공하였습니다.")
-	@DeleteMapping
-	public ResponseEntity<BoardDeleteResponse> deleteBoard(@Valid @RequestBody final BoardRequest request) {
+	@DeleteMapping("/{boardId}")
+	public ResponseEntity<BoardDeleteResponse> deleteBoard(
+		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
 		return ResponseEntity.ok(BoardDeleteResponse.of());
 	}
 

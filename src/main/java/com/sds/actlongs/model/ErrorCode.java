@@ -19,7 +19,10 @@ public enum ErrorCode {
 	AUTHENTICATION_FAILURE(401, "E-G009", "인증에 실패하였습니다."),
 
 	// Member
-	MEMBERINFO_FAILURE(500, "E-M001", "회원정보 조회에 실패하였습니다.");
+	MEMBERINFO_FAILURE(500, "E-M001", "회원정보 조회에 실패하였습니다."),
+
+	// Board
+	BOARD_NOT_MATCHED_MEMBER_FAILURE(403, "E-B001", "게시글 접근 권한이 유효하지 않습니다.");
 
 	private final int status;
 	private final String code;
