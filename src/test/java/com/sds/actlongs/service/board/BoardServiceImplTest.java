@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sds.actlongs.domain.board.entity.Board;
+import com.sds.actlongs.domain.board.repository.BoardRepository;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
@@ -27,6 +28,9 @@ class BoardServiceImplTest {
 
 	@Mock
 	private VideoRepository videoRepository;
+
+	@Mock
+	private BoardRepository boardRepository;
 
 	@InjectMocks
 	private BoardServiceImpl subject;
@@ -66,6 +70,40 @@ class BoardServiceImplTest {
 
 		//then
 		Assertions.assertThat(videoOptional).isEmpty();
+	}
+
+	@Test
+	@DisplayName("존재하는 게시글 id로 게시글 업데이트를 요청하면 게시글 상세정보를 조회한다.")
+	void ifUpdateBoardWithExistingBoardIdThenSuceess() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			member,
+			new Channel("Knox SRE", new Member("din", null, null), null, null),
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		Board updateBoard = new Board(board.getId(), "제목(수정)", "설명(수정)");
+		given(boardRepository.findById(board.getId())).willReturn(Optional.of(board));
+
+		//when
+		Optional<Board> boardOptional = subject.updateBoard(updateBoard, member.getId());
+
+		//then
+		Assertions.assertThat(boardOptional.get().getTitle()).isEqualTo(updateBoard.getTitle());
+		Assertions.assertThat(boardOptional.get().getDescription()).isEqualTo(updateBoard.getDescription());
+	}
+
+	@Test
+	@DisplayName("존재하지 않는 게시글 id로 상세정보를 요청하면 게시글 상세정보 조회에 실패한다.")
+	void ifUpdateBoardWithNotExistingBoardIdThenFail() {
+		//given
+		given(boardRepository.findById((long)1)).willReturn(Optional.empty());
+
+		//when
+		Optional<Board> boardOptional = subject.updateBoard(new Board((long)1, "제목(수정)", "설명(수정)"), (long)1);
+
+		//then
+		Assertions.assertThat(boardOptional).isEmpty();
 	}
 
 }
