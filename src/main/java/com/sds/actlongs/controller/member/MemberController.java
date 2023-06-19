@@ -37,7 +37,7 @@ public class MemberController {
 	public ResponseEntity<LoginResponse> login(@Valid @RequestBody final LoginRequest request,
 		final HttpServletRequest servletRequest) {
 		final boolean result = memberService.login(request.getUsername(), servletRequest.getSession());
-		return ResponseEntity.ok(LoginResponse.of(result));
+		return ResponseEntity.ok(LoginResponse.from(result));
 	}
 
 	@ApiOperation(value = "회원정보 조회 API", notes = ""
