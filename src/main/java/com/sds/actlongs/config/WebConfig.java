@@ -18,16 +18,35 @@ import com.sds.actlongs.filter.LoginFilter;
 @Configuration
 public class WebConfig {
 
+	private final String LOCAL_URL = "http://localhost:3000";
+	private final String CLOUDFRONT_URL = "https://longs.iamnew.net";
+
 	@Bean
-	@Profile({"local", "dev"})
-	public WebMvcConfigurer localAndDevCorsConfigurer() {
+	@Profile("local")
+	public WebMvcConfigurer localCorsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry
 					.addMapping(ALL_SUB_PATHS)
 					.allowedMethods(CorsConfiguration.ALL)
-					.allowedOrigins("http://localhost:3000")
+					.allowedOrigins(LOCAL_URL)
+					.allowedHeaders(CorsConfiguration.ALL)
+					.allowCredentials(true);
+			}
+		};
+	}
+
+	@Bean
+	@Profile("dev")
+	public WebMvcConfigurer devCorsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry
+					.addMapping(ALL_SUB_PATHS)
+					.allowedMethods(CorsConfiguration.ALL)
+					.allowedOrigins(LOCAL_URL, CLOUDFRONT_URL)
 					.allowedHeaders(CorsConfiguration.ALL)
 					.allowCredentials(true);
 			}
@@ -44,7 +63,7 @@ public class WebConfig {
 	}
 
 	@Bean
-	@Profile({"dev"})
+	@Profile("dev")
 	public FilterRegistrationBean<Filter> loginFilter() {
 		final FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new LoginFilter());
