@@ -24,10 +24,14 @@ public class MemberServiceImpl implements MemberService {
 		if (memberOptional.isEmpty()) {
 			return false;
 		}
-
 		Member member = memberOptional.get();
 		session.setAttribute(SessionConstants.MEMBER_ID, member.getId());
 		return true;
+	}
+
+	@Override
+	public Optional<Member> getMember(final Long id) {
+		return memberRepository.findById(id);
 	}
 
 }
