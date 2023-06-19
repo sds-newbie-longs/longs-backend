@@ -57,5 +57,5 @@ jobs:
           port: 22
           script: |
             cd /app/longs-env/env-dev
-            docker image rm --force vidigummy/svr
+            docker image rm --force vidigummy/longs-svr
             docker compose up -d --force-recreate

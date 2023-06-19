@@ -22,7 +22,14 @@ public enum ResultCode {
 
 	// ChannelMember
 	MEMBERINVITE_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다."),
-	CHANNELLEAVE_SUCCESS(200, "LV001", "그룹 탈퇴에 성공하였습니다.");
+	CHANNELLEAVE_SUCCESS(200, "LV001", "그룹 탈퇴에 성공하였습니다."),
+
+	// Board
+	GET_BOARDDETAIL_SUCCESS(200, "B001", "게시글 상세정보 조회에 성공하였습니다."),
+	UPDATE_BOARD_SUCCESS(200, "B002", "게시글 수정에 성공하였습니다."),
+	DELETE_BOARD_SUCCESS(200, "B003", "게시글 삭제에 성공하였습니다."),
+	SEARCH_BOARDLIST_SUCCESS(200, "B004", "게시글 검색에 성공하였습니다."),
+	GET_BOARDLIST_SUCCESS(200, "B005", "게시글 리스트 조회에 성공하였습니다.");
 
 	private final int status;
 	private final String code;
