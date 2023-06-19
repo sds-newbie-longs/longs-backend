@@ -33,9 +33,14 @@ public class AuthenticationFilter implements Filter {
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 		throws ServletException, IOException {
-		if (processAuthenticationAndGetResult((HttpServletRequest)request, (HttpServletResponse)response)) {
+		HttpServletRequest request = (HttpServletRequest)req;
+		HttpServletResponse response = (HttpServletResponse)res;
+
+		if (Arrays.stream(API_WHITELIST).anyMatch(api -> api.equals(request.getRequestURI()))) {
+			chain.doFilter(request, new CustomHttpServletResponseWrapper(response));
+		} else {
 			chain.doFilter(request, response);
 		}
 	}

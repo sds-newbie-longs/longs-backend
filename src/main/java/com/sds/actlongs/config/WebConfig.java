@@ -34,6 +34,7 @@ public class WebConfig {
 	}
 
 	@Bean
+	@Profile({"dev"})
 	public FilterRegistrationBean<Filter> authenticationFilter() {
 		final FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new AuthenticationFilter());
