@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.sds.actlongs.filter.AuthenticationFilter;
+import com.sds.actlongs.filter.LoginFilter;
 
 @Configuration
 public class WebConfig {
@@ -34,12 +35,21 @@ public class WebConfig {
 	}
 
 	@Bean
-	@Profile({"dev"})
 	public FilterRegistrationBean<Filter> authenticationFilter() {
 		final FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new AuthenticationFilter());
-		filterRegistrationBean.setOrder(1);
+		filterRegistrationBean.setOrder(2);
 		filterRegistrationBean.addUrlPatterns(ALL_PATHS);
+		return filterRegistrationBean;
+	}
+
+	@Bean
+	@Profile({"dev"})
+	public FilterRegistrationBean<Filter> LoginFilter() {
+		final FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+		filterRegistrationBean.setFilter(new LoginFilter());
+		filterRegistrationBean.setOrder(1);
+		filterRegistrationBean.addUrlPatterns(API_LOGIN);
 		return filterRegistrationBean;
 	}
 
