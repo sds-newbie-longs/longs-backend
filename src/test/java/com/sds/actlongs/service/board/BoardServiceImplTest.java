@@ -73,7 +73,7 @@ class BoardServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("존재하는 게시글 id로 게시글 업데이트를 요청하면 게시글 상세정보를 조회한다.")
+	@DisplayName("존재하는 게시글 id로 게시글 수정을 요청하면 게시글이 수정된다.")
 	void ifUpdateBoardWithExistingBoardIdThenSuceess() {
 		//given
 		Member member = new Member("harry", null, null);
@@ -94,7 +94,7 @@ class BoardServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("존재하지 않는 게시글 id로 상세정보를 요청하면 게시글 상세정보 조회에 실패한다.")
+	@DisplayName("존재하지 않는 게시글 id로 게시글 수정을 요청하면 게시글 수정에 실패한다.")
 	void ifUpdateBoardWithNotExistingBoardIdThenFail() {
 		//given
 		given(boardRepository.findById((long)1)).willReturn(Optional.empty());
@@ -104,6 +104,38 @@ class BoardServiceImplTest {
 
 		//then
 		Assertions.assertThat(boardOptional).isEmpty();
+	}
+
+	@Test
+	@DisplayName("존재하는 게시글 id로 게시글 삭제를 요청하면 게시글 삭제에 성공한다.")
+	void ifDeleteBoardWithExistingBoardIdThenSuceess() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			member,
+			new Channel("Knox SRE", new Member("din", null, null), null, null),
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		given(boardRepository.findById(board.getId())).willReturn(Optional.of(board));
+
+		//when
+		boolean result = subject.deleteBoard(board.getId(), member.getId());
+
+		//then
+		Assertions.assertThat(result).isEqualTo(true);
+	}
+
+	@Test
+	@DisplayName("존재하지 않는 게시글 id로 게시글삭제를 요청하면 게시글 삭제에 실패한다.")
+	void ifDeleteBoardWithNotExistingBoardIdThenFail() {
+		//given
+		given(boardRepository.findById((long)1)).willReturn(Optional.empty());
+
+		//when
+		boolean result = subject.deleteBoard((long)1, (long)1);
+
+		//then
+		Assertions.assertThat(result).isEqualTo(false);
 	}
 
 }
