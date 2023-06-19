@@ -19,7 +19,6 @@ import com.sds.actlongs.filter.LoginFilter;
 public class WebConfig {
 
 	private static final String LOCAL_URL = "http://localhost:3000";
-	private static final String CLOUDFRONT_URL = "https://longs.iamnew.net";
 
 	@Bean
 	@Profile("local")
@@ -46,7 +45,7 @@ public class WebConfig {
 				registry
 					.addMapping(ALL_SUB_PATHS)
 					.allowedMethods(CorsConfiguration.ALL)
-					.allowedOrigins(LOCAL_URL, CLOUDFRONT_URL)
+					.allowedOriginPatterns(WILDCARD)
 					.allowedHeaders(CorsConfiguration.ALL)
 					.allowCredentials(true);
 			}
