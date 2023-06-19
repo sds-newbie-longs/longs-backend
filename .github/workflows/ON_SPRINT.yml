@@ -38,7 +38,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push vidigummy/longs-svr:${{ github.run_id }} 
+        run: docker push vidigummy/longs-svr:${{ github.run_id }}
 
       - name: Push Docker image latest
         run: docker push vidigummy/longs-svr:latest
