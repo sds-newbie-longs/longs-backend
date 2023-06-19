@@ -18,7 +18,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public ResultBoardDetail getBoardDetail(final Long boardId) {
-		Optional<Video> videoOptional = videoRepository.findByBoard_Id(boardId);
+		Optional<Video> videoOptional = videoRepository.findByBoardId(boardId);
 		if (videoOptional.isPresent()) {
 			return new ResultBoardDetail(true, videoOptional.get());
 		} else {

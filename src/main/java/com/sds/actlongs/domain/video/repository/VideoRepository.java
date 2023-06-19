@@ -8,5 +8,5 @@ import com.sds.actlongs.domain.video.entity.Video;
 
 public interface VideoRepository extends JpaRepository<Video, Long> {
 
-	Optional<Video> findByBoard_Id(Long boardId);
+	Optional<Video> findByBoardId(Long boardId);
 }
