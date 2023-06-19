@@ -3,6 +3,7 @@ package com.sds.actlongs.controller.board.dto;
 import static com.sds.actlongs.model.ResultCode.*;
 
 import java.sql.Time;
+import java.util.Optional;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -45,9 +46,24 @@ public class BoardDetailResponse extends ResultResponse {
 		this.playingTime = video.getPlayingTime();
 	}
 
-	public static BoardDetailResponse of(ResultBoardDetail result) {
-		return new BoardDetailResponse(result.isResult() ? ResultCode.GET_BOARDDETAIL_SUCCESS : GET_BOARDDETAIL_FAIL,
-			result.getVideo());
+	private BoardDetailResponse(ResultCode resultCode) {
+		super(resultCode);
+		this.title = null;
+		this.description = null;
+		this.username = null;
+		this.thumbnailImageUuid = null;
+		this.thumbnailImageType = null;
+		this.videoUuid = null;
+		this.videoType = null;
+		this.playingTime = null;
+	}
+
+	public static BoardDetailResponse of(Optional<Video> result) {
+		if (result.isPresent()) {
+			return new BoardDetailResponse(GET_BOARDDETAIL_SUCCESS, result.get());
+		} else {
+			return new BoardDetailResponse(GET_BOARDDETAIL_FAIL);
+		}
 	}
 
 }

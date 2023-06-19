@@ -1,9 +1,11 @@
 package com.sds.actlongs.service.board;
 
-import com.sds.actlongs.controller.board.dto.ResultBoardDetail;
+import java.util.Optional;
+
+import com.sds.actlongs.domain.video.entity.Video;
 
 public interface BoardService {
 
-	ResultBoardDetail getBoardDetail(final Long boardId);
+	Optional<Video> getBoardDetail(final Long boardId);
 
 }

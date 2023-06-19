@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.sds.actlongs.controller.board.dto.ResultBoardDetail;
 import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
@@ -47,27 +46,26 @@ class BoardServiceImplTest {
 			"data/test_1686534272185",
 			VideoExtension.MP4,
 			Time.valueOf(LocalTime.now()));
-		given(videoRepository.findByBoard_Id(video.getId())).willReturn(Optional.of(video));
+		given(videoRepository.findByBoardId(video.getId())).willReturn(Optional.of(video));
 
 		//when
-		ResultBoardDetail boardDetail = subject.getBoardDetail(video.getId());
+		Optional<Video> videoOptional = subject.getBoardDetail(video.getId());
 
 		//then
-		Assertions.assertThat(boardDetail.isResult()).isEqualTo(true);
-		Assertions.assertThat(boardDetail.getVideo()).isEqualTo(video);
+		Assertions.assertThat(videoOptional.get().getId()).isEqualTo(video.getId());
 	}
 
 	@Test
 	@DisplayName("존재하지 않는 게시글 id로 상세정보를 요청하면 게시글 상세정보 조회에 실패한다.")
 	void ifGetBoardDetailWithNotExistingBoardIdThenFail() {
 		//given
-		given(videoRepository.findByBoard_Id((long)1)).willReturn(Optional.empty());
+		given(videoRepository.findByBoardId((long)1)).willReturn(Optional.empty());
 
 		//when
-		ResultBoardDetail boardDetail = subject.getBoardDetail((long)1);
+		Optional<Video> videoOptional = subject.getBoardDetail((long)1);
 
 		//then
-		Assertions.assertThat(boardDetail.isResult()).isEqualTo(false);
+		Assertions.assertThat(videoOptional).isEmpty();
 	}
 
 }

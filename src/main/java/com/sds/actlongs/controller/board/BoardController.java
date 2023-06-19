@@ -3,6 +3,7 @@ package com.sds.actlongs.controller.board;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -33,7 +34,6 @@ import com.sds.actlongs.controller.board.dto.BoardRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateResponse;
 import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
-import com.sds.actlongs.controller.board.dto.ResultBoardDetail;
 import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
@@ -55,7 +55,7 @@ public class BoardController {
 	@GetMapping("/{boardId}")
 	public ResponseEntity<BoardDetailResponse> getBoardDetail(
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
-		ResultBoardDetail result = boardService.getBoardDetail(boardId);
+		Optional<Video> result = boardService.getBoardDetail(boardId);
 		return ResponseEntity.ok(BoardDetailResponse.of(result));
 	}
 
