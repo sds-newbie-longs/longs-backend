@@ -18,8 +18,8 @@ import com.sds.actlongs.filter.LoginFilter;
 @Configuration
 public class WebConfig {
 
-	private final String LOCAL_URL = "http://localhost:3000";
-	private final String CLOUDFRONT_URL = "https://longs.iamnew.net";
+	private static final String LOCAL_URL = "http://localhost:3000";
+	private static final String CLOUDFRONT_URL = "https://longs.iamnew.net";
 
 	@Bean
 	@Profile("local")
