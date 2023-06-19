@@ -1,8 +1,11 @@
 package com.sds.actlongs.controller.member.dto;
 
+import java.util.Optional;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -20,8 +23,9 @@ public class MemberInfoResponse extends ResultResponse {
 		this.username = username;
 	}
 
-	public static MemberInfoResponse of(Long id, String username) {
-		return new MemberInfoResponse(ResultCode.MEMBERINFO_SUCCESS, id, username);
+	public static MemberInfoResponse of(Optional<Member> memberOptional) {
+		Member member = memberOptional.get();
+		return new MemberInfoResponse(ResultCode.MEMBERINFO_SUCCESS, member.getId(), member.getUsername());
 	}
 
 }
