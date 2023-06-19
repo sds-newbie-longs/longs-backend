@@ -26,10 +26,10 @@ import com.sds.actlongs.util.manage.file.FileManage;
 public class FFmpegConvertService implements ConvertService {
 
 	@Value("${ffmpeg.video.chunk.size}")
-	private  final String chunkSize;
+	private String chunkSize;
 
 	@Value("${ffmpeg.video.ts.default}")
-	private final String fileFormatPolicy;
+	private String fileFormatPolicy;
 
 	private final FFmpeg fFmpeg;
 	private final FFprobe fFprobe;

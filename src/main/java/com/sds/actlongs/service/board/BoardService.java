@@ -1,5 +1,7 @@
 package com.sds.actlongs.service.board;
 
-public interface BoardService {
+import com.sds.actlongs.controller.board.dto.BoardCreateRequest;
 
+public interface BoardService {
+ 	void createBoard(BoardCreateRequest request);
 }
