@@ -48,7 +48,7 @@ import com.sds.actlongs.vo.VideoExtension;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/boards")
+@RequestMapping("groups/{groupId}//boards")
 public class BoardController {
 
 	private final BoardService boardService;
@@ -57,6 +57,7 @@ public class BoardController {
 		+ "BOO6: 게시글 상세정보 조회에 실패하였습니다.")
 	@GetMapping("/{boardId}")
 	public ResponseEntity<BoardDetailResponse> getBoardDetail(
+		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
 		Optional<Video> result = boardService.getBoardDetail(boardId);
 		return ResponseEntity.ok(BoardDetailResponse.of(result));
@@ -66,6 +67,7 @@ public class BoardController {
 		+ "B007: 게시글 수정에 실패하였습니다.")
 	@PatchMapping("/{boardId}")
 	public ResponseEntity<BoardUpdateResponse> updateBoard(
+		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId,
 		@Valid @RequestBody final BoardUpdateRequest request,
 		@SessionAttribute(MEMBER_ID) Long memberId) {
@@ -77,15 +79,15 @@ public class BoardController {
 	@ApiOperation(value = "삭제 API", notes = "B003: 게시글 삭제에 성공하였습니다.")
 	@DeleteMapping("/{boardId}")
 	public ResponseEntity<BoardDeleteResponse> deleteBoard(
+		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
 		return ResponseEntity.ok(BoardDeleteResponse.of());
 	}
 
 	@ApiOperation(value = "검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
-	@GetMapping("/groups/{groupId}/search")
+	@GetMapping("/search")
 	public ResponseEntity<BoardListSearchResponse> searchBoardList(
-		@NotNull @ApiParam(value = "그룹 ID", example = "1", required = true)
-		@PathVariable("groupId") Long channelId,
+		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@ApiParam(value = "검색 키워드", example = "재진스", required = true) @Size(max = 50)
 		@RequestParam String keyword) {
 
@@ -119,10 +121,9 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시글 목록 (메인페이지) API", notes = "B005: 게시글 리스트 조회에 성공하였습니다.")
-	@GetMapping("groups/{groupId}")
+	@GetMapping("/boardList")
 	public ResponseEntity<BoardListResponse> getBoardList(
-		@NotNull @ApiParam(value = "그룹 id", example = "1", required = true)
-		@PathVariable("groupId") Long channelId) {
+		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId) {
 		Video video1 = new Video(
 			new Board(
 				new Member("harry", null, null),
