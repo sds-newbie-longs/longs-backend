@@ -15,4 +15,6 @@ public final class Constants {
 	public static final String ALL_PATHS = "/*";
 	public static final String CATEGORY_PREFIX = "/";
 
+	public static final String API_LOGIN = "/members/login";
+
 }
