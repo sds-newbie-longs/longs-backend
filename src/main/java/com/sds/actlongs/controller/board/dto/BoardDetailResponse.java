@@ -46,8 +46,8 @@ public class BoardDetailResponse extends ResultResponse {
 		this.playingTime = video.getPlayingTime();
 	}
 
-	private BoardDetailResponse(ResultCode resultCode) {
-		super(resultCode);
+	private BoardDetailResponse() {
+		super(GET_BOARDDETAIL_FAIL);
 		this.title = null;
 		this.description = null;
 		this.username = null;
@@ -62,7 +62,7 @@ public class BoardDetailResponse extends ResultResponse {
 		if (result.isPresent()) {
 			return new BoardDetailResponse(GET_BOARDDETAIL_SUCCESS, result.get());
 		} else {
-			return new BoardDetailResponse(GET_BOARDDETAIL_FAIL);
+			return new BoardDetailResponse();
 		}
 	}
 
