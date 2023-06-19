@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
 import springfox.documentation.builders.ApiInfoBuilder;
