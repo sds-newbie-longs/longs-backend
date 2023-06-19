@@ -79,18 +79,29 @@ CREATE TABLE IF NOT EXISTS videos
     thumbnail_image_uuid CHAR(36) UNIQUE NOT NULL,
     thumbnail_image_type ENUM('JPG', 'JPEG', 'PNG') NOT NULL,
     video_uuid           CHAR(36) UNIQUE NOT NULL,
-    video_type           ENUM('MP4') NOT NULL,
-    playing_type         TIME NOT NULL,
-    created_at           DATETIME NOT NULL,
-    updated_at           DATETIME NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (board_id) REFERENCES boards(id)
+    video_type           ENUM (
+    'MP4'
+                              ) NOT NULL,
+    playing_time TIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    PRIMARY KEY
+(
+    id
+),
+    FOREIGN KEY
+(
+    board_id
+) REFERENCES boards
+(
+    id
+)
     );
 ALTER TABLE videos MODIFY COLUMN board_id BIGINT COMMENT '게시글 PK';
-ALTER TABLE videos MODIFY COLUMN thumbnail_image_uuid CHAR(36) NOT NULL COMMENT '동영상 썸네일 이미지 파일 ID';
+ALTER TABLE videos MODIFY COLUMN thumbnail_image_uuid CHAR (36) NOT NULL COMMENT '동영상 썸네일 이미지 파일 ID';
 ALTER TABLE videos MODIFY COLUMN thumbnail_image_type ENUM('JPG', 'JPEG', 'PNG') NOT NULL COMMENT '동영상 썸네일 이미지 파일 유형';
-ALTER TABLE videos MODIFY COLUMN video_uuid CHAR(36) NOT NULL COMMENT '동영상 파일 ID';
+ALTER TABLE videos MODIFY COLUMN video_uuid CHAR (36) NOT NULL COMMENT '동영상 파일 ID';
 ALTER TABLE videos MODIFY COLUMN video_type ENUM('MP4') NOT NULL COMMENT '동영상 파일 유형';
-ALTER TABLE videos MODIFY COLUMN playing_type TIME NOT NULL COMMENT '재생 시간';
+ALTER TABLE videos MODIFY COLUMN playing_time TIME NOT NULL COMMENT '재생 시간';
 ALTER TABLE videos MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
 ALTER TABLE videos MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
