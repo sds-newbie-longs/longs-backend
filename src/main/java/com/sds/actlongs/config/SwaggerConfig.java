@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -36,7 +37,8 @@ public class SwaggerConfig {
 			.select()
 			.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 			.paths(PathSelectors.any())
-			.build();
+			.build()
+			.ignoredParameterTypes(SessionAttribute.class);
 	}
 
 	private ApiInfo apiInfo() {

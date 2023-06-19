@@ -9,9 +9,9 @@ import com.sds.actlongs.model.ResultResponse;
 @Getter
 public class MemberInfoResponse extends ResultResponse {
 
-	@ApiModelProperty(value = "회원PK", example = "1")
+	@ApiModelProperty(position = 4, value = "회원PK", example = "1")
 	private Long id;
-	@ApiModelProperty(value = "회원 아이디", example = "Harry")
+	@ApiModelProperty(position = 5, value = "회원 아이디", example = "Harry")
 	private String username;
 
 	private MemberInfoResponse(ResultCode resultCode, Long id, String username) {

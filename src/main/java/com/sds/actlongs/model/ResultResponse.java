@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class ResultResponse {
 
-	@ApiModelProperty(value = "HTTP 상태 코드", example = "200")
+	@ApiModelProperty(position = 1, value = "HTTP 상태 코드", example = "200")
 	private int status;
-	@ApiModelProperty(value = "Business 상태 코드", example = "M001")
+	@ApiModelProperty(position = 2, value = "Business 상태 코드", example = "M001")
 	private String code;
-	@ApiModelProperty(value = "결과 메세지", example = "로그인에 성공하였습니다.")
+	@ApiModelProperty(position = 3, value = "결과 메세지", example = "로그인에 성공하였습니다.")
 	private String message;
 
 	public ResultResponse(ResultCode resultCode) {
