@@ -11,4 +11,6 @@ public interface BoardService {
 
 	Optional<Board> updateBoard(final Board board, final Long memberId);
 
+	boolean deleteBoard(final Long boardId, final Long memberId);
+
 }

@@ -30,6 +30,7 @@ public enum ResultCode {
 	UPDATE_BOARD_SUCCESS(200, "B002", "게시글 수정에 성공하였습니다."),
 	UPDATE_BOARD_FAIL(200, "B007", "게시글 수정에 실패하였습니다."),
 	DELETE_BOARD_SUCCESS(200, "B003", "게시글 삭제에 성공하였습니다."),
+	DELETE_BOARD_FAIL(200, "B008", "게시글 삭제에 실패하였습니다."),
 	SEARCH_BOARDLIST_SUCCESS(200, "B004", "게시글 검색에 성공하였습니다."),
 	GET_BOARDLIST_SUCCESS(200, "B005", "게시글 리스트 조회에 성공하였습니다.");
 

@@ -76,12 +76,15 @@ public class BoardController {
 		return ResponseEntity.ok(BoardUpdateResponse.of(result));
 	}
 
-	@ApiOperation(value = "삭제 API", notes = "B003: 게시글 삭제에 성공하였습니다.")
+	@ApiOperation(value = "삭제 API", notes = "B003: 게시글 삭제에 성공하였습니다.\n"
+		+ "B008: 게시글 삭제에 실패하였습니다.")
 	@DeleteMapping("/{boardId}")
 	public ResponseEntity<BoardDeleteResponse> deleteBoard(
 		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
-		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId) {
-		return ResponseEntity.ok(BoardDeleteResponse.of());
+		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId,
+		@SessionAttribute(MEMBER_ID) Long memberId) {
+		boolean result = boardService.deleteBoard(boardId, memberId);
+		return ResponseEntity.ok(BoardDeleteResponse.of(result));
 	}
 
 	@ApiOperation(value = "검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
