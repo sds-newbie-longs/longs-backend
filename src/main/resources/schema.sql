@@ -74,14 +74,30 @@ ALTER TABLE boards MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 �
 ALTER TABLE boards MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
 CREATE TABLE IF NOT EXISTS videos
 (
-    id                   BIGINT AUTO_INCREMENT,
-    board_id             BIGINT,
-    thumbnail_image_uuid CHAR(36) UNIQUE NOT NULL,
-    thumbnail_image_type ENUM('JPG', 'JPEG', 'PNG') NOT NULL,
-    video_uuid           CHAR(36) UNIQUE NOT NULL,
-    video_type           ENUM (
+    id
+    BIGINT
+    AUTO_INCREMENT,
+    board_id
+    BIGINT,
+    thumbnail_image_uuid
+    CHAR
+(
+    36
+) UNIQUE NOT NULL,
+    thumbnail_image_type ENUM
+(
+    'JPG',
+    'JPEG',
+    'PNG'
+) NOT NULL,
+    video_uuid CHAR
+(
+    36
+) UNIQUE NOT NULL,
+    video_type ENUM
+(
     'MP4'
-                              ) NOT NULL,
+) NOT NULL,
     playing_time TIME NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
