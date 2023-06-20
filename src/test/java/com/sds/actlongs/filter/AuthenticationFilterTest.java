@@ -2,6 +2,8 @@ package com.sds.actlongs.filter;
 
 import static org.mockito.BDDMockito.*;
 
+import java.util.List;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.sds.actlongs.domain.member.entity.Member;
+import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.util.SessionConstants;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,9 +47,9 @@ class AuthenticationFilterTest {
 			// given
 			given(request.getRequestURI()).willReturn(AUTHENTICATION_PATH);
 
-			final Long memberId = 1L;
+			final Authentication authentication = Authentication.of(Member.createNewMember("mandoo"), List.of());
 			given(request.getSession(false)).willReturn(session);
-			given(session.getAttribute(SessionConstants.MEMBER_ID)).willReturn(memberId);
+			given(session.getAttribute(SessionConstants.AUTHENTICATION)).willReturn(authentication);
 
 			// when
 			subject.doFilter(request, response, filterChain);

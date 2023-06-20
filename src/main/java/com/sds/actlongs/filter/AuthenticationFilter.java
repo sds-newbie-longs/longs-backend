@@ -45,8 +45,7 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse httpResponse) {
 		if (CorsUtils.isPreFlightRequest(httpRequest)) {
 			return true;
-		}
-		else if (isAuthenticationPath(httpRequest.getRequestURI())
+		} else if (isAuthenticationPath(httpRequest.getRequestURI())
 			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
@@ -55,7 +54,7 @@ public class AuthenticationFilter implements Filter {
 	}
 
 	private boolean isSessionExpiredOrInvalid(HttpSession session) {
-		return session == null || session.getAttribute(SessionConstants.MEMBER_ID) == null;
+		return session == null || session.getAttribute(SessionConstants.AUTHENTICATION) == null;
 	}
 
 	private void handleAuthenticationFailure(HttpServletResponse httpResponse) {
