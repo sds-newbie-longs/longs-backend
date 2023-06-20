@@ -3,7 +3,6 @@ package com.sds.actlongs.service.channel;
 import static org.mockito.BDDMockito.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,15 +17,13 @@ import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
-import com.sds.actlongs.domain.member.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
 class ChannelServiceImplTest {
 
 	@InjectMocks
 	private ChannelServiceImpl subject;
-	@Mock
-	private MemberRepository memberRepository;
+
 	@Mock
 	private ChannelMemberRepository channelMemberRepository;
 
@@ -34,12 +31,12 @@ class ChannelServiceImplTest {
 	class GetChannelList {
 
 		@Test
-		@DisplayName("어떤 그룹에도 소속되지 않은 Harry가 접속하면, 빈 그룹목록을 조회한다.")
+		@DisplayName("어떤 그룹에도 속하지 않은 Harry가 접속하면, 빈 그룹목록을 조회한다.")
 		public void whenUserWhoDoesNotBelongToAnyGroupEntersThenGetEmptyList() {
 			//given
 			Member member = Member.createNewMember("Harry");
-			given(memberRepository.findById(member.getId())).willReturn(Optional.of(member));
-			given(channelMemberRepository.findByMember(member)).willReturn(List.of());
+			given(channelMemberRepository.findAllFetchMemberAndChannelByMemberId(member.getId()))
+				.willReturn(List.of());
 
 			//when
 			List<ChannelMember> resultList = subject.getChannelList(member.getId());
@@ -49,7 +46,7 @@ class ChannelServiceImplTest {
 		}
 
 		@Test
-		@DisplayName("3개의 그룹에 소속된 Harry가 접속하면, 3개의 그룹에 대한 그룹ID, 소유자ID, 그룹명을 조회한다.")
+		@DisplayName("3개의 그룹에 속한 Harry가 접속하면, 3개의 그룹에 대한 그룹ID, 소유자ID, 그룹명을 조회한다.")
 		public void whenUserBelongingToThreeGroupsEntersThenGetListOfThreeElements() {
 			//given
 			Member member1 = Member.createNewMember("Harry");
@@ -62,8 +59,8 @@ class ChannelServiceImplTest {
 				ChannelMember.registerMemberToChannel(member1, channel3)
 			);
 
-			given(memberRepository.findById(member1.getId())).willReturn(Optional.of(member1));
-			given(channelMemberRepository.findByMember(member1)).willReturn(channelsHarry);
+			given(channelMemberRepository.findAllFetchMemberAndChannelByMemberId(member1.getId()))
+				.willReturn(channelsHarry);
 
 			//when
 			List<ChannelMember> resultList = subject.getChannelList(member1.getId());
