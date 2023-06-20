@@ -48,7 +48,7 @@ import com.sds.actlongs.vo.VideoExtension;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("groups/{groupId}//boards")
+@RequestMapping("/groups/{groupId}/boards")
 public class BoardController {
 
 	private final BoardService boardService;
@@ -72,7 +72,7 @@ public class BoardController {
 		@Valid @RequestBody final BoardUpdateRequest request,
 		@SessionAttribute(MEMBER_ID) Long memberId) {
 		Board updateBoard = new Board(boardId, request.getTitle(), request.getDescription());
-		Optional<Board> result = boardService.updateBoard(updateBoard, memberId);
+		Board result = boardService.updateBoard(updateBoard, memberId);
 		return ResponseEntity.ok(BoardUpdateResponse.of(result));
 	}
 

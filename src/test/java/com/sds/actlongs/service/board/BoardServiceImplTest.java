@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,7 @@ import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.domain.video.repository.VideoRepository;
+import com.sds.actlongs.exception.BoardNotMatchedMemberException;
 import com.sds.actlongs.vo.ImageExtension;
 import com.sds.actlongs.vo.VideoExtension;
 
@@ -92,32 +94,19 @@ class BoardServiceImplTest {
 			"재진스",
 			"재진스의 뉴진스 플레이리스트 입니다.");
 		Board updateBoard = new Board(board.getId(), "제목(수정)", "설명(수정)");
-		given(boardRepository.findById(board.getId())).willReturn(Optional.of(board));
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
 
 		//when
-		Optional<Board> boardOptional = subject.updateBoard(updateBoard, member.getId());
+		Board newBoard = subject.updateBoard(updateBoard, member.getId());
 
 		//then
-		Assertions.assertThat(boardOptional.get().getTitle()).isEqualTo(updateBoard.getTitle());
-		Assertions.assertThat(boardOptional.get().getDescription()).isEqualTo(updateBoard.getDescription());
+		Assertions.assertThat(newBoard.getTitle()).isEqualTo(updateBoard.getTitle());
+		Assertions.assertThat(newBoard.getDescription()).isEqualTo(updateBoard.getDescription());
 	}
 
 	@Test
-	@DisplayName("존재하지 않는 게시글 id로 게시글 수정을 요청하면 게시글 수정에 실패한다.")
-	void ifUpdateBoardWithNotExistingBoardIdThenFail() {
-		//given
-		given(boardRepository.findById((long)1)).willReturn(Optional.empty());
-
-		//when
-		Optional<Board> boardOptional = subject.updateBoard(new Board((long)1, "제목(수정)", "설명(수정)"), (long)1);
-
-		//then
-		Assertions.assertThat(boardOptional).isEmpty();
-	}
-
-	@Test
-	@DisplayName("존재하는 게시글 id로 게시글 삭제를 요청하면 게시글 삭제에 성공한다.")
-	void ifDeleteBoardWithExistingBoardIdThenSuceess() {
+	@DisplayName("작성자가 아닌 사람이 수정을 요청하면 에러가 발생한다.")
+	void ifUpdateBoardWithNotMatchedMemberIdThenThrowBoardNotMatchedMemberException() {
 		//given
 		Member member = new Member("harry", null, null);
 		Board board = new Board(
@@ -125,7 +114,27 @@ class BoardServiceImplTest {
 			new Channel("Knox SRE", new Member("din", null, null), null, null),
 			"재진스",
 			"재진스의 뉴진스 플레이리스트 입니다.");
-		given(boardRepository.findById(board.getId())).willReturn(Optional.of(board));
+		Board updateBoard = new Board(board.getId(), "제목(수정)", "설명(수정)");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
+
+		//when
+		ThrowingCallable callable = () -> subject.updateBoard(updateBoard, 1L);
+
+		//then
+		Assertions.assertThatThrownBy(callable)
+			.isInstanceOf(BoardNotMatchedMemberException.class);
+	}
+
+	@Test
+	@DisplayName("존재하는 게시글 id로 게시글 삭제를 요청하면 게시글 삭제에 성공한다.")
+	void ifDeleteBoardWithExistingBoardIdThenSuccess() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			1L,
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
 
 		//when
 		boolean result = subject.deleteBoard(board.getId(), member.getId());
@@ -135,16 +144,23 @@ class BoardServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("존재하지 않는 게시글 id로 게시글삭제를 요청하면 게시글 삭제에 실패한다.")
-	void ifDeleteBoardWithNotExistingBoardIdThenFail() {
+	@DisplayName("작성자가 아닌 사람이 삭제를 요청하면 예외가 발생한다.")
+	void ifDeleteBoardWithNotMatchedMemberIdThenThrowBoardNotMatchedMemberException() {
 		//given
-		given(boardRepository.findById((long)1)).willReturn(Optional.empty());
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			member,
+			new Channel("Knox SRE", new Member("din", null, null), null, null),
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.empty());
 
 		//when
-		boolean result = subject.deleteBoard((long)1, (long)1);
+		ThrowingCallable callable = () -> subject.deleteBoard(board.getId(), member.getId());
 
 		//then
-		Assertions.assertThat(result).isEqualTo(false);
+		Assertions.assertThatThrownBy(callable)
+			.isInstanceOf(BoardNotMatchedMemberException.class);
 	}
 
 	@Test

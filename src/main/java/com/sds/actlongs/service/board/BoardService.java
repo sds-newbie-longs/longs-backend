@@ -12,7 +12,7 @@ public interface BoardService {
 
 	Optional<Video> getBoardDetail(final Long boardId);
 
-	Optional<Board> updateBoard(final Board board, final Long memberId);
+	Board updateBoard(final Board board, final Long memberId);
 
 	boolean deleteBoard(final Long boardId, final Long memberId);
 
