@@ -115,10 +115,10 @@ class BoardServiceImplTest {
 			"재진스",
 			"재진스의 뉴진스 플레이리스트 입니다.");
 		Board updateBoard = new Board(board.getId(), "제목(수정)", "설명(수정)");
-		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.empty());
 
 		//when
-		ThrowingCallable callable = () -> subject.updateBoard(updateBoard, 1L);
+		ThrowingCallable callable = () -> subject.updateBoard(updateBoard, member.getId());
 
 		//then
 		Assertions.assertThatThrownBy(callable)
