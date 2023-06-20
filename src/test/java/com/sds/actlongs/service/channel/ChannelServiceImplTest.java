@@ -91,7 +91,7 @@ class ChannelServiceImplTest {
 	}
 
 	@Nested
-	class CreateChannelList {
+	class CreateChannel {
 
 		@Test
 		@DisplayName("Harry가 기존과 겹치지 않는 그룹명을 입력하면, 그룹 생성에 성공한다.")

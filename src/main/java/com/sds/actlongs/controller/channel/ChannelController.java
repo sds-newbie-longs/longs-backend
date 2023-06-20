@@ -49,7 +49,7 @@ public class ChannelController {
 	public ResponseEntity<ChannelCreateResponse> createChannel(
 		@Valid @RequestBody final ChannelCreateRequest request,
 		@SessionAttribute(MEMBER_ID) Long memberId) {
-		final boolean result = channelService.createChannel(request.getName(), memberId); //채널생성 여부 (중복확인)
+		final boolean result = channelService.createChannel(request.getName(), memberId);
 		return ResponseEntity.ok(ChannelCreateResponse.from(result));
 	}
 
