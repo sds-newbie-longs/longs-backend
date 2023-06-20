@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS channels
     id                   BIGINT AUTO_INCREMENT,
     owner_id             BIGINT,
     name                 VARCHAR(20) UNIQUE NOT NULL,
-    channel_image_id     CHAR(36) UNIQUE,
-    channel_image_type   ENUM('JPG', 'JPEG', 'PNG'),
+    image_uuid           CHAR(36) UNIQUE,
+    image_type           ENUM('JPG', 'JPEG', 'PNG'),
     created_at           DATETIME NOT NULL,
     updated_at           DATETIME NOT NULL,
     PRIMARY KEY (id),
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS channels
     );
 ALTER TABLE channels MODIFY COLUMN owner_id BIGINT COMMENT '채널장 PK';
 ALTER TABLE channels MODIFY COLUMN name VARCHAR(20) NOT NULL COMMENT '채널 이름';
-ALTER TABLE channels MODIFY COLUMN channel_image_id CHAR(36) COMMENT '채널 이미지 파일 ID';
-ALTER TABLE channels MODIFY COLUMN channel_image_type ENUM('JPG', 'JPEG', 'PNG') COMMENT '채널 이미지 파일 유형';
+ALTER TABLE channels MODIFY COLUMN image_uuid CHAR(36) COMMENT '채널 이미지 파일 ID';
+ALTER TABLE channels MODIFY COLUMN image_type ENUM('JPG', 'JPEG', 'PNG') COMMENT '채널 이미지 파일 유형';
 ALTER TABLE channels MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
 ALTER TABLE channels MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
 CREATE TABLE IF NOT EXISTS channel_members
@@ -79,23 +79,12 @@ CREATE TABLE IF NOT EXISTS videos
     thumbnail_image_uuid CHAR(36) UNIQUE NOT NULL,
     thumbnail_image_type ENUM('JPG', 'JPEG', 'PNG') NOT NULL,
     video_uuid           CHAR(36) UNIQUE NOT NULL,
-    video_type           ENUM (
-    'MP4'
-                              ) NOT NULL,
-    playing_time TIME NOT NULL,
-    created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
-    PRIMARY KEY
-(
-    id
-),
-    FOREIGN KEY
-(
-    board_id
-) REFERENCES boards
-(
-    id
-)
+    video_type           ENUM('MP4') NOT NULL,
+    playing_time         TIME NOT NULL,
+    created_at           DATETIME NOT NULL,
+    updated_at           DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (board_id) REFERENCES boards(id)
     );
 ALTER TABLE videos MODIFY COLUMN board_id BIGINT COMMENT '게시글 PK';
 ALTER TABLE videos MODIFY COLUMN thumbnail_image_uuid CHAR (36) NOT NULL COMMENT '동영상 썸네일 이미지 파일 ID';
