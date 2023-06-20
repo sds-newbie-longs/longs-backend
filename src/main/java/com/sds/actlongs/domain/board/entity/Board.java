@@ -44,6 +44,19 @@ public class Board {
 		this.description = description;
 	}
 
+	public Board(Long id, String title, String description) {
+		this.id = id;
+		this.member = null;
+		this.channel = null;
+		this.title = title;
+		this.description = description;
+	}
+
+	public void updateBoard(String title, String description) {
+		this.title = title;
+		this.description = description;
+	}
+
 	public static Board createNewBoard(Member member, Channel channel, String title) {
 		return new Board(member, channel, title, null);
 	}

@@ -4,9 +4,12 @@ import static org.mockito.BDDMockito.*;
 
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,11 +17,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.sds.actlongs.controller.board.dto.BoardDto;
+import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
 import com.sds.actlongs.domain.board.entity.Board;
+import com.sds.actlongs.domain.board.repository.BoardRepository;
 import com.sds.actlongs.domain.channel.entity.Channel;
+import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.domain.video.repository.VideoRepository;
+import com.sds.actlongs.exception.BoardNotMatchedMemberException;
 import com.sds.actlongs.vo.ImageExtension;
 import com.sds.actlongs.vo.VideoExtension;
 
@@ -27,6 +36,12 @@ class BoardServiceImplTest {
 
 	@Mock
 	private VideoRepository videoRepository;
+
+	@Mock
+	private BoardRepository boardRepository;
+
+	@Mock
+	private ChannelMemberRepository channelMemberRepository;
 
 	@InjectMocks
 	private BoardServiceImpl subject;
@@ -66,6 +81,139 @@ class BoardServiceImplTest {
 
 		//then
 		Assertions.assertThat(videoOptional).isEmpty();
+	}
+
+	@Test
+	@DisplayName("존재하는 게시글 id로 게시글 수정을 요청하면 게시글이 수정된다.")
+	void ifUpdateBoardWithExistingBoardIdThenSuceess() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			member,
+			new Channel("Knox SRE", new Member("din", null, null), null, null),
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		Board updateBoard = new Board(board.getId(), "제목(수정)", "설명(수정)");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
+
+		//when
+		Board newBoard = subject.updateBoard(updateBoard, member.getId());
+
+		//then
+		Assertions.assertThat(newBoard.getTitle()).isEqualTo(updateBoard.getTitle());
+		Assertions.assertThat(newBoard.getDescription()).isEqualTo(updateBoard.getDescription());
+	}
+
+	@Test
+	@DisplayName("작성자가 아닌 사람이 수정을 요청하면 에러가 발생한다.")
+	void ifUpdateBoardWithNotMatchedMemberIdThenThrowBoardNotMatchedMemberException() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			member,
+			new Channel("Knox SRE", new Member("din", null, null), null, null),
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		Board updateBoard = new Board(board.getId(), "제목(수정)", "설명(수정)");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
+
+		//when
+		ThrowingCallable callable = () -> subject.updateBoard(updateBoard, 1L);
+
+		//then
+		Assertions.assertThatThrownBy(callable)
+			.isInstanceOf(BoardNotMatchedMemberException.class);
+	}
+
+	@Test
+	@DisplayName("존재하는 게시글 id로 게시글 삭제를 요청하면 게시글 삭제에 성공한다.")
+	void ifDeleteBoardWithExistingBoardIdThenSuccess() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			1L,
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.of(board));
+
+		//when
+		boolean result = subject.deleteBoard(board.getId(), member.getId());
+
+		//then
+		Assertions.assertThat(result).isEqualTo(true);
+	}
+
+	@Test
+	@DisplayName("작성자가 아닌 사람이 삭제를 요청하면 예외가 발생한다.")
+	void ifDeleteBoardWithNotMatchedMemberIdThenThrowBoardNotMatchedMemberException() {
+		//given
+		Member member = new Member("harry", null, null);
+		Board board = new Board(
+			member,
+			new Channel("Knox SRE", new Member("din", null, null), null, null),
+			"재진스",
+			"재진스의 뉴진스 플레이리스트 입니다.");
+		given(boardRepository.findByIdAndMemberId(board.getId(), member.getId())).willReturn(Optional.empty());
+
+		//when
+		ThrowingCallable callable = () -> subject.deleteBoard(board.getId(), member.getId());
+
+		//then
+		Assertions.assertThatThrownBy(callable)
+			.isInstanceOf(BoardNotMatchedMemberException.class);
+	}
+
+	@Test
+	@DisplayName("channelId로 메인페이지 전체 게시글 조회 요청을 하면 전체 게시글과 멤버별 게시글 리스트를 최신순으로 가져온다")
+	void ifGetMemberBoardsWithExistingChannelIdThenSuceess() {
+		//given
+		Member member1 = new Member("harry", null, null);
+		Member member2 = new Member("din", null, null);
+
+		Channel channel = new Channel("Knox SRE", member2, null, null);
+
+		Video video1 = new Video(
+			new Board(
+				member1,
+				channel,
+				"제목1",
+				"내용1"),
+			"썸네일uuid1",
+			ImageExtension.PNG,
+			"비디오uuid1",
+			VideoExtension.MP4,
+			Time.valueOf(LocalTime.now()));
+
+		Video video2 = new Video(
+			new Board(
+				member2,
+				channel,
+				"제목2",
+				"내용2"),
+			"썸네일uuid2",
+			ImageExtension.PNG,
+			"비디오uuid2",
+			VideoExtension.MP4,
+			Time.valueOf(LocalTime.now()));
+
+		ChannelMember channelMember1 = new ChannelMember(member1, channel);
+		ChannelMember channelMember2 = new ChannelMember(member2, channel);
+		given(channelMemberRepository.findByChannelId(channel.getId())).willReturn(
+			Arrays.asList(channelMember1, channelMember2));
+		given(videoRepository.findByBoardChannelIdOrderByCreatedAtDesc(channel.getId())).willReturn(
+			Arrays.asList(video2, video1));
+		given(videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(member1.getId())).willReturn(
+			List.of(video1));
+		given(videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(member2.getId())).willReturn(
+			List.of(video2));
+
+		//when
+		List<BoardDto> boardList = subject.getBoardList(channel.getId());
+		List<MemberBoardsDto> memberBoardsList = subject.getMemberBoardsList(channel.getId());
+
+		//then
+		Assertions.assertThat(boardList.size()).isEqualTo(2);
+		Assertions.assertThat(memberBoardsList.size()).isEqualTo(2);
 	}
 
 }
