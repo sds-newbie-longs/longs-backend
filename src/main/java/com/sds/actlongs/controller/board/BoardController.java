@@ -40,6 +40,7 @@ import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
+import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.board.BoardService;
 import com.sds.actlongs.vo.ImageExtension;
 import com.sds.actlongs.vo.VideoExtension;
@@ -70,9 +71,9 @@ public class BoardController {
 		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId,
 		@Valid @RequestBody final BoardUpdateRequest request,
-		@SessionAttribute(MEMBER_ID) Long memberId) {
+		@SessionAttribute(AUTHENTICATION) Authentication authentication) {
 		Board updateBoard = new Board(boardId, request.getTitle(), request.getDescription());
-		Board result = boardService.updateBoard(updateBoard, memberId);
+		Board result = boardService.updateBoard(updateBoard, authentication.getMemberId());
 		return ResponseEntity.ok(BoardUpdateResponse.of(result));
 	}
 
@@ -82,8 +83,8 @@ public class BoardController {
 	public ResponseEntity<BoardDeleteResponse> deleteBoard(
 		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@PathVariable("boardId") @NotNull @ApiParam(value = "게시글 id", example = "1", required = true) Long boardId,
-		@SessionAttribute(MEMBER_ID) Long memberId) {
-		boolean result = boardService.deleteBoard(boardId, memberId);
+		@SessionAttribute(AUTHENTICATION) Authentication authentication) {
+		boolean result = boardService.deleteBoard(boardId, authentication.getMemberId());
 		return ResponseEntity.ok(BoardDeleteResponse.of(result));
 	}
 

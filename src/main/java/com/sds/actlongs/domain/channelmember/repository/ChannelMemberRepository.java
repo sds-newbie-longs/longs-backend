@@ -9,6 +9,9 @@ import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 
 public interface ChannelMemberRepository extends JpaRepository<ChannelMember, Long> {
 
+	@Query("SELECT cm FROM channel_members cm JOIN FETCH cm.channel c WHERE cm.member.id = :memberId")
+	List<ChannelMember> findAllFetchChannelByMemberId(Long memberId);
+
 	List<ChannelMember> findByChannelId(Long channelId);
 
 	@Query("SELECT cm FROM channel_members cm "
