@@ -25,6 +25,7 @@ import com.sds.actlongs.controller.channel.dto.ChannelCreateResponse;
 import com.sds.actlongs.controller.channel.dto.ChannelDeleteResponse;
 import com.sds.actlongs.controller.channel.dto.ChannelListResponse;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channel.ChannelService;
 
 @Api(tags = "그룹 API")
@@ -37,8 +38,9 @@ public class ChannelController {
 
 	@ApiOperation(value = "그룹목록 조회 API", notes = "CL001: 그룹목록 조회에 성공하였습니다.")
 	@GetMapping
-	public ResponseEntity<ChannelListResponse> getChannelList(@SessionAttribute(MEMBER_ID) Long memberId) {
-		final List<ChannelMember> channelMembers = channelService.getChannelList(memberId);
+	public ResponseEntity<ChannelListResponse> getChannelList(
+		@SessionAttribute(AUTHENTICATION) Authentication authentication) {
+		final List<ChannelMember> channelMembers = channelService.getChannelList(authentication.getMemberId());
 		// List<ChannelListResponse.JoinedChannel> channelList = List.of(
 		// 	ChannelListResponse.JoinedChannel.of(1L, 1L, "Knoxxx SRE"),
 		// 	ChannelListResponse.JoinedChannel.of(2L, 1L, "Knoxxx Common"),
