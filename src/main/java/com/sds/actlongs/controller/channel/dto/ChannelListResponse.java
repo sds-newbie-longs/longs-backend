@@ -1,5 +1,6 @@
 package com.sds.actlongs.controller.channel.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -28,13 +29,13 @@ public class ChannelListResponse extends ResultResponse {
 	}
 
 	public static ChannelListResponse from(List<ChannelMember> channelMembers) {
-		List<JoinedChannel> channelList = List.of();
+		List<JoinedChannel> channelList = new ArrayList<>();
 		for (ChannelMember channelMember : channelMembers) {
 			Channel channel = channelMember.getChannel();
 			channelList.add(JoinedChannel.of(
 				channel.getId(),
 				channel.getOwner().getId(),
-				channel.getName()
+				channel.getChannelName()
 			));
 		}
 		return new ChannelListResponse(channelList);
@@ -48,16 +49,16 @@ public class ChannelListResponse extends ResultResponse {
 		@ApiModelProperty(value = "그룹장 회원PK", example = "11")
 		private Long ownerId;
 		@ApiModelProperty(value = "그룹명", example = "Knox SRE")
-		private String name;
+		private String channelName;
 
-		public JoinedChannel(Long channelId, Long ownerId, String name) {
+		public JoinedChannel(Long channelId, Long ownerId, String channelName) {
 			this.channelId = channelId;
 			this.ownerId = ownerId;
-			this.name = name;
+			this.channelName = channelName;
 		}
 
-		public static JoinedChannel of(Long channelId, Long ownerId, String name) {
-			return new JoinedChannel(channelId, ownerId, name);
+		public static JoinedChannel of(Long channelId, Long ownerId, String channelName) {
+			return new JoinedChannel(channelId, ownerId, channelName);
 		}
 
 	}

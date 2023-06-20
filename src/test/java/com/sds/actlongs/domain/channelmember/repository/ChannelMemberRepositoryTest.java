@@ -40,7 +40,7 @@ class ChannelMemberRepositoryTest {
 
 		List<ChannelMember> byMember = channelMemberRepository.findAllFetchMemberAndChannelByMemberId(harry.getId());
 		assertThat(byMember.get(0).getMember().getUsername()).isEqualTo("Harry");
-		assertThat(byMember.get(0).getChannel().getName()).isEqualTo("Knox SRE");
+		assertThat(byMember.get(0).getChannel().getChannelName()).isEqualTo("Knox SRE");
 	}
 
 }

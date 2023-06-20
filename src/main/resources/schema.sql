@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS channels
 (
     id                   BIGINT AUTO_INCREMENT,
     owner_id             BIGINT,
-    name                 VARCHAR(20) UNIQUE NOT NULL,
+    channel_name         VARCHAR(20) UNIQUE NOT NULL,
     image_uuid           CHAR(36) UNIQUE,
     image_type           ENUM('JPG', 'JPEG', 'PNG'),
     created_at           DATETIME NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS channels
     FOREIGN KEY (owner_id) REFERENCES members(id)
     );
 ALTER TABLE channels MODIFY COLUMN owner_id BIGINT COMMENT '채널장 PK';
-ALTER TABLE channels MODIFY COLUMN name VARCHAR(20) NOT NULL COMMENT '채널 이름';
+ALTER TABLE channels MODIFY COLUMN channel_name VARCHAR(20) NOT NULL COMMENT '채널 이름';
 ALTER TABLE channels MODIFY COLUMN image_uuid CHAR(36) COMMENT '채널 이미지 파일 ID';
 ALTER TABLE channels MODIFY COLUMN image_type ENUM('JPG', 'JPEG', 'PNG') COMMENT '채널 이미지 파일 유형';
 ALTER TABLE channels MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
