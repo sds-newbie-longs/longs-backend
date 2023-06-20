@@ -64,8 +64,9 @@ public class ChannelMemberController {
 	}
 
 	@ApiOperation(value = "그룹원 초대 API", notes = "IV001: 그룹원 초대에 성공하였습니다.")
-	@PostMapping
-	public ResponseEntity<MemberInviteResponse> inviteMember(@Valid @RequestBody final MemberInviteRequest request) {
+	@PostMapping("/{groupId}")
+	public ResponseEntity<MemberInviteResponse> inviteMember(@PathVariable("groupId") final Long channelId,
+		@Valid @RequestBody final MemberInviteRequest request) {
 		return ResponseEntity.ok(new MemberInviteResponse());
 	}
 

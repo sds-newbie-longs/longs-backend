@@ -23,6 +23,7 @@ import com.sds.actlongs.controller.member.dto.LoginRequest;
 import com.sds.actlongs.controller.member.dto.LoginResponse;
 import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
 import com.sds.actlongs.domain.member.entity.Member;
+import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.member.MemberService;
 
 @Api(tags = "회원 API")
@@ -46,8 +47,9 @@ public class MemberController {
 	@ApiOperation(value = "회원정보 조회 API", notes = ""
 		+ "MI001: 회원정보 조회에 성공하였습니다.")
 	@GetMapping("/info")
-	public ResponseEntity<MemberInfoResponse> memberInfo(@SessionAttribute(MEMBER_ID) Long memberId) {
-		final Optional<Member> memberOptional = memberService.getMember(memberId);
+	public ResponseEntity<MemberInfoResponse> memberInfo(
+		@SessionAttribute(AUTHENTICATION) Authentication authentication) {
+		final Optional<Member> memberOptional = memberService.getMember(authentication.getMemberId());
 		return ResponseEntity.ok(MemberInfoResponse.of(memberOptional));
 	}
 

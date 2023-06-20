@@ -35,9 +35,8 @@ public class AuthenticationFilter implements Filter {
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws
-		ServletException,
-		IOException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+		throws ServletException, IOException {
 		if (processAuthenticationAndGetResult((HttpServletRequest)request, (HttpServletResponse)response)) {
 			chain.doFilter(request, response);
 		}
@@ -47,17 +46,16 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse httpResponse) {
 		if (CorsUtils.isPreFlightRequest(httpRequest)) {
 			return true;
-		} else if (isAuthenticationPath(httpRequest.getRequestURI()) && isSessionExpiredOrInvalid(
-			httpRequest.getSession(false))) {
+		} else if (isAuthenticationPath(httpRequest.getRequestURI())
+			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
-		} else {
-			return true;
 		}
+		return true;
 	}
 
 	private boolean isSessionExpiredOrInvalid(HttpSession session) {
-		return session == null || session.getAttribute(SessionConstants.MEMBER_ID) == null;
+		return session == null || session.getAttribute(SessionConstants.AUTHENTICATION) == null;
 	}
 
 	private void handleAuthenticationFailure(HttpServletResponse httpResponse) {
@@ -77,7 +75,9 @@ public class AuthenticationFilter implements Filter {
 	}
 
 	private Stream<String> getWhitelistStream() {
-		return Stream.concat(Arrays.stream(API_WHITELIST), Arrays.stream(SWAGGER_WHITELIST));
+		return Stream.concat(
+			Arrays.stream(API_WHITELIST),
+			Arrays.stream(SWAGGER_WHITELIST));
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.board.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import lombok.Getter;
 
 import com.sds.actlongs.model.ResultCode;
@@ -12,8 +14,8 @@ public class BoardDeleteResponse extends ResultResponse {
 		super(resultCode);
 	}
 
-	public static BoardDeleteResponse of() {
-		return new BoardDeleteResponse(ResultCode.DELETE_BOARD_SUCCESS);
+	public static BoardDeleteResponse of(boolean result) {
+		return new BoardDeleteResponse(result ? DELETE_BOARD_SUCCESS : DELETE_BOARD_FAIL);
 	}
 
 }
