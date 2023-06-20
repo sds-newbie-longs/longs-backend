@@ -50,8 +50,9 @@ public class AuthenticationFilter implements Filter {
 			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
+		} else {
+			return true;
 		}
-		return true;
 	}
 
 	private boolean isSessionExpiredOrInvalid(HttpSession session) {
