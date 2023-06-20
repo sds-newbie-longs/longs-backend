@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS channels
     );
 ALTER TABLE channels MODIFY COLUMN owner_id BIGINT COMMENT '채널장 PK';
 ALTER TABLE channels MODIFY COLUMN name VARCHAR(20) NOT NULL COMMENT '채널 이름';
-ALTER TABLE channels MODIFY COLUMN image_id CHAR(36) COMMENT '채널 이미지 파일 ID';
+ALTER TABLE channels MODIFY COLUMN image_uuid CHAR(36) COMMENT '채널 이미지 파일 ID';
 ALTER TABLE channels MODIFY COLUMN image_type ENUM('JPG', 'JPEG', 'PNG') COMMENT '채널 이미지 파일 유형';
 ALTER TABLE channels MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
 ALTER TABLE channels MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
