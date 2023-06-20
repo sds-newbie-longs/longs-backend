@@ -2,6 +2,7 @@ package com.sds.actlongs.service.channel;
 
 import static org.mockito.BDDMockito.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -49,21 +50,27 @@ class ChannelServiceImplTest {
 		@DisplayName("3개의 그룹에 속한 Harry가 접속하면, 3개의 그룹에 대한 그룹ID, 소유자ID, 그룹명을 조회한다.")
 		public void whenUserBelongingToThreeGroupsEntersThenGetListOfThreeElements() {
 			//given
-			Member member1 = Member.createNewMember("Harry");
-			Channel channel1 = Channel.createNewChannel("Knox SRE", member1);
-			Channel channel2 = Channel.createNewChannel("Knox Common", member1);
-			Channel channel3 = Channel.createNewChannel("Knox Portal", member1);
-			List<ChannelMember> channelsHarry = List.of(
-				ChannelMember.registerMemberToChannel(member1, channel1),
-				ChannelMember.registerMemberToChannel(member1, channel2),
-				ChannelMember.registerMemberToChannel(member1, channel3)
-			);
+			Member harry = Member.createNewMember("Harry");
+			Member ari = Member.createNewMember("Ari");
+			Member sean = Member.createNewMember("Sean");
+			Channel channel1 = Channel.createNewChannel("Knox SRE", harry);
+			Channel channel2 = Channel.createNewChannel("Knox Common", harry);
+			Channel channel3 = Channel.createNewChannel("Knox Portal", ari);
 
-			given(channelMemberRepository.findAllFetchMemberAndChannelByMemberId(member1.getId()))
+			List<ChannelMember> channelsHarry = new ArrayList<>();
+			channelsHarry.add(ChannelMember.registerMemberToChannel(harry, channel1));
+			channelsHarry.add(ChannelMember.registerMemberToChannel(harry, channel2));
+			channelsHarry.add(ChannelMember.registerMemberToChannel(harry, channel3));
+			given(channelMemberRepository.findAllFetchMemberAndChannelByMemberId(harry.getId()))
 				.willReturn(channelsHarry);
 
+			List<ChannelMember> list = new ArrayList<>();
+			list.addAll(channelsHarry);
+			list.add(ChannelMember.registerMemberToChannel(ari, channel1));
+			list.add(ChannelMember.registerMemberToChannel(sean, channel2));
+
 			//when
-			List<ChannelMember> resultList = subject.getChannelList(member1.getId());
+			List<ChannelMember> resultList = subject.getChannelList(harry.getId());
 
 			//then
 			Assertions.assertThat(resultList.size()).isEqualTo(3);
