@@ -8,4 +8,6 @@ public interface ChannelService {
 
 	List<ChannelMember> getChannelList(final Long memberId);
 
+	boolean createChannel(final String channelName, final Long ownerId);
+
 }

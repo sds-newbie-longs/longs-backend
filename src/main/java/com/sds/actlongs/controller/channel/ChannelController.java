@@ -39,11 +39,6 @@ public class ChannelController {
 	@GetMapping
 	public ResponseEntity<ChannelListResponse> getChannelList(@SessionAttribute(MEMBER_ID) Long memberId) {
 		final List<ChannelMember> channelMembers = channelService.getChannelList(memberId);
-		// List<ChannelListResponse.JoinedChannel> channelList = List.of(
-		// 	ChannelListResponse.JoinedChannel.of(1L, 1L, "Knoxxx SRE"),
-		// 	ChannelListResponse.JoinedChannel.of(2L, 1L, "Knoxxx Common"),
-		// 	ChannelListResponse.JoinedChannel.of(3L, 1L, "Knoxxx Portal")
-		// );
 		return ResponseEntity.ok(ChannelListResponse.from(channelMembers));
 	}
 
@@ -51,9 +46,11 @@ public class ChannelController {
 		+ "CC001: 그룹 생성에 성공하였습니다.\n"
 		+ "CC002: 그룹 생성에 실패하였습니다.")
 	@PostMapping
-	public ResponseEntity<ChannelCreateResponse> createChannel(@Valid @RequestBody final ChannelCreateRequest request) {
-		// final boolean result = channelService.createChannel(request.getUsername()); //채널생성 여부 (중복확인)
-		return ResponseEntity.ok(ChannelCreateResponse.from(true));
+	public ResponseEntity<ChannelCreateResponse> createChannel(
+		@Valid @RequestBody final ChannelCreateRequest request,
+		@SessionAttribute(MEMBER_ID) Long memberId) {
+		final boolean result = channelService.createChannel(request.getName(), memberId); //채널생성 여부 (중복확인)
+		return ResponseEntity.ok(ChannelCreateResponse.from(result));
 	}
 
 	@ApiOperation(value = "그룹 삭제 API", notes = "CD001: 그룹 삭제에 성공하였습니다.")
