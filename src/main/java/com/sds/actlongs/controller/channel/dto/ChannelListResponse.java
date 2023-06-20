@@ -1,5 +1,6 @@
 package com.sds.actlongs.controller.channel.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -28,7 +29,7 @@ public class ChannelListResponse extends ResultResponse {
 	}
 
 	public static ChannelListResponse from(List<ChannelMember> channelMembers) {
-		List<JoinedChannel> channelList = List.of();
+		List<JoinedChannel> channelList = new ArrayList<>();
 		for (ChannelMember channelMember : channelMembers) {
 			Channel channel = channelMember.getChannel();
 			channelList.add(JoinedChannel.of(
