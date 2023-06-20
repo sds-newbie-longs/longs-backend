@@ -29,7 +29,8 @@ public class AuthenticationFilter implements Filter {
 
 	private static final String[] API_WHITELIST = {"/members/login"};
 	private static final String[] SWAGGER_WHITELIST = {"/v2/api-docs/**", "/configuration/ui/**",
-		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**"};
+		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**",
+		"/swagger-ui/**", "/actuator/**"};
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
