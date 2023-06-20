@@ -32,7 +32,7 @@ public class Channel extends BaseEntity {
 	private Member owner;
 
 	@Column(nullable = false, unique = true, length = 20)
-	private String name;
+	private String channelName;
 
 	@Column(unique = true, length = 36)
 	private String imageUuid;
@@ -40,15 +40,15 @@ public class Channel extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ImageExtension imageType;
 
-	public Channel(String name, Member owner, String imageUuid, ImageExtension imageType) {
-		this.name = name;
+	public Channel(String channelName, Member owner, String imageUuid, ImageExtension imageType) {
+		this.channelName = channelName;
 		this.owner = owner;
 		this.imageUuid = imageUuid;
 		this.imageType = imageType;
 	}
 
-	public static Channel createNewChannel(String name, Member owner) {
-		return new Channel(name, owner, null, null);
+	public static Channel createNewChannel(String channelName, Member owner) {
+		return new Channel(channelName, owner, null, null);
 	}
 
 }

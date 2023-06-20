@@ -37,7 +37,7 @@ class BoardRepositoryTest {
 			// then
 			Assertions.assertThat(result.getId()).isNotNull();
 			Assertions.assertThat(result.getMember().getUsername()).isEqualTo("Harry");
-			Assertions.assertThat(result.getChannel().getName()).isEqualTo("Knox SRE");
+			Assertions.assertThat(result.getChannel().getChannelName()).isEqualTo("Knox SRE");
 			Assertions.assertThat(result.getTitle()).isEqualTo("Title 1");
 		}
 

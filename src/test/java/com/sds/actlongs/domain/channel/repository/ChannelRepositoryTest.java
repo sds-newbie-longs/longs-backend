@@ -35,7 +35,7 @@ class ChannelRepositoryTest {
 			// then
 			Assertions.assertThat(result.getId()).isNotNull();
 			Assertions.assertThat(result.getOwner().getUsername()).isEqualTo("Harry");
-			Assertions.assertThat(result.getName()).isEqualTo("Knox SRE");
+			Assertions.assertThat(result.getChannelName()).isEqualTo("Knox SRE");
 		}
 
 	}
