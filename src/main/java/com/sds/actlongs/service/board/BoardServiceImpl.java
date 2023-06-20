@@ -78,4 +78,9 @@ public class BoardServiceImpl implements BoardService {
 		return memberBoardsList;
 	}
 
+	@Override
+	public List<Video> searchBoardsIncludeKeywordByChannelId(Long channelId, String keyword) {
+		return videoRepository.findAllByChannelIdAndKeywordContainingOrderByCreatedAtDesc(channelId, keyword);
+	}
+
 }
