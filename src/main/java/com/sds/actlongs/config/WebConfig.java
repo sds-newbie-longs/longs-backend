@@ -31,6 +31,7 @@ public class WebConfig {
 					.allowedMethods(CorsConfiguration.ALL)
 					.allowedOrigins(LOCAL_URL)
 					.allowedHeaders(CorsConfiguration.ALL)
+					.exposedHeaders("Location", "Upload-Offset")
 					.allowCredentials(true);
 			}
 		};
@@ -47,6 +48,7 @@ public class WebConfig {
 					.allowedMethods(CorsConfiguration.ALL)
 					.allowedOriginPatterns(WILDCARD)
 					.allowedHeaders(CorsConfiguration.ALL)
+					.exposedHeaders("Location", "Upload-Offset")
 					.allowCredentials(true);
 			}
 		};

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.cors.CorsUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,13 +29,15 @@ public class AuthenticationFilter implements Filter {
 
 	private static final String[] API_WHITELIST = {"/members/login"};
 	private static final String[] SWAGGER_WHITELIST = {"/v2/api-docs/**", "/configuration/ui/**",
-		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**"};
+		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**",
+		"/swagger-ui/**", "/actuator/**"};
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-		throws ServletException, IOException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws
+		ServletException,
+		IOException {
 		if (processAuthenticationAndGetResult((HttpServletRequest)request, (HttpServletResponse)response)) {
 			chain.doFilter(request, response);
 		}
@@ -42,12 +45,15 @@ public class AuthenticationFilter implements Filter {
 
 	private boolean processAuthenticationAndGetResult(HttpServletRequest httpRequest,
 		HttpServletResponse httpResponse) {
-		if (isAuthenticationPath(httpRequest.getRequestURI())
-			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
+		if (CorsUtils.isPreFlightRequest(httpRequest)) {
+			return true;
+		} else if (isAuthenticationPath(httpRequest.getRequestURI()) && isSessionExpiredOrInvalid(
+			httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
+		} else {
+			return true;
 		}
-		return true;
 	}
 
 	private boolean isSessionExpiredOrInvalid(HttpSession session) {
@@ -71,9 +77,7 @@ public class AuthenticationFilter implements Filter {
 	}
 
 	private Stream<String> getWhitelistStream() {
-		return Stream.concat(
-			Arrays.stream(API_WHITELIST),
-			Arrays.stream(SWAGGER_WHITELIST));
+		return Stream.concat(Arrays.stream(API_WHITELIST), Arrays.stream(SWAGGER_WHITELIST));
 	}
 
 }

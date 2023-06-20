@@ -2,6 +2,8 @@ package com.sds.actlongs.controller.member;
 
 import static com.sds.actlongs.util.SessionConstants.*;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import com.sds.actlongs.controller.member.dto.LoginRequest;
 import com.sds.actlongs.controller.member.dto.LoginResponse;
 import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
+import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.service.member.MemberService;
 
 @Api(tags = "회원 API")
@@ -44,7 +47,8 @@ public class MemberController {
 		+ "MI001: 회원정보 조회에 성공하였습니다.")
 	@GetMapping("/info")
 	public ResponseEntity<MemberInfoResponse> memberInfo(@SessionAttribute(MEMBER_ID) Long memberId) {
-		return ResponseEntity.ok(MemberInfoResponse.of(1L, "Harry"));
+		final Optional<Member> memberOptional = memberService.getMember(memberId);
+		return ResponseEntity.ok(MemberInfoResponse.of(memberOptional));
 	}
 
 }
