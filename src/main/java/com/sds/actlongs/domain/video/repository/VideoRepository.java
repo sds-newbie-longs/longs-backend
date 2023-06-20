@@ -16,7 +16,11 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 
 	List<Video> findByBoardMemberIdOrderByCreatedAtDesc(Long memberId);
 
-	@Query("SELECT v FROM videos v INNER JOIN boards b ON v.board.id = b.id WHERE b.channel.id = :channelId AND b.title LIKE %:keyword% ORDER BY v.createdAt DESC")
+	@Query("SELECT v "
+		+ "FROM videos v "
+		+ "INNER JOIN boards b ON v.board.id = b.id "
+		+ "WHERE b.channel.id = :channelId AND b.title LIKE %:keyword% "
+		+ "ORDER BY v.createdAt DESC")
 	List<Video> findAllByChannelIdAndKeywordContainingOrderByCreatedAtDesc(Long channelId, String keyword);
 
 }
