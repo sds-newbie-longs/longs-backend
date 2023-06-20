@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.cors.CorsUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -42,12 +43,16 @@ public class AuthenticationFilter implements Filter {
 
 	private boolean processAuthenticationAndGetResult(HttpServletRequest httpRequest,
 		HttpServletResponse httpResponse) {
-		if (isAuthenticationPath(httpRequest.getRequestURI())
+		if (CorsUtils.isPreFlightRequest(httpRequest)) {
+			return true;
+		}
+		else if (isAuthenticationPath(httpRequest.getRequestURI())
 			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
+		} else {
+			return true;
 		}
-		return true;
 	}
 
 	private boolean isSessionExpiredOrInvalid(HttpSession session) {

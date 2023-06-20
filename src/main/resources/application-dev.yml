@@ -39,15 +39,6 @@ logging:
         SQL: debug
         type: trace
 
-server:
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-password: ${JKS_KEY}
-    key-store-type: PKCS12
-    enabled: true
-    key-alias: vidi
-  port: 443
-
 ffmpeg:
   path: ${FFMPEG_PATH}
 ffprobe:
