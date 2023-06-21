@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,7 @@ public class ChannelServiceImpl implements ChannelService {
 	}
 
 	@Override
+	@Transactional
 	public boolean createChannel(final String channelName, final Long ownerId) {
 		Optional<Channel> channelOptional = channelRepository.findByChannelName(channelName);
 		if (channelOptional.isPresent()) {
