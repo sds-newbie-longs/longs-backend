@@ -47,15 +47,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteBoard(final Long boardId, final Long memberId) {
-		Optional<Board> deleteBoardOptional = boardRepository.findByIdAndMemberId(boardId, memberId);
-		if (deleteBoardOptional.isPresent()) {
-			Board deleteBoard = deleteBoardOptional.get();
-			boardRepository.deleteById(deleteBoard.getId());
-			return true;
-		} else {
-			throw new BoardNotMatchedMemberException();
-		}
+		final Board board = boardRepository.findByIdAndMemberId(boardId, memberId)
+			.orElseThrow(BoardNotMatchedMemberException::new);
+		board.delete();
+		return true;
 	}
 
 	@Override
