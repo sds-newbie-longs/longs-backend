@@ -88,40 +88,14 @@ public class BoardController {
 		return ResponseEntity.ok(BoardDeleteResponse.of(result));
 	}
 
-	@ApiOperation(value = "검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
+	@ApiOperation(value = "제목 검색 API", notes = "B004: 게시글 검색에 성공하였습니다.")
 	@GetMapping("/search")
 	public ResponseEntity<BoardListSearchResponse> searchBoardList(
 		@PathVariable("groupId") @NotNull @ApiParam(value = "그룹 ID", example = "1", required = true) Long channelId,
 		@ApiParam(value = "검색 키워드", example = "재진스", required = true) @Size(max = 50)
 		@RequestParam String keyword) {
-
-		Video video1 = new Video(
-			new Board(
-				new Member("harry", null, null),
-				new Channel("Knox SRE", new Member("din", null, null), null, null),
-				"재진스",
-				"재진스의 뉴진스 플레이리스트 입니다."),
-			"static/스크린샷(11)_1686513849288",
-			ImageExtension.PNG,
-			"data/test_1686534272185",
-			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
-		Video video2 = new Video(
-			new Board(
-				new Member("ari", null, null),
-				new Channel("Knox SRE", new Member("din", null, null), null, null),
-				"재진스2",
-				"재진스2의 뉴진스 플레이리스트 입니다."),
-			"static/스크린샷(11)_1686513849288",
-			ImageExtension.PNG,
-			"data/test_1686534272185",
-			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
-		List<Video> videoList = List.of(
-			video1, video2
-		);
-
-		return ResponseEntity.ok(BoardListSearchResponse.of(videoList));
+		final List<Video> videos = boardService.searchBoardsIncludeKeywordByChannelId(channelId, keyword);
+		return ResponseEntity.ok(BoardListSearchResponse.of(videos));
 	}
 
 	@ApiOperation(value = "게시글 목록 (메인페이지) API", notes = "B005: 게시글 리스트 조회에 성공하였습니다.")

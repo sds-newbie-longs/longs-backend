@@ -33,14 +33,14 @@ public class Video extends BaseEntity {
 	@JoinColumn(name = "board_id")
 	private Board board;
 
-	@Column(nullable = false, unique = true, length = 36)
+	@Column(nullable = false, unique = true, length = 32)
 	private String thumbnailImageUuid;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private ImageExtension thumbnailImageType;
 
-	@Column(nullable = false, unique = true, length = 36)
+	@Column(nullable = false, unique = true, length = 32)
 	private String videoUuid;
 
 	@Enumerated(EnumType.STRING)

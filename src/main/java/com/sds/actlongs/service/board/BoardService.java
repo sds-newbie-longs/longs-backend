@@ -20,4 +20,6 @@ public interface BoardService {
 
 	List<MemberBoardsDto> getMemberBoardsList(final Long channelId);
 
+	List<Video> searchBoardsIncludeKeywordByChannelId(Long channelId, String keyword);
+
 }

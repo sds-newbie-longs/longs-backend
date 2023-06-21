@@ -1,7 +1,7 @@
 package com.sds.actlongs.controller.board.dto;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,11 +18,9 @@ public class BoardListSearchResponse extends ResultResponse {
 
 	public BoardListSearchResponse(ResultCode resultCode, List<Video> videoList) {
 		super(resultCode);
-		List<BoardDto> boardList = new ArrayList<>();
-		for (Video video : videoList) {
-			boardList.add(new BoardDto(video));
-		}
-		this.boardList = boardList;
+		this.boardList = videoList.stream()
+			.map(BoardDto::new)
+			.collect(Collectors.toList());
 	}
 
 	public static BoardListSearchResponse of(List<Video> videoList) {
