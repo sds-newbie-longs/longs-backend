@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS channels
     id                   BIGINT AUTO_INCREMENT,
     owner_id             BIGINT,
     channel_name         VARCHAR(20) UNIQUE NOT NULL,
-    image_uuid           CHAR(33) UNIQUE,
+    image_uuid           CHAR(32) UNIQUE,
     image_type           ENUM('JPG', 'JPEG', 'PNG'),
     created_at           DATETIME NOT NULL,
     updated_at           DATETIME NOT NULL,
