@@ -36,9 +36,9 @@ class VideoRepositoryTest {
 			Channel channel = Channel.createNewChannel("Knox SRE", member);
 			Board board = Board.createNewBoard(member, channel, "Title 1");
 			Video video = Video.createNewVideo(board,
-				"62dd98f0-bd8e-11ed-93ab-325096b39f47",
+				"62dd98f0bd8e11ed93ab325096b39f47",
 				ImageExtension.JPG,
-				"d9daccee-39dd-4c4d-855d-9376bc981c11",
+				"d9daccee39dd4c4d855d9376bc981c11",
 				VideoExtension.MP4,
 				new Time(0, 20, 15));
 
@@ -47,8 +47,8 @@ class VideoRepositoryTest {
 
 			// then
 			Assertions.assertThat(result.getId()).isNotNull();
-			Assertions.assertThat(result.getThumbnailImageUuid()).isEqualTo("62dd98f0-bd8e-11ed-93ab-325096b39f47");
-			Assertions.assertThat(result.getVideoUuid()).isEqualTo("d9daccee-39dd-4c4d-855d-9376bc981c11");
+			Assertions.assertThat(result.getThumbnailImageUuid()).isEqualTo("62dd98f0bd8e11ed93ab325096b39f47");
+			Assertions.assertThat(result.getVideoUuid()).isEqualTo("d9daccee39dd4c4d855d9376bc981c11");
 			Assertions.assertThat(result.getPlayingTime().toString()).isEqualTo("00:20:15");
 		}
 
