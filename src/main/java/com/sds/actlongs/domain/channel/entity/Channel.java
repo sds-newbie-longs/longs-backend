@@ -40,6 +40,7 @@ public class Channel extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ImageExtension imageType;
 
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.CREATED;
 

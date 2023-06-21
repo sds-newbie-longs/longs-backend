@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS channels
     channel_name         VARCHAR(20) UNIQUE NOT NULL,
     image_uuid           CHAR(32) UNIQUE,
     image_type           ENUM('JPG', 'JPEG', 'PNG'),
-    status               ENUM('CREATED', 'DELETED'),
+    status               ENUM('CREATED', 'DELETED') NOT NULL,
     created_at           DATETIME NOT NULL,
     updated_at           DATETIME NOT NULL,
     PRIMARY KEY (id),
@@ -37,6 +37,7 @@ ALTER TABLE channels MODIFY COLUMN owner_id BIGINT COMMENT '채널장 PK';
 ALTER TABLE channels MODIFY COLUMN channel_name VARCHAR(20) NOT NULL COMMENT '채널 이름';
 ALTER TABLE channels MODIFY COLUMN image_uuid CHAR(32) COMMENT '채널 이미지 파일 ID';
 ALTER TABLE channels MODIFY COLUMN image_type ENUM('JPG', 'JPEG', 'PNG') COMMENT '채널 이미지 파일 유형';
+ALTER TABLE channels MODIFY COLUMN status ENUM('CREATED', 'DELETED') COMMENT '상태';
 ALTER TABLE channels MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
 ALTER TABLE channels MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
 CREATE TABLE IF NOT EXISTS channel_members
@@ -61,6 +62,7 @@ CREATE TABLE IF NOT EXISTS boards
     description          VARCHAR(1000),
     member_id            BIGINT,
     channel_id           BIGINT,
+    status               ENUM('CREATED', 'DELETED') NOT NULL,
     created_at           DATETIME NOT NULL,
     updated_at           DATETIME NOT NULL,
     PRIMARY KEY (id),
@@ -71,6 +73,7 @@ ALTER TABLE boards MODIFY COLUMN title VARCHAR(50) NOT NULL COMMENT '제목';
 ALTER TABLE boards MODIFY COLUMN description VARCHAR(1000) COMMENT '설명';
 ALTER TABLE boards MODIFY COLUMN member_id BIGINT COMMENT '작성자 PK';
 ALTER TABLE boards MODIFY COLUMN channel_id BIGINT COMMENT '채널 PK';
+ALTER TABLE boards MODIFY COLUMN status ENUM('CREATED', 'DELETED') COMMENT '상태';
 ALTER TABLE boards MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
 ALTER TABLE boards MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
 CREATE TABLE IF NOT EXISTS videos
