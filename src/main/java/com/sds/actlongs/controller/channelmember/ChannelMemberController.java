@@ -26,6 +26,8 @@ import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
+import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.service.channelmember.ChannelMemberService;
 
 @Api(tags = "그룹회원 API")
 @Validated
@@ -34,17 +36,13 @@ import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
 @RequestMapping("/group-members")
 public class ChannelMemberController {
 
+	private final ChannelMemberService channelMemberService;
+
 	@ApiOperation(value = "그룹원 목록 조회 API", notes = "ML001: 그룹원 목록 조회에 성공하였습니다.")
 	@GetMapping("/{groupId}")
-	public ResponseEntity<MemberListResponse> findMemberList(@PathVariable("groupId") final Long channelId) {
-		List<MemberListResponse.MemberResponse> memberList = List.of(
-			new MemberListResponse.MemberResponse("Sean"),
-			new MemberListResponse.MemberResponse("Ari"),
-			new MemberListResponse.MemberResponse("Jin"),
-			new MemberListResponse.MemberResponse("Null")
-		);
-		MemberListResponse listResponse = new MemberListResponse(memberList);
-		return ResponseEntity.ok(listResponse);
+	public ResponseEntity<MemberListResponse> getMemberList(@PathVariable("groupId") final Long channelId) {
+		List<ChannelMember> members = channelMemberService.getMemberList(channelId);
+		return ResponseEntity.ok(MemberListResponse.from(members));
 	}
 
 	@ApiOperation(value = "회원 검색 API", notes = "MS001: 회원 검색에 성공하였습니다.")

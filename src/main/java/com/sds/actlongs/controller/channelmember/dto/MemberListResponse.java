@@ -1,10 +1,12 @@
 package com.sds.actlongs.controller.channelmember.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -24,6 +26,14 @@ public class MemberListResponse extends ResultResponse {
 		this.memberList = memberList;
 	}
 
+	public static MemberListResponse from(List<ChannelMember> members) {
+		List<MemberListResponse.MemberResponse> memberList = new ArrayList<>();
+		for (ChannelMember cm : members) {
+			memberList.add(MemberResponse.from(cm.getMember().getUsername()));
+		}
+		return new MemberListResponse(memberList);
+	}
+
 	@Getter
 	public static class MemberResponse {
 
@@ -34,7 +44,7 @@ public class MemberListResponse extends ResultResponse {
 			this.username = username;
 		}
 
-		public static MemberResponse of(String username) {
+		public static MemberResponse from(String username) {
 			return new MemberResponse(username);
 		}
 
