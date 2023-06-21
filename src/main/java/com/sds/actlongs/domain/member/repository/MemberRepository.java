@@ -10,4 +10,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Optional<Member> findByUsername(String username);
 
+	// @Query("SELECT m FROM members m JOIN FETCH m.id ")
+	// List<Member> findAllByMemberChannelId(Long channelId);
+
+	// List<Member> findByUsernameStartsWith(String keyword);
+
 }

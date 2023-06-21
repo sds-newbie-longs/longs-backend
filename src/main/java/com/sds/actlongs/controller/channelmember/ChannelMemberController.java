@@ -30,6 +30,7 @@ import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channelmember.ChannelMemberService;
 
@@ -56,7 +57,7 @@ public class ChannelMemberController {
 		@RequestParam @NotBlank @Size(max = 20) final String keyword,
 		@SessionAttribute(AUTHENTICATION) Authentication authentication
 	) {
-		List<ChannelMember> externalMembers = channelMemberService.searchMembersNotInChannel(channelId,
+		List<Member> externalMembers = channelMemberService.searchMembersNotInChannel(channelId,
 			authentication.getMemberId(), keyword);
 		return ResponseEntity.ok(MemberSearchResponse.from(externalMembers));
 	}

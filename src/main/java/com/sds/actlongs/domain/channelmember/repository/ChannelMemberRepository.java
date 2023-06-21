@@ -22,9 +22,12 @@ public interface ChannelMemberRepository extends JpaRepository<ChannelMember, Lo
 	@Query("SELECT cm FROM channel_members cm JOIN FETCH cm.member m WHERE cm.channel.id = :channelId")
 	List<ChannelMember> findAllFetchMemberByChannelId(Long channelId);
 
-	@Query("SELECT cm FROM channel_members cm JOIN FETCH cm.channel c JOIN FETCH cm.member m "
-		+ "WHERE cm.channel.id != :channelId AND cm.member.id != :memberId AND m.username LIKE :keyword%")
-	List<ChannelMember> findAllFetchMemberByChannelIdAndKeywordContaining(Long channelId, Long memberId,
-		String keyword);
+	// @Query("SELECT cm FROM channel_members cm JOIN FETCH cm.member m WHERE cm.channel.id != :channelId")
+	// List<ChannelMember> findAllFetchMemberByChannelIdNot(Long channelId);
+
+	// @Query("SELECT cm FROM channel_members cm JOIN FETCH cm.channel c JOIN FETCH cm.member m "
+	// 	+ "WHERE cm.channel.id != :channelId AND cm.member.id != :memberId AND m.username LIKE :keyword%")
+	// List<ChannelMember> findAllFetchMemberByChannelIdAndKeywordContaining(Long channelId, Long memberId,
+	// 	String keyword);
 
 }

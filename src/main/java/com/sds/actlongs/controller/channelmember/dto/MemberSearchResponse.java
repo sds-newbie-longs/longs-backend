@@ -6,7 +6,7 @@ import java.util.List;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -27,10 +27,10 @@ public class MemberSearchResponse extends ResultResponse {
 		this.searchList = searchList;
 	}
 
-	public static MemberSearchResponse from(List<ChannelMember> externalMembers) {
+	public static MemberSearchResponse from(List<Member> externalMembers) {
 		List<SearchedMember> members = new ArrayList<>();
-		for (ChannelMember cm : externalMembers) {
-			members.add(SearchedMember.of(cm.getMember().getId(), cm.getMember().getUsername()));
+		for (Member m : externalMembers) {
+			members.add(SearchedMember.of(m.getId(), m.getUsername()));
 		}
 		return new MemberSearchResponse(members);
 	}
