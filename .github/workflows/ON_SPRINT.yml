@@ -61,7 +61,7 @@ jobs:
             docker compose up -d --force-recreate
 
   deploy_aws:
-    needs: deploy_gcp
+    needs: build-and-push-docker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Git repository
@@ -80,5 +80,5 @@ jobs:
           key: ${{ secrets.AWS_SVR_SECRET_KEY }}
           port: 22
           script: |
-            ssh -i /home/ubuntu/.ssh/longs.pem ${{ secrets.AWS_VM_USERNAME }}@${{ secrets.AWS_SECRET_SVR_HOST }} 'sudo -S su -c "cd /app/longs-env/env-dev && docker compose down && docker image rm --force vidigummy/longs-svr  && docker compose up -d"' <<< '${{ secrets.SVR_ROOT_PW }}'
+            /home/ubuntu/.ssh/loginToMaster.sh
 
