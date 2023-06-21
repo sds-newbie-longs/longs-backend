@@ -52,6 +52,7 @@ class ChannelMemberRepositoryTest {
 		Member ari = Member.createNewMember("Ari");
 		memberRepository.save(ari);
 		Channel knoxSre = Channel.createNewChannel("Knox SRE", harry);
+		knoxSre.delete();
 		channelRepository.save(knoxSre);
 
 		channelMemberRepository.save(ChannelMember.registerMemberToChannel(harry, knoxSre));
