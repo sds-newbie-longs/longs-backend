@@ -26,7 +26,7 @@ public class Member extends BaseEntity {
 	@Column(nullable = false, unique = true, length = 20)
 	private String username;
 
-	@Column(unique = true, length = 36)
+	@Column(unique = true, length = 32)
 	private String profileImageUuid;
 
 	@Enumerated(EnumType.STRING)
