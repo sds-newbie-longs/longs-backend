@@ -51,7 +51,7 @@ public class ChannelServiceImpl implements ChannelService {
 	@Override
 	@Transactional
 	public void deleteChannel(final Long channelId, final Long memberId) {
-		final Optional<Channel> optionalChannel = channelRepository.findById(channelId);
+		final Optional<Channel> optionalChannel = channelRepository.findByIdAndOwnerId(channelId, memberId);
 		if (optionalChannel.isEmpty()) {
 			throw new EntityNotFoundException();
 		}
