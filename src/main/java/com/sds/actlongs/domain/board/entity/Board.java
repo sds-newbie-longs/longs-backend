@@ -2,6 +2,8 @@ package com.sds.actlongs.domain.board.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +39,10 @@ public class Board {
 	@Column(length = 1000)
 	private String description;
 
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.CREATED;
+
 	public Board(Member member, Channel channel, String title, String description) {
 		this.member = member;
 		this.channel = channel;
@@ -64,6 +70,10 @@ public class Board {
 	public static Board createNewBoardWithDescription(Member member, Channel channel, String title,
 		String description) {
 		return new Board(member, channel, title, description);
+	}
+
+	public enum Status {
+		CREATED, DELETED
 	}
 
 }
