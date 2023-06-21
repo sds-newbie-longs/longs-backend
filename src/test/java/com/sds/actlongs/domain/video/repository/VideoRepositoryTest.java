@@ -1,5 +1,7 @@
 package com.sds.actlongs.domain.video.repository;
 
+import static com.sds.actlongs.vo.VideoExtension.*;
+
 import java.sql.Time;
 
 import org.assertj.core.api.Assertions;
@@ -16,7 +18,6 @@ import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.vo.ImageExtension;
-import com.sds.actlongs.vo.VideoExtension;
 
 @Import(JpaAuditingConfig.class)
 @DataJpaTest
@@ -39,7 +40,7 @@ class VideoRepositoryTest {
 				"62dd98f0bd8e11ed93ab325096b39f47",
 				ImageExtension.JPG,
 				"d9daccee39dd4c4d855d9376bc981c11",
-				VideoExtension.MP4,
+				MP4,
 				new Time(0, 20, 15));
 
 			// when
