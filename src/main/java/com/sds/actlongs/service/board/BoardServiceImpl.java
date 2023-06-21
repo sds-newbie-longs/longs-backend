@@ -35,15 +35,10 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public Board updateBoard(final Board board, final Long memberId) {
-		Optional<Board> updateBoardOptional = boardRepository.findByIdAndMemberId(board.getId(), memberId);
-		if (updateBoardOptional.isPresent()) {
-			Board updateBoard = updateBoardOptional.get();
-			updateBoard.updateBoard(board.getTitle(), board.getDescription());
-			return updateBoard;
-		} else {
-			throw new BoardNotMatchedMemberException();
-		}
+	public Board updateBoard(Board updateBoard, final Long memberId) {
+		final Board board = boardRepository.findByIdAndMemberId(updateBoard.getId(), memberId)
+			.orElseThrow(BoardNotMatchedMemberException::new);
+		return board.updateBoard(updateBoard.getTitle(), updateBoard.getDescription());
 	}
 
 	@Override
@@ -65,14 +60,14 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<MemberBoardsDto> getMemberBoardsList(final Long channelId) {
-		List<ChannelMember> channelMemberList = channelMemberRepository.findByChannelId(channelId);
-		List<MemberBoardsDto> memberBoardsList = new ArrayList<>();
-		channelMemberList.forEach(channelMember -> {
-			List<Video> videoList = videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(
-				channelMember.getMember().getId());
-			memberBoardsList.add(new MemberBoardsDto(channelMember.getMember().getUsername(), videoList));
-		});
-		return memberBoardsList;
+		return channelMemberRepository.findByChannelId(channelId)
+			.stream()
+			.map(channelMember -> {
+				final List<Video> videoList = videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(
+					channelMember.getMember().getId());
+				return new MemberBoardsDto(channelMember.getMember().getUsername(), videoList);
+			})
+			.collect(Collectors.toList());
 	}
 
 	@Override

@@ -67,9 +67,10 @@ public class Board {
 		return new Board(member, channel, title, description);
 	}
 
-	public void updateBoard(String title, String description) {
+	public Board updateBoard(String title, String description) {
 		this.title = title;
 		this.description = description;
+		return this;
 	}
 
 	public void delete() {
