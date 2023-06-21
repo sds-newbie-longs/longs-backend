@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.channelmember;
 
+import static com.sds.actlongs.util.SessionConstants.*;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +30,7 @@ import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channelmember.ChannelMemberService;
 
 @Api(tags = "그룹회원 API")
@@ -49,9 +53,11 @@ public class ChannelMemberController {
 	@GetMapping("/not-in/{groupId}/search")
 	public ResponseEntity<MemberSearchResponse> searchMember(
 		@PathVariable("groupId") final Long channelId,
-		@RequestParam @NotBlank @Size(max = 20) final String keyword
+		@RequestParam @NotBlank @Size(max = 20) final String keyword,
+		@SessionAttribute(AUTHENTICATION) Authentication authentication
 	) {
-		List<ChannelMember> externalMembers = channelMemberService.searchMembersNotInChannel(channelId, keyword);
+		List<ChannelMember> externalMembers = channelMemberService.searchMembersNotInChannel(channelId,
+			authentication.getMemberId(), keyword);
 		return ResponseEntity.ok(MemberSearchResponse.from(externalMembers));
 	}
 

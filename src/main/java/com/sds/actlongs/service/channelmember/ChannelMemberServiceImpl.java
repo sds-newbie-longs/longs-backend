@@ -21,8 +21,9 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	}
 
 	@Override
-	public List<ChannelMember> searchMembersNotInChannel(final Long channelId, final String keyword) {
-		return channelMemberRepository.findAllFetchMemberByChannelIdAndKeywordContaining(channelId, keyword);
+	public List<ChannelMember> searchMembersNotInChannel(final Long channelId, final Long memberId,
+		final String keyword) {
+		return channelMemberRepository.findAllFetchMemberByChannelIdAndKeywordContaining(channelId, memberId, keyword);
 	}
 
 }

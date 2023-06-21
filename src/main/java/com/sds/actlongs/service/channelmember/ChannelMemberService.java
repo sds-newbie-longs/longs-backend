@@ -8,6 +8,6 @@ public interface ChannelMemberService {
 
 	List<ChannelMember> getMemberList(final Long channelId);
 
-	List<ChannelMember> searchMembersNotInChannel(final Long channelId, final String keyword);
+	List<ChannelMember> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword);
 
 }
