@@ -34,7 +34,7 @@ public class Channel extends BaseEntity {
 	@Column(nullable = false, unique = true, length = 20)
 	private String channelName;
 
-	@Column(unique = true, length = 36)
+	@Column(unique = true, length = 32)
 	private String imageUuid;
 
 	@Enumerated(EnumType.STRING)
