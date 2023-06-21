@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS channels
     channel_name         VARCHAR(20) UNIQUE NOT NULL,
     image_uuid           CHAR(36) UNIQUE,
     image_type           ENUM('JPG', 'JPEG', 'PNG'),
+    status               ENUM('CREATED', 'DELETED'),
     created_at           DATETIME NOT NULL,
     updated_at           DATETIME NOT NULL,
     PRIMARY KEY (id),

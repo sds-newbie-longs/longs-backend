@@ -3,6 +3,8 @@ package com.sds.actlongs.service.channel;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +46,17 @@ public class ChannelServiceImpl implements ChannelService {
 		Channel channel = channelRepository.save(Channel.createNewChannel(channelName, owner));
 		channelMemberRepository.save(ChannelMember.registerMemberToChannel(owner, channel));
 		return true;
+	}
+
+	@Override
+	@Transactional
+	public void deleteChannel(final Long channelId, final Long memberId) {
+		final Optional<Channel> optionalChannel = channelRepository.findById(channelId);
+		if (optionalChannel.isEmpty()) {
+			throw new EntityNotFoundException();
+		}
+		final Channel channel = optionalChannel.get();
+		channel.delete();
 	}
 
 }
