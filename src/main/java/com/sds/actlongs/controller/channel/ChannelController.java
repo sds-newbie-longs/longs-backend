@@ -57,7 +57,10 @@ public class ChannelController {
 
 	@ApiOperation(value = "그룹 삭제 API", notes = "CD001: 그룹 삭제에 성공하였습니다.")
 	@DeleteMapping("/{groupId}")
-	public ResponseEntity<ChannelDeleteResponse> deleteChannel(@PathVariable("groupId") final Long channelId) {
+	public ResponseEntity<ChannelDeleteResponse> deleteChannel(
+		@PathVariable("groupId") final Long channelId,
+		@SessionAttribute(AUTHENTICATION) Authentication authentication) {
+		channelService.deleteChannel(channelId, authentication.getMemberId());
 		return ResponseEntity.ok(new ChannelDeleteResponse());
 	}
 

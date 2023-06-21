@@ -40,6 +40,9 @@ public class Channel extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ImageExtension imageType;
 
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.CREATED;
+
 	public Channel(String channelName, Member owner, String imageUuid, ImageExtension imageType) {
 		this.channelName = channelName;
 		this.owner = owner;
@@ -49,6 +52,16 @@ public class Channel extends BaseEntity {
 
 	public static Channel createNewChannel(String channelName, Member owner) {
 		return new Channel(channelName, owner, null, null);
+	}
+
+	public void delete() {
+		if (this.status.equals(Status.CREATED)) {
+			this.status = Status.DELETED;
+		}
+	}
+
+	public enum Status {
+		CREATED, DELETED
 	}
 
 }

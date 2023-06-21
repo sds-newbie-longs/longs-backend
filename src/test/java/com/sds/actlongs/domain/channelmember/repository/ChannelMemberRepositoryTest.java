@@ -65,4 +65,19 @@ class ChannelMemberRepositoryTest {
 		}
 	}
 
+	@Test
+	@DisplayName("삭제된 그룹일 때, 그룹 목록 조회시 조회되지 않는다.")
+	void ifGetMemberListWhenChannelIsDeletedThenSucceed() {
+		Member harry = Member.createNewMember("Harry");
+		memberRepository.save(harry);
+		Channel knoxSre = Channel.createNewChannel("Knox SRE", harry);
+		knoxSre.delete();
+		channelRepository.save(knoxSre);
+
+		channelMemberRepository.save(ChannelMember.registerMemberToChannel(harry, knoxSre));
+
+		List<ChannelMember> byChannel = channelMemberRepository.findAllFetchMemberAndChannelByMemberId(harry.getId());
+		assertThat(byChannel.size()).isEqualTo(0);
+	}
+
 }

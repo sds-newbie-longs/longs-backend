@@ -10,4 +10,6 @@ public interface ChannelService {
 
 	boolean createChannel(final String channelName, final Long ownerId);
 
+	void deleteChannel(final Long channelId, final Long memberId);
+
 }
