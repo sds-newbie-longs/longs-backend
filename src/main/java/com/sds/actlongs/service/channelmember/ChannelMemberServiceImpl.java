@@ -28,7 +28,6 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	@Override
 	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId,
 		final String keyword) {
-		// List<ChannelMember> cm = channelMemberRepository.findAllFetchMemberByChannelIdNot(channelId);
 		Stream<Member> membersNotInChannel = channelMemberRepository.findAll()
 			.stream()
 			.filter(cm -> cm.getChannel().getId() != channelId)
