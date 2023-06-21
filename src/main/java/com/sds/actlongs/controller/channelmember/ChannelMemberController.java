@@ -51,19 +51,14 @@ public class ChannelMemberController {
 		@PathVariable("groupId") final Long channelId,
 		@RequestParam @NotBlank @Size(max = 20) final String keyword
 	) {
-		List<MemberSearchResponse.SearchedMember> searchList = List.of(
-			new MemberSearchResponse.SearchedMember(101L, "Din"),
-			new MemberSearchResponse.SearchedMember(102L, "diedie"),
-			new MemberSearchResponse.SearchedMember(103L, "DIN_DEAN"),
-			new MemberSearchResponse.SearchedMember(104L, "dIabcd")
-		);
-		MemberSearchResponse listResponse = new MemberSearchResponse(searchList);
-		return ResponseEntity.ok(listResponse);
+		List<ChannelMember> externalMembers = channelMemberService.searchMembersNotInChannel(channelId, keyword);
+		return ResponseEntity.ok(MemberSearchResponse.from(externalMembers));
 	}
 
 	@ApiOperation(value = "그룹원 초대 API", notes = "IV001: 그룹원 초대에 성공하였습니다.")
 	@PostMapping("/{groupId}")
-	public ResponseEntity<MemberInviteResponse> inviteMember(@PathVariable("groupId") final Long channelId,
+	public ResponseEntity<MemberInviteResponse> inviteMember(
+		@PathVariable("groupId") final Long channelId,
 		@Valid @RequestBody final MemberInviteRequest request) {
 		return ResponseEntity.ok(new MemberInviteResponse());
 	}
