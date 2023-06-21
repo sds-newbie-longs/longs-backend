@@ -58,11 +58,6 @@ public class Board {
 		this.description = description;
 	}
 
-	public void updateBoard(String title, String description) {
-		this.title = title;
-		this.description = description;
-	}
-
 	public static Board createNewBoard(Member member, Channel channel, String title) {
 		return new Board(member, channel, title, null);
 	}
@@ -70,6 +65,17 @@ public class Board {
 	public static Board createNewBoardWithDescription(Member member, Channel channel, String title,
 		String description) {
 		return new Board(member, channel, title, description);
+	}
+
+	public void updateBoard(String title, String description) {
+		this.title = title;
+		this.description = description;
+	}
+
+	public void delete() {
+		if (this.status.equals(Status.CREATED)) {
+			this.status = Status.DELETED;
+		}
 	}
 
 	public enum Status {
