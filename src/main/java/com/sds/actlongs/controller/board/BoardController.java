@@ -42,15 +42,10 @@ import com.sds.actlongs.controller.board.dto.BoardUpdateRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateResponse;
 import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
 import com.sds.actlongs.domain.board.entity.Board;
-import com.sds.actlongs.domain.channel.entity.Channel;
-import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.model.Authentication;
-
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.service.board.BoardService;
-import com.sds.actlongs.vo.ImageExtension;
-import com.sds.actlongs.vo.VideoExtension;
 
 @Api(tags = "게시글 API")
 @RestController

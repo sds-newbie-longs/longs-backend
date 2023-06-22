@@ -21,20 +21,18 @@ public class FileSenderForS3 implements FileSender {
 	private final S3Uploader s3Uploader;
 	private final FileManage fileManage;
 
+	private static final String VIDEO_START_POINT_IN_S3 = "videos/";
+	private static final String THUMBNAIL_START_POINT_IN_S3 = "thumbnails/";
+
+
 	@Value("${temp.video.hls.path}")
 	private String hlsPath;
-
 	@Value("${temp.thumbnail.path}")
 	private String thumbnailPath;
-
 	@Value("${temp.img.extension}")
 	private String thumbnailExtension;
 
-	private final static String VIDEO_START_POINT_IN_S3 = "videos/";
-	private final static String THUMBNAIL_START_POINT_IN_S3 = "thumbnails/";
-
 	@Override
-
 	public void sendHlsFiles(String vodUuid) {
 
 		File root = new File(hlsPath + CATEGORY_PREFIX + vodUuid);

@@ -41,14 +41,14 @@ public class TimeUtils {
 		}
 	}
 
-	public static Time transDurationToTime(Double duration){
+	public static Time transDurationToTime(Double duration) {
 		Duration time = Duration.ofMillis(Math.round(duration) * 1000);
 		long hour = time.toHours();
 		long minute = time.toMinutes();
 		long seconds = time.toSeconds();
 
-		String timeInHHMMSS = String.format(VIDEO_TIME_FORMAT, hour, minute, seconds);
-		return Time.valueOf(timeInHHMMSS);
+		String timeInHhMmSs = String.format(VIDEO_TIME_FORMAT, hour, minute, seconds);
+		return Time.valueOf(timeInHhMmSs);
 	}
 
 }
