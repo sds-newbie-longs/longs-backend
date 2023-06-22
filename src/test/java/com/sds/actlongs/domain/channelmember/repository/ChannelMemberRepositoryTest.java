@@ -57,7 +57,7 @@ class ChannelMemberRepositoryTest {
 		channelMemberRepository.save(ChannelMember.registerMemberToChannel(harry, knoxSre));
 		channelMemberRepository.save(ChannelMember.registerMemberToChannel(ari, knoxSre));
 
-		List<ChannelMember> byChannel = channelMemberRepository.findAllFetchMemberByChannelId(knoxSre.getId());
+		List<ChannelMember> byChannel = channelMemberRepository.findAllFetchMemberUsernameByChannelId(knoxSre.getId());
 		assertThat(byChannel.get(0).getMember().getUsername()).isEqualTo("Harry");
 		assertThat(byChannel.get(1).getMember().getUsername()).isEqualTo("Ari");
 		for (ChannelMember cm : byChannel) {
