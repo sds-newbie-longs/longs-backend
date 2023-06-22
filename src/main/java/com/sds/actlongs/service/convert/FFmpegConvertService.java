@@ -58,9 +58,12 @@ public class FFmpegConvertService implements ConvertService {
 			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + fileFormatPolicy)
 			.addExtraArgs("-master_pl_name", "master.m3u8")
 			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:a")
 			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:a")
 			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-var_stream_map", "v:0,name:1080 v:1,name:720 v:2,name:480");
+			.addExtraArgs("-map", "0:a")
+			.addExtraArgs("-var_stream_map", "v:0,a:0,name:1080 v:1,a:1,name:720 v:2,a:2,name:480");
 	}
 
 	private FFmpegOutputBuilder initSetting(FFmpegBuilder builder, Path inputFilePath, Path outputFolderPath) {
@@ -71,7 +74,8 @@ public class FFmpegConvertService implements ConvertService {
 
 	private void masterSettingWithoutCodec(FFmpegOutputBuilder builder) {
 		builder.setFormat("hls")
-			.addExtraArgs("-c:v", "copy");
+			.addExtraArgs("-c:v", "copy")
+			.addExtraArgs("-c:a", "copy");
 	}
 
 	private void masterSettingWithCodecH264(FFmpegOutputBuilder builder) {
