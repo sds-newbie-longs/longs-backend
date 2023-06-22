@@ -4,10 +4,9 @@ import static com.sds.actlongs.vo.ImageExtension.*;
 import static com.sds.actlongs.vo.VideoExtension.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,6 @@ import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.member.repository.MemberRepository;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.vo.ImageExtension;
-import com.sds.actlongs.vo.VideoExtension;
 
 @Import(JpaAuditingConfig.class)
 @DataJpaTest
@@ -65,16 +63,17 @@ class VideoRepositoryTest {
 				ImageExtension.JPG,
 				"d9daccee39dd4c4d855d9376bc981c11",
 				MP4,
-				new Time(0, 20, 15));
+				LocalTime.of(0, 20, 15)
+			);
 
 			// when
 			Video result = subject.save(video);
 
 			// then
-			Assertions.assertThat(result.getId()).isNotNull();
-			Assertions.assertThat(result.getThumbnailImageUuid()).isEqualTo("62dd98f0bd8e11ed93ab325096b39f47");
-			Assertions.assertThat(result.getVideoUuid()).isEqualTo("d9daccee39dd4c4d855d9376bc981c11");
-			Assertions.assertThat(result.getPlayingTime().toString()).isEqualTo("00:20:15");
+			assertThat(result.getId()).isNotNull();
+			assertThat(result.getThumbnailImageUuid()).isEqualTo("62dd98f0bd8e11ed93ab325096b39f47");
+			assertThat(result.getVideoUuid()).isEqualTo("d9daccee39dd4c4d855d9376bc981c11");
+			assertThat(result.getPlayingTime().toString()).isEqualTo("00:20:15");
 		}
 
 	}
@@ -94,19 +93,19 @@ class VideoRepositoryTest {
 
 			final Board board = Board.createNewBoard(member, channel, "newjeans");
 			final String uuid = "62dd98f0bd8e11ed93ab325096b39f43";
-			final Video video = Video.createNewVideo(board, uuid, PNG, uuid, MP4, new Time(1000));
+			final Video video = Video.createNewVideo(board, uuid, PNG, uuid, MP4, LocalTime.of(1, 30));
 			boardRepository.save(board);
 			videoRepository.save(video);
 
 			final Board board2 = Board.createNewBoard(member, channel, "newjeans1");
 			final String uuid2 = "62dd98f0bd8e11ed93ab325096b39f41";
-			final Video video2 = Video.createNewVideo(board2, uuid2, PNG, uuid2, MP4, new Time(1000));
+			final Video video2 = Video.createNewVideo(board2, uuid2, PNG, uuid2, MP4, LocalTime.of(2, 30));
 			boardRepository.save(board2);
 			videoRepository.save(video2);
 
 			final Board board3 = Board.createNewBoard(member, channel, "ive");
 			final String uuid3 = "62dd98f0bd8e11ed93ab325096b39f42";
-			final Video video3 = Video.createNewVideo(board3, uuid3, PNG, uuid3, MP4, new Time(1000));
+			final Video video3 = Video.createNewVideo(board3, uuid3, PNG, uuid3, MP4, LocalTime.of(2, 15));
 			videoRepository.save(video3);
 			boardRepository.save(board3);
 

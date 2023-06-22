@@ -1,6 +1,6 @@
 package com.sds.actlongs.domain.video.entity;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,10 +48,10 @@ public class Video extends BaseEntity {
 	private VideoExtension videoType;
 
 	@Column(nullable = false)
-	private Time playingTime;
+	private LocalTime playingTime;
 
 	public Video(Board board, String thumbnailImageUuid, ImageExtension thumbnailImageType,
-		String videoUuid, VideoExtension videoType, Time playingTime) {
+		String videoUuid, VideoExtension videoType, LocalTime playingTime) {
 		this.board = board;
 		this.thumbnailImageUuid = thumbnailImageUuid;
 		this.thumbnailImageType = thumbnailImageType;
@@ -66,7 +66,7 @@ public class Video extends BaseEntity {
 		ImageExtension thumbnailImageType,
 		String videoUuid,
 		VideoExtension videoType,
-		Time playingTime) {
+		LocalTime playingTime) {
 		return new Video(board, thumbnailImageUuid, thumbnailImageType, videoUuid, videoType, playingTime);
 	}
 
