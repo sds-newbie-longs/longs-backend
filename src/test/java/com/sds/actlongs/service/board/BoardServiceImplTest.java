@@ -198,7 +198,7 @@ class BoardServiceImplTest {
 
 		ChannelMember channelMember1 = new ChannelMember(member1, channel);
 		ChannelMember channelMember2 = new ChannelMember(member2, channel);
-		given(channelMemberRepository.findByChannelId(channel.getId())).willReturn(
+		given(channelMemberRepository.findAllFetchMemberUsernameByChannelId(channel.getId())).willReturn(
 			Arrays.asList(channelMember1, channelMember2));
 		given(videoRepository.findByBoardChannelIdOrderByCreatedAtDesc(channel.getId())).willReturn(
 			Arrays.asList(video2, video1));

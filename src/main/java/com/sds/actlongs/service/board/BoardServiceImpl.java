@@ -60,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<MemberBoardsDto> getMemberBoardsList(final Long channelId) {
-		return channelMemberRepository.findByChannelId(channelId)
+		return channelMemberRepository.findAllFetchMemberUsernameByChannelId(channelId)
 			.stream()
 			.map(channelMember -> {
 				final List<Video> videoList = videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(
