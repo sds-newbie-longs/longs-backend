@@ -45,11 +45,8 @@ public class FFmpegDurationExtractor implements DurationExtractor {
 
 	@Override
 	public Time extractReturnTime(String fileName) {
-		Double extract = this.extract(fileName);
-		System.out.println("extract 1");
-		Time time = TimeUtils.transDurationToTime(extract);
-		System.out.println("extract 1" + time.toString());
-		return time;
+		return TimeUtils
+			.transDurationToTime(this.extract(fileName));
 	}
 
 }

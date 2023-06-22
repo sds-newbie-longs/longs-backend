@@ -20,12 +20,14 @@ public class UploadManageSync implements UploadManage {
 
 	@Override
 	public void uploadProcess(String vodUuid) {
-		System.out.println("================================= uploadProcess  Start =================================");
 		convertService.convertToHls(vodUuid);
 
 		fileSender.sendHlsFiles(vodUuid);
 		fileSender.sendThumbnailFile(vodUuid);
 
+		fileManage.deleteTempVideo(vodUuid);
+		fileManage.deleteTempImage(vodUuid);
+		fileManage.deleteTempHls(vodUuid);
 	}
 
 }

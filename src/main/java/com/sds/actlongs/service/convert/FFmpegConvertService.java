@@ -35,7 +35,6 @@ public class FFmpegConvertService implements ConvertService {
 
 	@Override
 	public void convertToHls(String fileName) {
-		System.out.println("=====================incoding start ============================");
 		List<Path> paths = fileManage.createDirectoryForConvertedVideo(fileName);
 		Path inputFilePath = paths.get(0);
 		Path outputFolderPath = paths.get(1);
@@ -116,7 +115,7 @@ public class FFmpegConvertService implements ConvertService {
 
 		executor.createJob(builder, progress -> {
 			if (progress.status.equals(Progress.Status.END)) {
-				System.out.println("================================= JOB FINISHED =================================");
+				//System.out.println("================================= JOB FINISHED =================================");
 			}
 		}).run();
 	}

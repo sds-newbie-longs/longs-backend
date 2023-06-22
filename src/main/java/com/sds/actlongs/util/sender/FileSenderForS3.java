@@ -30,14 +30,17 @@ public class FileSenderForS3 implements FileSender {
 	@Value("${temp.img.extension}")
 	private String thumbnailExtension;
 
+	private final static String VIDEO_START_POINT_IN_S3 = "videos/";
+	private final static String THUMBNAIL_START_POINT_IN_S3 = "thumbnails/";
 
 	@Override
+
 	public void sendHlsFiles(String vodUuid) {
 
 		File root = new File(hlsPath + CATEGORY_PREFIX + vodUuid);
 		File[] files = root.listFiles();
 
-		String pathInS3 = "videos"+ CATEGORY_PREFIX + vodUuid;
+		String pathInS3 = VIDEO_START_POINT_IN_S3 + vodUuid;
 
 		if (files == null) {
 			return;
@@ -59,8 +62,7 @@ public class FileSenderForS3 implements FileSender {
 	@Override
 	public void sendThumbnailFile(String thumbnailUuid) {
 		File thumbnail = new File(thumbnailPath + CATEGORY_PREFIX + thumbnailUuid + thumbnailExtension);
-		String pathInS3 = "thumbnails";
-		s3Uploader.uploadFile(fileManage.transFileToMultipartFile(thumbnail),pathInS3);
+		s3Uploader.uploadFile(fileManage.transFileToMultipartFile(thumbnail), THUMBNAIL_START_POINT_IN_S3);
 	}
 
 	private void process(String rooPath, File[] files) {

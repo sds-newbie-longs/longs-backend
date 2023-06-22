@@ -12,6 +12,7 @@ public class TimeUtils {
 	private static final String SECONDS_UNIT = "s";
 	private static final String MINUTES_UNIT = "m";
 	private static final String HOURS_UNIT = "h";
+	private static final String VIDEO_TIME_FORMAT = "%02d:%02d:%02d";
 	private static final int SECOND = 1000;
 	private static final int SECONDS_PER_MINUTE = 60;
 	private static final int MINUTE = SECOND * SECONDS_PER_MINUTE;
@@ -46,7 +47,7 @@ public class TimeUtils {
 		long minute = time.toMinutes();
 		long seconds = time.toSeconds();
 
-		String timeInHHMMSS = String.format("%02d:%02d:%02d", hour, minute, seconds);
+		String timeInHHMMSS = String.format(VIDEO_TIME_FORMAT, hour, minute, seconds);
 		return Time.valueOf(timeInHHMMSS);
 	}
 
