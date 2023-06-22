@@ -36,21 +36,19 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 
 	@Override
 	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword) {
-		List<Member> members = channelMemberRepository.findAllCreatedChannel()
+		List<Member> membersSearched = memberRepository.findAllByUsernameStartsWith(keyword)
 			.stream()
-			.filter(cm -> cm.getChannel().getId() != channelId)
-			.map(ChannelMember::getMember)
-			.filter(m -> m.getId() != memberId && m.getUsername().startsWith(keyword))
+			.filter(m -> m.getId() != memberId)
 			.collect(Collectors.toList());
 
-		// 아무 그룹에도 속하지 않은 회원
-		// List<Member> membersNoneChannel =  memberRepository.findAll()
-		// 	.stream()
-		// 	.filter(m -> m.getUsername().startsWith(keyword) && m.getId() != memberId)
-		// 	.collect(Collectors.toList());
+		List<Member> membersBelongsToChannel = channelMemberRepository.findAllChannelByChannelIdAndUsernameStartsWith(
+				channelId, keyword)
+			.stream()
+			.map(ChannelMember::getMember)
+			.collect(Collectors.toList());
 
-		return members;
-
+		membersSearched.removeAll(membersBelongsToChannel);
+		return membersSearched;
 	}
 
 }
