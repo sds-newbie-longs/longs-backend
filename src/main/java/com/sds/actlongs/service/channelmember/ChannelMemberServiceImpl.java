@@ -2,10 +2,9 @@ package com.sds.actlongs.service.channelmember;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -36,17 +35,22 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	}
 
 	@Override
-	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId,
-		final String keyword) {
-		Stream<Member> membersNotInChannel = channelMemberRepository.findAll()
+	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword) {
+		List<Member> members = channelMemberRepository.findAllCreatedChannel()
 			.stream()
 			.filter(cm -> cm.getChannel().getId() != channelId)
-			.map(cm -> cm.getMember());
-		List<Member> members = membersNotInChannel
+			.map(ChannelMember::getMember)
 			.filter(m -> m.getId() != memberId && m.getUsername().startsWith(keyword))
 			.collect(Collectors.toList());
+
+		// 아무 그룹에도 속하지 않은 회원
+		// List<Member> membersNoneChannel =  memberRepository.findAll()
+		// 	.stream()
+		// 	.filter(m -> m.getUsername().startsWith(keyword) && m.getId() != memberId)
+		// 	.collect(Collectors.toList());
+
 		return members;
-		// return channelMemberRepository.findAllFetchMemberByChannelIdAndKeywordContaining(channelId, memberId, keyword);
+
 	}
 
 }
