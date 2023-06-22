@@ -22,5 +22,7 @@ public interface FileManage {
 
 	Boolean deleteTempHls(String fileName);
 
+	Boolean deleteFiles(File file);
+
 	MultipartFile transFileToMultipartFile(File input);
 }

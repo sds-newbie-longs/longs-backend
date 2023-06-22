@@ -112,7 +112,7 @@ public class FileManageImpl implements FileManage {
 	@Override
 	public Boolean deleteTempHls(String fileName) {
 		File hls = new File(saveHlsPath + CATEGORY_PREFIX + fileName);
-		return hls.delete();
+		return deleteFiles(hls);
 	}
 
 	@Override
@@ -135,6 +135,19 @@ public class FileManageImpl implements FileManage {
 
 		}
 		return null;
+	}
+
+	@Override
+	public Boolean deleteFiles(File file) {
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			if (files != null) {
+				for (File child : files) {
+					deleteFiles(child);
+				}
+			}
+		}
+		return file.delete();
 	}
 
 }
