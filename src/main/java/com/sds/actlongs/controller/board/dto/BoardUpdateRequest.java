@@ -1,7 +1,6 @@
 package com.sds.actlongs.controller.board.dto;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -13,10 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardUpdateRequest {
-
-	@NotNull
-	@ApiModelProperty(value = "게시글 pk(공백불가)", example = "1", required = true)
-	private Long boardId;
 
 	@NotBlank
 	@Size(max = 50)

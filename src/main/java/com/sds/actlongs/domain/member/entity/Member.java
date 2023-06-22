@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,7 @@ import lombok.NoArgsConstructor;
 import com.sds.actlongs.domain.BaseEntity;
 import com.sds.actlongs.vo.ImageExtension;
 
-@Entity
-@Table(name = "members")
+@Entity(name = "members")
 @Getter
 @NoArgsConstructor
 public class Member extends BaseEntity {
@@ -28,7 +26,7 @@ public class Member extends BaseEntity {
 	@Column(nullable = false, unique = true, length = 20)
 	private String username;
 
-	@Column(unique = true, length = 36)
+	@Column(unique = true, length = 32)
 	private String profileImageUuid;
 
 	@Enumerated(EnumType.STRING)

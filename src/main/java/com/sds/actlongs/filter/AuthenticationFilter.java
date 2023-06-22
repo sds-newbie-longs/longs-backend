@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.cors.CorsUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,7 +29,8 @@ public class AuthenticationFilter implements Filter {
 
 	private static final String[] API_WHITELIST = {"/members/login"};
 	private static final String[] SWAGGER_WHITELIST = {"/v2/api-docs/**", "/configuration/ui/**",
-		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**"};
+		"/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html/**", "/webjars/**", "/swagger/**",
+		"/swagger-ui/**", "/actuator/**"};
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -42,7 +44,9 @@ public class AuthenticationFilter implements Filter {
 
 	private boolean processAuthenticationAndGetResult(HttpServletRequest httpRequest,
 		HttpServletResponse httpResponse) {
-		if (isAuthenticationPath(httpRequest.getRequestURI())
+		if (CorsUtils.isPreFlightRequest(httpRequest)) {
+			return true;
+		} else if (isAuthenticationPath(httpRequest.getRequestURI())
 			&& isSessionExpiredOrInvalid(httpRequest.getSession(false))) {
 			handleAuthenticationFailure(httpResponse);
 			return false;
@@ -51,7 +55,7 @@ public class AuthenticationFilter implements Filter {
 	}
 
 	private boolean isSessionExpiredOrInvalid(HttpSession session) {
-		return session == null || session.getAttribute(SessionConstants.MEMBER_ID) == null;
+		return session == null || session.getAttribute(SessionConstants.AUTHENTICATION) == null;
 	}
 
 	private void handleAuthenticationFailure(HttpServletResponse httpResponse) {

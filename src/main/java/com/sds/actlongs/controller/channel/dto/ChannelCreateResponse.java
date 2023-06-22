@@ -12,7 +12,7 @@ public class ChannelCreateResponse extends ResultResponse {
 		super(resultCode);
 	}
 
-	public static ChannelCreateResponse of(boolean result) {
+	public static ChannelCreateResponse from(boolean result) {
 		return result ? succeed() : fail();
 	}
 

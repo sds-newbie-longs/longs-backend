@@ -38,12 +38,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push vidigummy/longs-svr:${{ github.run_id }} 
+        run: docker push vidigummy/longs-svr:${{ github.run_id }}
 
       - name: Push Docker image latest
         run: docker push vidigummy/longs-svr:latest
 
-  deploy:
+  deploy_gcp:
     needs: build-and-push-docker
     runs-on: ubuntu-latest
     steps:
@@ -59,3 +59,26 @@ jobs:
             cd /app/longs-env/env-dev
             docker image rm --force vidigummy/longs-svr
             docker compose up -d --force-recreate
+
+  deploy_aws:
+    needs: build-and-push-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repository
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.AWS_SVR_SECRET_KEY }}
+
+      - name: Connect to remote server and run command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_VM_BS_HOST }}
+          username: ${{ secrets.AWS_VM_USERNAME }}
+          key: ${{ secrets.AWS_SVR_SECRET_KEY }}
+          port: 22
+          script: |
+            /home/ubuntu/.ssh/loginToMaster.sh
+

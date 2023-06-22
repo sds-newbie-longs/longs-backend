@@ -2,6 +2,7 @@ package com.sds.actlongs.service.member;
 
 import static org.mockito.BDDMockito.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.member.repository.MemberRepository;
 
@@ -23,6 +25,9 @@ class MemberServiceImplTest {
 
 	@Mock
 	private MemberRepository memberRepository;
+
+	@Mock
+	private ChannelMemberRepository channelMemberRepository;
 
 	@InjectMocks
 	private MemberServiceImpl subject;
@@ -35,8 +40,10 @@ class MemberServiceImplTest {
 		void ifLoginWithExistingUsernameThenSucceed() {
 			//given
 			String username = "Harry";
-			Member member = Member.createNewMember(username);
+			Member member = mock(Member.class);
+			given(member.getId()).willReturn(1L);
 			given(memberRepository.findByUsername(username)).willReturn(Optional.of(member));
+			given(channelMemberRepository.findAllFetchChannelByMemberId(member.getId())).willReturn(List.of());
 			HttpSession mockHttpSession = mock(HttpSession.class);
 
 			//when
