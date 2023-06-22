@@ -35,7 +35,7 @@ public class TusUploadService implements UploadService {
 			UploadInfo uploadInfo = tusFileUploadService.getUploadInfo(request.getRequestURI());
 
 			if (uploadInfo != null && !uploadInfo.isUploadInProgress()) {
-				String vodUuid = uuidGenerate.getVodUuid();
+				String  vodUuid = uuidGenerate.getVodUuid();
 
 				fileManage.createTempVideoFileInLocal(tusFileUploadService.getUploadedBytes(request.getRequestURI()),
 					vodUuid);

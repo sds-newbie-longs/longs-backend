@@ -1,7 +1,11 @@
 package com.sds.actlongs.util.duration;
 
-import java.io.IOException;
+import static com.sds.actlongs.util.Constants.*;
 
+import java.io.IOException;
+import java.sql.Time;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +15,8 @@ import net.bramp.ffmpeg.probe.FFmpegStream;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.util.TimeUtils;
+
 @Profile({"local", "dev"})
 @Component
 @RequiredArgsConstructor
@@ -18,17 +24,29 @@ public class FFmpegDurationExtractor implements DurationExtractor {
 
 	private static final Integer START_POINT = 0;
 	private final FFprobe fFprobe;
+	@Value("${temp.video.original.path}")
+	private String videoOriginalPath;
+	@Value("${temp.img.extension}")
+	private String videoExtension;
 
 	@Override
-	public Double extract(String sourcePath) {
+	public Double extract(String fileName) {
+		String videoPath = videoOriginalPath + CATEGORY_PREFIX + fileName + videoExtension;
 		try {
-			FFmpegProbeResult probeResult = fFprobe.probe(sourcePath);
+			FFmpegProbeResult probeResult = fFprobe.probe(videoPath);
 			FFmpegStream videoStream = probeResult.getStreams().get(START_POINT);
 			return videoStream.duration;
 		} catch (IOException exception) {
 			//TODO THROW EXCEPTION
 		}
 		return 0.0; // 예외 상황 발생 시 반환하는 default value
+	}
+
+	@Override
+	public Time extractReturnTime(String fileName) {
+		return Time.valueOf(
+			TimeUtils.formatMilliseconds(
+				Math.round(this.extract(fileName)) * 1000));
 	}
 
 }

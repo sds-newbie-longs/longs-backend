@@ -26,8 +26,8 @@ public class UploadController {
 
 	@ApiOperation(value = "동영상 업로드 엔드포인트", notes = "동영상 업로드 성공시 동영상의 UUID response")
 	@RequestMapping(value = {"/video/upload", "/video/upload/**"})
-	public ResponseEntity<UploadResponseDto> tusUpload(HttpServletRequest request, HttpServletResponse response) {
-		return ResponseEntity.status(HttpStatus.OK).body(uploadService.upload(request, response));
+	public ResponseEntity<String> tusUpload(HttpServletRequest request, HttpServletResponse response) {
+		return ResponseEntity.status(HttpStatus.OK).body(uploadService.upload(request, response).getVideoUUid());
 	}
 
 }

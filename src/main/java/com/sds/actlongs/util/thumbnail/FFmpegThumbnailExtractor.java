@@ -23,7 +23,8 @@ public class FFmpegThumbnailExtractor implements ThumbnailExtractor {
 
 	private final FFmpeg ffmpeg;
 
-	private final Integer frame = 1;
+	@Value("${ffmpeg.thumbnail.extract.frame}")
+	private Integer grabFrameNum;
 
 	@Value("${temp.video.original.path}")
 	private String originalVideoPath;
@@ -52,7 +53,7 @@ public class FFmpegThumbnailExtractor implements ThumbnailExtractor {
 				.overrideOutputFiles(true)
 				.addOutput(outputPath)
 				.setFormat("image2")
-				.setFrames(frame)
+				.setFrames(grabFrameNum)
 				.setVideoFrameRate(1)
 				.done();
 
