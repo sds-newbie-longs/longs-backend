@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import com.sds.actlongs.vo.ImageExtension;
 @Entity(name = "members")
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id", callSuper = false)
 public class Member extends BaseEntity {
 
 	@Id

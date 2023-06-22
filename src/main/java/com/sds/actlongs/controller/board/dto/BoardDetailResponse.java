@@ -3,7 +3,7 @@ package com.sds.actlongs.controller.board.dto;
 import static com.sds.actlongs.model.ResultCode.*;
 import static com.sds.actlongs.util.Constants.*;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +27,7 @@ public class BoardDetailResponse extends ResultResponse {
 	@ApiModelProperty(value = "동영상 파일 ID", example = "jazzeans")
 	private final String videoUuid;
 	@ApiModelProperty(value = "재생시간", example = "2017-02-16 09:21:50.634")
-	private final Time playingTime;
+	private final LocalTime playingTime;
 
 	private BoardDetailResponse(ResultCode resultCode, Video video) {
 		super(resultCode);

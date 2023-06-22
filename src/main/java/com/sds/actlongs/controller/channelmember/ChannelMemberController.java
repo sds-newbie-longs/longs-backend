@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.channelmember;
 
+import static com.sds.actlongs.util.SessionConstants.*;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +30,8 @@ import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
+import com.sds.actlongs.domain.member.entity.Member;
+import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channelmember.ChannelMemberService;
 
 @Api(tags = "그룹회원 API")
@@ -49,21 +54,18 @@ public class ChannelMemberController {
 	@GetMapping("/not-in/{groupId}/search")
 	public ResponseEntity<MemberSearchResponse> searchMember(
 		@PathVariable("groupId") final Long channelId,
-		@RequestParam @NotBlank @Size(max = 20) final String keyword
+		@RequestParam @NotBlank @Size(max = 20) final String keyword,
+		@SessionAttribute(AUTHENTICATION) Authentication authentication
 	) {
-		List<MemberSearchResponse.SearchedMember> searchList = List.of(
-			new MemberSearchResponse.SearchedMember(101L, "Din"),
-			new MemberSearchResponse.SearchedMember(102L, "diedie"),
-			new MemberSearchResponse.SearchedMember(103L, "DIN_DEAN"),
-			new MemberSearchResponse.SearchedMember(104L, "dIabcd")
-		);
-		MemberSearchResponse listResponse = new MemberSearchResponse(searchList);
-		return ResponseEntity.ok(listResponse);
+		List<Member> externalMembers = channelMemberService.searchMembersNotInChannel(channelId,
+			authentication.getMemberId(), keyword);
+		return ResponseEntity.ok(MemberSearchResponse.from(externalMembers));
 	}
 
 	@ApiOperation(value = "그룹원 초대 API", notes = "IV001: 그룹원 초대에 성공하였습니다.")
 	@PostMapping("/{groupId}")
-	public ResponseEntity<MemberInviteResponse> inviteMember(@PathVariable("groupId") final Long channelId,
+	public ResponseEntity<MemberInviteResponse> inviteMember(
+		@PathVariable("groupId") final Long channelId,
 		@Valid @RequestBody final MemberInviteRequest request) {
 		return ResponseEntity.ok(new MemberInviteResponse());
 	}

@@ -60,7 +60,7 @@ class BoardServiceImplTest {
 			ImageExtension.PNG,
 			"data/test_1686534272185",
 			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
+			LocalTime.now());
 		given(videoRepository.findByBoardId(video.getId())).willReturn(Optional.of(video));
 
 		//when
@@ -182,7 +182,7 @@ class BoardServiceImplTest {
 			ImageExtension.PNG,
 			"비디오uuid1",
 			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
+			LocalTime.now());
 
 		Video video2 = new Video(
 			new Board(
@@ -194,11 +194,11 @@ class BoardServiceImplTest {
 			ImageExtension.PNG,
 			"비디오uuid2",
 			VideoExtension.MP4,
-			Time.valueOf(LocalTime.now()));
+			LocalTime.now());
 
 		ChannelMember channelMember1 = new ChannelMember(member1, channel);
 		ChannelMember channelMember2 = new ChannelMember(member2, channel);
-		given(channelMemberRepository.findByChannelId(channel.getId())).willReturn(
+		given(channelMemberRepository.findAllFetchMemberUsernameByChannelId(channel.getId())).willReturn(
 			Arrays.asList(channelMember1, channelMember2));
 		given(videoRepository.findByBoardChannelIdOrderByCreatedAtDesc(channel.getId())).willReturn(
 			Arrays.asList(video2, video1));

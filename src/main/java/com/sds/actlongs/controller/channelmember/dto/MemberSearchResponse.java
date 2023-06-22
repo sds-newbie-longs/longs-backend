@@ -1,10 +1,12 @@
 package com.sds.actlongs.controller.channelmember.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -23,6 +25,14 @@ public class MemberSearchResponse extends ResultResponse {
 	public MemberSearchResponse(List<SearchedMember> searchList) {
 		super(ResultCode.MEMBERSEARCH_SUCCESS);
 		this.searchList = searchList;
+	}
+
+	public static MemberSearchResponse from(List<Member> externalMembers) {
+		List<SearchedMember> members = new ArrayList<>();
+		for (Member m : externalMembers) {
+			members.add(SearchedMember.of(m.getId(), m.getUsername()));
+		}
+		return new MemberSearchResponse(members);
 	}
 
 	@Getter

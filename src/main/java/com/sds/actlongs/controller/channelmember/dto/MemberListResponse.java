@@ -37,7 +37,7 @@ public class MemberListResponse extends ResultResponse {
 	public static MemberListResponse from(List<ChannelMember> channelMembers) {
 		return new MemberListResponse(channelMembers.stream()
 			.map(ChannelMember::getMember)
-			.map(member -> MemberResponse.from(member.getId(), member.getUsername()))
+			.map(member -> MemberResponse.of(member.getId(), member.getUsername()))
 			.collect(Collectors.toList()));
 	}
 
@@ -54,7 +54,7 @@ public class MemberListResponse extends ResultResponse {
 			this.username = username;
 		}
 
-		public static MemberResponse from(Long id, String username) {
+		public static MemberResponse of(Long id, String username) {
 			return new MemberResponse(id, username);
 		}
 

@@ -25,6 +25,8 @@ class ChannelMemberServiceImplTest {
 	private ChannelMemberServiceImpl subject;
 	@Mock
 	private ChannelRepository mockChannelRepository;
+	@Mock
+	private ChannelMemberRepository channelMemberRepository;
 
 	@Test
 	void getMemberList() {
