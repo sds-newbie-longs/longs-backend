@@ -17,7 +17,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -28,24 +27,19 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 @PropertySource("classpath:upload.properties")
 public class FileManageImpl implements FileManage {
 
-	@Value("${temp.video.original.path}")
-	private String saveOriginalPath;
-
-	@Value("${temp.thumbnail.path}")
-	private String saveThumbnailPath;
-
-	@Value("${temp.video.hls.path}")
-	private String saveHlsPath;
-
-	@Value("${temp.video.extension}")
-	private String videoExtension;
-
-	@Value("${temp.img.extension}")
-	private String imgExtension;
-
 	private static final String HLS_480 = "480";
 	private static final String HLS_720 = "720";
 	private static final String HLS_1080 = "1080";
+	@Value("${temp.video.original.path}")
+	private String saveOriginalPath;
+	@Value("${temp.thumbnail.path}")
+	private String saveThumbnailPath;
+	@Value("${temp.video.hls.path}")
+	private String saveHlsPath;
+	@Value("${temp.video.extension}")
+	private String videoExtension;
+	@Value("${temp.img.extension}")
+	private String imgExtension;
 
 	@Override
 	public String createTempVideoFileInLocal(InputStream input, String fileName) {
@@ -116,7 +110,7 @@ public class FileManageImpl implements FileManage {
 	}
 
 	@Override
-	public Boolean deleteTempHls(String fileName){
+	public Boolean deleteTempHls(String fileName) {
 		File hls = new File(saveHlsPath + CATEGORY_PREFIX + fileName);
 		return hls.delete();
 	}
@@ -129,12 +123,12 @@ public class FileManageImpl implements FileManage {
 				Files.probeContentType(input.toPath()),
 				false,
 				input.getName(),
-				(int) input.length(),
+				(int)input.length(),
 				input.getParentFile());
 
 			InputStream fileInputStream = new FileInputStream(input);
 			OutputStream outputStream = fileItem.getOutputStream();
-			IOUtils.copy(fileInputStream,outputStream);
+			IOUtils.copy(fileInputStream, outputStream);
 
 			return new CommonsMultipartFile(fileItem);
 		} catch (IOException exception) {
@@ -142,4 +136,5 @@ public class FileManageImpl implements FileManage {
 		}
 		return null;
 	}
+
 }

@@ -25,15 +25,13 @@ import com.sds.actlongs.util.manage.file.FileManage;
 @PropertySource("classpath:upload.properties")
 public class FFmpegConvertService implements ConvertService {
 
-	@Value("${ffmpeg.video.chunk.size}")
-	private String chunkSize;
-
-	@Value("${ffmpeg.video.ts.default}")
-	private String fileFormatPolicy;
-
 	private final FFmpeg fFmpeg;
 	private final FFprobe fFprobe;
 	private final FileManage fileManage;
+	@Value("${ffmpeg.video.chunk.size}")
+	private String chunkSize;
+	@Value("${ffmpeg.video.ts.default}")
+	private String fileFormatPolicy;
 
 	@Override
 	public void convertToHls(String fileName) {
@@ -45,13 +43,24 @@ public class FFmpegConvertService implements ConvertService {
 		FFmpegOutputBuilder outPutBuilder = initSetting(builder, inputFilePath, outputFolderPath);
 
 		masterSettingWithoutCodec(outPutBuilder);
-		incodingDefaultSetting(outPutBuilder,outputFolderPath);
+		incodingDefaultSetting(outPutBuilder, outputFolderPath);
 		hls_1080Setting(outPutBuilder);
 		hls_720Setting(outPutBuilder);
 		hls_480Setting(outPutBuilder);
 		outPutBuilder.done();
 
 		run(builder);
+	}
+
+	public void incodingDefaultSetting(FFmpegOutputBuilder builder, Path outputFolderPath) {
+		builder.addExtraArgs("-hls_time", chunkSize)
+			.addExtraArgs("-hls_list_size", "0")
+			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + fileFormatPolicy)
+			.addExtraArgs("-master_pl_name", "master.m3u8")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-var_stream_map", "v:0,name:1080 v:1,name:720 v:2,name:480");
 	}
 
 	private FFmpegOutputBuilder initSetting(FFmpegBuilder builder, Path inputFilePath, Path outputFolderPath) {
@@ -72,17 +81,6 @@ public class FFmpegConvertService implements ConvertService {
 	private void masterSettingWithCodecVP9(FFmpegOutputBuilder builder) {
 		builder.setFormat("hls")
 			.setVideoCodec("libvpx-vp9");
-	}
-
-	public void incodingDefaultSetting(FFmpegOutputBuilder builder, Path outputFolderPath){
-		builder.addExtraArgs("-hls_time", chunkSize)
-			.addExtraArgs("-hls_list_size", "0")
-			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + fileFormatPolicy)
-			.addExtraArgs("-master_pl_name", "master.m3u8")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-var_stream_map", "v:0,name:1080 v:1,name:720 v:2,name:480");
 	}
 
 	private void hls_1080Setting(FFmpegOutputBuilder builder) {

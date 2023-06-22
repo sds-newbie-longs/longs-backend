@@ -14,10 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BoardCreateRequest {
 	@NotNull
-	@ApiModelProperty(value = "작성자 Id", example = "1", required = true)
-	private Long writerId;
-
-	@NotNull
 	@ApiModelProperty(value = "채널 Id", example = "1", required = true)
 	private Long channelId;
 
@@ -27,7 +23,7 @@ public class BoardCreateRequest {
 
 	@NotBlank
 	@Size(max = 50)
-	@ApiModelProperty(value = "제목(최대50자)", example = "재진스")
+	@ApiModelProperty(value = "제목(최대50자)", example = "재진스", required = true)
 	private String title;
 
 	@Size(max = 1000)

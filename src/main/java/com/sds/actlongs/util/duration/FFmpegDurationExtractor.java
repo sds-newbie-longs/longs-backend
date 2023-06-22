@@ -7,31 +7,27 @@ import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.lang.UsesJava8;
 import org.springframework.stereotype.Component;
 
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
 
-import com.sds.actlongs.util.TimeUtils;
-
 import lombok.RequiredArgsConstructor;
+
+import com.sds.actlongs.util.TimeUtils;
 
 @Profile({"local", "dev"})
 @Component
 @RequiredArgsConstructor
 public class FFmpegDurationExtractor implements DurationExtractor {
 
-	@Value("${temp.video.original.path}")
-	private String videoOriginalPath;
-
-	@Value("${temp.img.extension}")
-	private String videoExtension;
-
 	private static final Integer START_POINT = 0;
 	private final FFprobe fFprobe;
+	@Value("${temp.video.original.path}")
+	private String videoOriginalPath;
+	@Value("${temp.img.extension}")
+	private String videoExtension;
 
 	@Override
 	public Double extract(String fileName) {

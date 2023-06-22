@@ -28,6 +28,7 @@ public class WebConfig {
 					.allowedMethods(CorsConfiguration.ALL)
 					.allowedOrigins("http://localhost:3000")
 					.allowedHeaders(CorsConfiguration.ALL)
+					.exposedHeaders("Location", "Upload-Offset","Upload-Length")
 					.allowCredentials(true);
 			}
 		};
