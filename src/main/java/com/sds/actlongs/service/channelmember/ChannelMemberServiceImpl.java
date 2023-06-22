@@ -1,6 +1,9 @@
 package com.sds.actlongs.service.channelmember;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -8,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.domain.channel.entity.Channel;
+import com.sds.actlongs.domain.channel.repository.ChannelRepository;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
@@ -18,11 +23,16 @@ import com.sds.actlongs.domain.member.repository.MemberRepository;
 public class ChannelMemberServiceImpl implements ChannelMemberService {
 
 	private final ChannelMemberRepository channelMemberRepository;
+	private final ChannelRepository channelRepository;
 	private final MemberRepository memberRepository;
 
 	@Override
 	public List<ChannelMember> getMemberList(final Long channelId) {
-		return channelMemberRepository.findAllFetchMemberByChannelId(channelId);
+		final Optional<Channel> optionalChannel = channelRepository.findById(channelId);
+		if (optionalChannel.isEmpty() || optionalChannel.get().getStatus().equals(Channel.Status.DELETED)) {
+			throw new EntityNotFoundException();
+		}
+		return channelMemberRepository.findAllFetchMemberUsernameByChannelId(channelId);
 	}
 
 	@Override
