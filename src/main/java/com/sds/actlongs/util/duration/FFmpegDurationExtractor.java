@@ -26,7 +26,7 @@ public class FFmpegDurationExtractor implements DurationExtractor {
 	private final FFprobe fFprobe;
 	@Value("${temp.video.original.path}")
 	private String videoOriginalPath;
-	@Value("${temp.img.extension}")
+	@Value("${temp.video.extension}")
 	private String videoExtension;
 
 	@Override
@@ -38,15 +38,18 @@ public class FFmpegDurationExtractor implements DurationExtractor {
 			return videoStream.duration;
 		} catch (IOException exception) {
 			//TODO THROW EXCEPTION
+
 		}
 		return 0.0; // 예외 상황 발생 시 반환하는 default value
 	}
 
 	@Override
 	public Time extractReturnTime(String fileName) {
-		return Time.valueOf(
-			TimeUtils.formatMilliseconds(
-				Math.round(this.extract(fileName)) * 1000));
+		Double extract = this.extract(fileName);
+		System.out.println("extract 1");
+		Time time = TimeUtils.transDurationToTime(extract);
+		System.out.println("extract 1" + time.toString());
+		return time;
 	}
 
 }

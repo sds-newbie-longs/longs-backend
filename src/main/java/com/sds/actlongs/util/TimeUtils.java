@@ -2,6 +2,8 @@ package com.sds.actlongs.util;
 
 import static com.sds.actlongs.util.Constants.*;
 
+import java.sql.Time;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class TimeUtils {
@@ -36,6 +38,16 @@ public class TimeUtils {
 			return hours + HOURS_UNIT + SPACE + remainingMinutes + MINUTES_UNIT + SPACE + remainingSeconds
 				+ SECONDS_UNIT + SPACE + remainingMilliseconds + MILLISECONDS_UNIT;
 		}
+	}
+
+	public static Time transDurationToTime(Double duration){
+		Duration time = Duration.ofMillis(Math.round(duration) * 1000);
+		long hour = time.toHours();
+		long minute = time.toMinutes();
+		long seconds = time.toSeconds();
+
+		String timeInHHMMSS = String.format("%02d:%02d:%02d", hour, minute, seconds);
+		return Time.valueOf(timeInHHMMSS);
 	}
 
 }

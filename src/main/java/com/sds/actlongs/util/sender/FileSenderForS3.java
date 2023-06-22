@@ -37,7 +37,7 @@ public class FileSenderForS3 implements FileSender {
 		File root = new File(hlsPath + CATEGORY_PREFIX + vodUuid);
 		File[] files = root.listFiles();
 
-		String pathInS3 = "./videos" + vodUuid;
+		String pathInS3 = "videos"+ CATEGORY_PREFIX + vodUuid;
 
 		if (files == null) {
 			return;
@@ -59,7 +59,7 @@ public class FileSenderForS3 implements FileSender {
 	@Override
 	public void sendThumbnailFile(String thumbnailUuid) {
 		File thumbnail = new File(thumbnailPath + CATEGORY_PREFIX + thumbnailUuid + thumbnailExtension);
-		String pathInS3 = "./thumbnails";
+		String pathInS3 = "thumbnails";
 		s3Uploader.uploadFile(fileManage.transFileToMultipartFile(thumbnail),pathInS3);
 	}
 

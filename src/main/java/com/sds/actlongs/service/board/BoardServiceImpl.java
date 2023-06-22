@@ -1,5 +1,5 @@
 package com.sds.actlongs.service.board;
-  
+
 import java.sql.Time;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +32,10 @@ import com.sds.actlongs.vo.ImageExtension;
 import com.sds.actlongs.vo.VideoExtension;
 import com.sds.actlongs.controller.board.dto.BoardDto;
 import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
-import com.sds.actlongs.domain.board.entity.Board;
-import com.sds.actlongs.domain.board.repository.BoardRepository;
-import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
-import com.sds.actlongs.domain.video.entity.Video;
-import com.sds.actlongs.domain.video.repository.VideoRepository;
 import com.sds.actlongs.exception.BoardNotMatchedMemberException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
@@ -51,10 +48,9 @@ public class BoardServiceImpl implements BoardService {
 	private final DurationExtractor durationExtractor;
 	private final FileManage fileManage;
 	private final UploadManage uploadManage;
-  
-  private final BoardRepository boardRepository;
-	private final VideoRepository videoRepository;
+
 	private final ChannelMemberRepository channelMemberRepository;
+
 
 	@Override
 	public ResultCode createBoard(final BoardCreateRequest request, final Long writerId) {
@@ -71,7 +67,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 
 		Time videoDuration = durationExtractor.extractReturnTime(request.getVideoUuid());
-
+		System.out.println("videoDuration:" + videoDuration.toString());
 		uploadManage.uploadProcess(request.getVideoUuid());
 
 		Board newBoard = (request.getDescription() == null
@@ -92,7 +88,7 @@ public class BoardServiceImpl implements BoardService {
 
 		return ResultCode.POST_BOARD_SUCCESS;
   }
-  
+
 	@Override
 	public Optional<Video> getBoardDetail(final Long boardId) {
 		return videoRepository.findByBoardId(boardId);

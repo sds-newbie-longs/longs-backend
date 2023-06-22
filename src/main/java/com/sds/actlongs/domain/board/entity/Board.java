@@ -13,13 +13,14 @@ import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.sds.actlongs.domain.BaseEntity;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.member.entity.Member;
 
 @Entity(name = "boards")
 @Getter
 @NoArgsConstructor
-public class Board {
+public class Board extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
