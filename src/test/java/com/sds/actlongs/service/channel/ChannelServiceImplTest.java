@@ -1,13 +1,5 @@
 package com.sds.actlongs.service.channel;
 
-import static org.mockito.BDDMockito.*;
-
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpSession;
-
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,13 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channel.repository.ChannelRepository;
-import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
-import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.member.repository.MemberRepository;
-import com.sds.actlongs.util.SessionConstants;
 
 @ExtendWith(MockitoExtension.class)
 class ChannelServiceImplTest {
@@ -88,8 +76,8 @@ class ChannelServiceImplTest {
 			//
 			// //then
 			// Assertions.assertThat(resultList.size()).isEqualTo(3);
-			// for (Channel channel : resultList) {
-			// 	Assertions.assertThat(channel.getMember().getUsername()).isEqualTo("Harry");
+			// for (ChannelMember channelMember : resultList) {
+			// 	Assertions.assertThat(channelMember.getMember().getUsername()).isEqualTo("Harry");
 			// }
 		}
 
@@ -113,7 +101,7 @@ class ChannelServiceImplTest {
 			// given(channelMemberRepository.save(any())).willReturn(channelMember);
 			//
 			// HttpSession mockHttpSession = mock(HttpSession.class);
-			//
+
 			// //when
 			// boolean result = subject.createChannel(channelName, harry.getId(), mockHttpSession);
 			//
