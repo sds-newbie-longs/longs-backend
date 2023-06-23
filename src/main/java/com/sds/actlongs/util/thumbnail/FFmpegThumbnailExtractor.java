@@ -3,6 +3,9 @@ package com.sds.actlongs.util.thumbnail;
 import static com.sds.actlongs.util.Constants.*;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +51,7 @@ public class FFmpegThumbnailExtractor implements ThumbnailExtractor {
 		final String outputPath = imgSavePath + CATEGORY_PREFIX + fileName + imgExtension;
 
 		try {
+			Files.createDirectories(Paths.get(imgSavePath));
 			FFmpegBuilder builder = new FFmpegBuilder()
 				.setInput(sourcePath)
 				.overrideOutputFiles(true)

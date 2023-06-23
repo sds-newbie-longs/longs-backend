@@ -45,6 +45,7 @@ public class FileManageImpl implements FileManage {
 	public String createTempVideoFileInLocal(InputStream input, String fileName) {
 		String uploadPath = saveOriginalPath + CATEGORY_PREFIX;
 		try {
+			Files.createDirectories(Paths.get(saveOriginalPath));
 			File video = new File(uploadPath + fileName + videoExtension);
 			FileUtils.copyInputStreamToFile(input, video);
 		} catch (IOException exception) {
