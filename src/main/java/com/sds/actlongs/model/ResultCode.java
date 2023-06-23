@@ -22,7 +22,9 @@ public enum ResultCode {
 
 	// ChannelMember
 	MEMBERINVITE_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다."),
+	MEMBERINVITE_FAILURE(200, "IV002", "그룹원 초대에 실패하였습니다."),
 	CHANNELLEAVE_SUCCESS(200, "LV001", "그룹 탈퇴에 성공하였습니다."),
+	CHANNELLEAVE_FAILURE(200, "LV002", "그룹 탈퇴에 실패하였습니다."),
 
 	// Board
 	GET_BOARDDETAIL_SUCCESS(200, "B001", "게시글 상세정보 조회에 성공하였습니다."),

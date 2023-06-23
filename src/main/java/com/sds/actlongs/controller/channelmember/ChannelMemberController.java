@@ -4,6 +4,7 @@ import static com.sds.actlongs.util.SessionConstants.*;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
 import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
@@ -62,18 +64,26 @@ public class ChannelMemberController {
 		return ResponseEntity.ok(MemberSearchResponse.from(externalMembers));
 	}
 
-	@ApiOperation(value = "그룹원 초대 API", notes = "IV001: 그룹원 초대에 성공하였습니다.")
+	@ApiOperation(value = "그룹원 초대 API", notes = ""
+		+ "IV001: 그룹원 초대에 성공하였습니다.\n"
+		+ "IV002: 그룹원 초대에 실패하였습니다.")
 	@PostMapping("/{groupId}")
 	public ResponseEntity<MemberInviteResponse> inviteMember(
-		@PathVariable("groupId") final Long channelId,
+		@PathVariable("groupId") @ApiParam(value = "그룹PK", example = "1", required = true) final Long channelId,
 		@Valid @RequestBody final MemberInviteRequest request) {
-		return ResponseEntity.ok(new MemberInviteResponse());
+		final boolean result = channelMemberService.inviteMember(channelId, request.getMemberId());
+		return ResponseEntity.ok(MemberInviteResponse.from(result));
 	}
 
 	@ApiOperation(value = "그룹 탈퇴 API", notes = "LV001: 그룹 탈퇴에 성공하였습니다.")
 	@DeleteMapping("/{groupId}")
-	public ResponseEntity<ChannelLeaveResponse> leaveChannel(@PathVariable("groupId") final Long channelId) {
-		return ResponseEntity.ok(new ChannelLeaveResponse());
+	public ResponseEntity<ChannelLeaveResponse> leaveChannel(
+		@PathVariable("groupId") @ApiParam(value = "그룹PK", example = "1", required = true) final Long channelId,
+		@SessionAttribute(AUTHENTICATION) Authentication authentication,
+		final HttpServletRequest servletRequest) {
+		final boolean result = channelMemberService.leaveChannel(channelId, authentication.getMemberId(),
+			servletRequest.getSession());
+		return ResponseEntity.ok(ChannelLeaveResponse.from(result));
 	}
 
 }
