@@ -35,7 +35,6 @@ public class MemberController {
 
 	private final MemberService memberService;
 
-	@MeasureExecutionTime
 	@ApiOperation(value = "로그인 API", notes = ""
 		+ "L001: 로그인에 성공하였습니다.\n"
 		+ "L002: 로그인에 실패하였습니다.")

@@ -7,6 +7,7 @@ import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import net.bramp.ffmpeg.FFprobe;
@@ -20,6 +21,7 @@ import com.sds.actlongs.util.TimeUtils;
 @Profile({"local", "dev"})
 @Component
 @RequiredArgsConstructor
+@PropertySource("classpath:upload.properties")
 public class FFmpegDurationExtractor implements DurationExtractor {
 
 	private static final Integer START_POINT = 0;
