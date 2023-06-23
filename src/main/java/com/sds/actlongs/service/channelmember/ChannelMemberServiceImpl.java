@@ -9,7 +9,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,7 +42,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword) {
 		List<Member> membersSearched = memberRepository.findAllByUsernameStartsWith(keyword)
 			.stream()
-			.filter(m -> m.getId() != memberId)
+			.filter(m -> !m.getId().equals(memberId))
 			.collect(Collectors.toList());
 
 		List<Member> membersBelongsToChannel = channelMemberRepository.findAllChannelByChannelIdAndUsernameStartsWith(
@@ -89,7 +88,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 			.getChannelAuthorityMap()
 			.entrySet()
 			.stream()
-			.filter(e -> e.getKey() != channelId)
+			.filter(e -> !e.getKey().equals(channelId))
 			.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 		session.setAttribute(SessionConstants.AUTHENTICATION, new Authentication(memberId, filteredMap));
 		return true;
