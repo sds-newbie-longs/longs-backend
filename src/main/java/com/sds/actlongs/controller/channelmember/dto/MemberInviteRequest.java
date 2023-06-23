@@ -16,8 +16,4 @@ public class MemberInviteRequest {
 	@ApiModelProperty(value = "회원PK", example = "2", required = true)
 	private Long memberId;
 
-	@NotNull
-	@ApiModelProperty(value = "그룹PK", example = "1", required = true)
-	private Long channelId;
-
 }

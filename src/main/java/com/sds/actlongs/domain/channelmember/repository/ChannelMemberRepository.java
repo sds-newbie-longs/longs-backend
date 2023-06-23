@@ -1,6 +1,7 @@
 package com.sds.actlongs.domain.channelmember.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +34,7 @@ public interface ChannelMemberRepository extends JpaRepository<ChannelMember, Lo
 		+ "INNER JOIN cm.channel c ON c.status = 'CREATED'"
 		+ "WHERE cm.channel.id = :channelId AND cm.member.username LIKE :keyword%")
 	List<ChannelMember> findAllChannelByChannelIdAndUsernameStartsWith(Long channelId, String keyword);
+
+	Optional<ChannelMember> findByChannelIdAndMemberId(Long channelId, Long memberId);
 
 }
