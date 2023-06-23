@@ -5,7 +5,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 class ActLongsApplicationTests {
 
-	void contextLoads() {
+	// @Test
+	// void contextLoads() {
+	//
+	// }
 
-	}
 }

@@ -12,7 +12,7 @@ public class LoginResponse extends ResultResponse {
 		super(resultCode);
 	}
 
-	public static LoginResponse of(boolean result) {
+	public static LoginResponse from(boolean result) {
 		return result ? succeed() : fail();
 	}
 

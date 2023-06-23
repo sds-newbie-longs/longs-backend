@@ -15,7 +15,15 @@ public enum ErrorCode {
 	HTTP_MESSAGE_NOT_READABLE(400, "E-G005", "HTTP Request Body 형식이 올바르지 않습니다."),
 	REQUEST_PARAMETER_MISSING(400, "E-G006", "요청 파라미터는 필수입니다."),
 	REQUEST_HEADER_MISSING(400, "E-G007", "요청 헤더는 필수입니다."),
-	ENTITY_NOT_FOUND(404, "E-G008", "존재하지 않는 Entity입니다.");
+	ENTITY_NOT_FOUND(404, "E-G008", "존재하지 않는 Entity 입니다."),
+	AUTHENTICATION_FAILURE(401, "E-G009", "인증에 실패하였습니다."),
+	AUTHORIZATION_FAILURE(403, "E-G010", "권한이 부족합니다."),
+
+	// Member
+	MEMBERINFO_FAILURE(500, "E-M001", "회원정보 조회에 실패하였습니다."),
+
+	// Board
+	BOARD_NOT_MATCHED_MEMBER_FAILURE(400, "E-B001", "게시글이 존재하지 않습니다.");
 
 	private final int status;
 	private final String code;
