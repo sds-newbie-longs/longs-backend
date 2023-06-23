@@ -3,7 +3,7 @@ name: '[SPRINT]도커 DEV SVR 배포'
 on:
   push:
     branches:
-      - sprint2
+      - sprint3
 
 jobs:
   build-and-push-docker:
