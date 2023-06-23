@@ -72,7 +72,6 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	}
 
 	@Override
-	@Transactional
 	public boolean leaveChannel(final Long channelId, final Long memberId, final HttpSession session) {
 		final Optional<Member> memberOptional = memberRepository.findById(memberId);
 		final Optional<ChannelMember> channelMemberOptional = channelMemberRepository.findByChannelIdAndMemberId(
