@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
 			ImageExtension.PNG,
 			request.getVideoUuid(),
 			VideoExtension.MP4,
-			videoDuration);
+			videoDuration.toLocalTime());
 
 		videoRepository.save(newVideo);
 
