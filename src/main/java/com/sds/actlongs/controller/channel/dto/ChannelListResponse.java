@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import com.sds.actlongs.domain.channel.entity.Channel;
-import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -28,10 +27,9 @@ public class ChannelListResponse extends ResultResponse {
 		this.channelList = channelList;
 	}
 
-	public static ChannelListResponse from(List<ChannelMember> channelMembers) {
+	public static ChannelListResponse from(List<Channel> channels) {
 		List<JoinedChannel> channelList = new ArrayList<>();
-		for (ChannelMember channelMember : channelMembers) {
-			Channel channel = channelMember.getChannel();
+		for (Channel channel : channels) {
 			channelList.add(JoinedChannel.of(
 				channel.getId(),
 				channel.getOwner().getId(),
