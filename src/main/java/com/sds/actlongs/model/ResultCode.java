@@ -34,7 +34,9 @@ public enum ResultCode {
 	DELETE_BOARD_SUCCESS(200, "B003", "게시글 삭제에 성공하였습니다."),
 	DELETE_BOARD_FAIL(200, "B008", "게시글 삭제에 실패하였습니다."),
 	SEARCH_BOARDLIST_SUCCESS(200, "B004", "게시글 검색에 성공하였습니다."),
-	GET_BOARDLIST_SUCCESS(200, "B005", "게시글 리스트 조회에 성공하였습니다.");
+	GET_BOARDLIST_SUCCESS(200, "B005", "게시글 리스트 조회에 성공하였습니다."),
+	POST_BOARD_SUCCESS(200, "B009", "게시글 생성을 완료했습니다."),
+	POST_BOARD_FAILURE_BAD_REQUEST_UUID(400, "B010", "동영상 Uuid가 존재하지 않습니다.");
 
 	private final int status;
 	private final String code;

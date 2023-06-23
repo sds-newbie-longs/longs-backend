@@ -2,6 +2,8 @@ package com.sds.actlongs.util;
 
 import static com.sds.actlongs.util.Constants.*;
 
+import java.sql.Time;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class TimeUtils {
@@ -10,6 +12,7 @@ public class TimeUtils {
 	private static final String SECONDS_UNIT = "s";
 	private static final String MINUTES_UNIT = "m";
 	private static final String HOURS_UNIT = "h";
+	private static final String VIDEO_TIME_FORMAT = "%02d:%02d:%02d";
 	private static final int SECOND = 1000;
 	private static final int SECONDS_PER_MINUTE = 60;
 	private static final int MINUTE = SECOND * SECONDS_PER_MINUTE;
@@ -36,6 +39,16 @@ public class TimeUtils {
 			return hours + HOURS_UNIT + SPACE + remainingMinutes + MINUTES_UNIT + SPACE + remainingSeconds
 				+ SECONDS_UNIT + SPACE + remainingMilliseconds + MILLISECONDS_UNIT;
 		}
+	}
+
+	public static Time transDurationToTime(Double duration) {
+		Duration time = Duration.ofMillis(Math.round(duration) * 1000);
+		long hour = time.toHours();
+		long minute = time.toMinutes();
+		long seconds = time.toSeconds();
+
+		String timeInHhMmSs = String.format(VIDEO_TIME_FORMAT, hour, minute, seconds);
+		return Time.valueOf(timeInHhMmSs);
 	}
 
 }

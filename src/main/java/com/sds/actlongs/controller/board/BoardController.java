@@ -7,16 +7,19 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +31,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.board.dto.BoardCreateRequest;
+import com.sds.actlongs.controller.board.dto.BoardCreateResponse;
 import com.sds.actlongs.controller.board.dto.BoardDeleteResponse;
 import com.sds.actlongs.controller.board.dto.BoardDetailResponse;
 import com.sds.actlongs.controller.board.dto.BoardDto;
@@ -37,13 +42,10 @@ import com.sds.actlongs.controller.board.dto.BoardUpdateRequest;
 import com.sds.actlongs.controller.board.dto.BoardUpdateResponse;
 import com.sds.actlongs.controller.board.dto.MemberBoardsDto;
 import com.sds.actlongs.domain.board.entity.Board;
-import com.sds.actlongs.domain.channel.entity.Channel;
-import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.model.Authentication;
+import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.service.board.BoardService;
-import com.sds.actlongs.vo.ImageExtension;
-import com.sds.actlongs.vo.VideoExtension;
 
 @Api(tags = "게시글 API")
 @RestController
@@ -53,6 +55,17 @@ import com.sds.actlongs.vo.VideoExtension;
 public class BoardController {
 
 	private final BoardService boardService;
+
+
+	@ApiOperation(value = "게시물 등록 API", notes = "B006: 게시글 등록에 성공했습니다")
+	@PostMapping("")
+	public ResponseEntity<BoardCreateResponse> getBoardDetail(@Valid @RequestBody BoardCreateRequest request,
+		@SessionAttribute("authentication") Authentication authentication) {
+		ResultCode result = boardService.createBoard(request, authentication.getMemberId());
+
+		return (result.getStatus() == HttpStatus.OK.value() ? ResponseEntity.ok() : ResponseEntity.badRequest()).body(
+			BoardCreateResponse.of(result));
+	}
 
 	@ApiOperation(value = "상세 조회 API", notes = "B001: 게시글 상세정보 조회에 성공하였습니다.\n"
 		+ "BOO6: 게시글 상세정보 조회에 실패하였습니다.")
