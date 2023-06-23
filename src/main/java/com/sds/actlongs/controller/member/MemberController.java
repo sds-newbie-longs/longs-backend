@@ -19,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.annotation.MeasureExecutionTime;
 import com.sds.actlongs.controller.member.dto.LoginRequest;
 import com.sds.actlongs.controller.member.dto.LoginResponse;
 import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
@@ -34,6 +35,7 @@ public class MemberController {
 
 	private final MemberService memberService;
 
+	@MeasureExecutionTime
 	@ApiOperation(value = "로그인 API", notes = ""
 		+ "L001: 로그인에 성공하였습니다.\n"
 		+ "L002: 로그인에 실패하였습니다.")

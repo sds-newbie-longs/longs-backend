@@ -3,7 +3,9 @@ package com.sds.actlongs.service.convert;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import net.bramp.ffmpeg.FFmpeg;
@@ -20,12 +22,16 @@ import com.sds.actlongs.util.manage.file.FileManage;
 @Profile({"local", "dev"})
 @Service
 @RequiredArgsConstructor
+@PropertySource("classpath:upload.properties")
 public class FFmpegConvertService implements ConvertService {
 
-	private static final String CHUNK_SIZE = "6";
 	private final FFmpeg fFmpeg;
 	private final FFprobe fFprobe;
 	private final FileManage fileManage;
+	@Value("${ffmpeg.video.chunk.size}")
+	private String chunkSize;
+	@Value("${ffmpeg.video.ts.default}")
+	private String fileFormatPolicy;
 
 	@Override
 	public void convertToHls(String fileName) {
@@ -36,7 +42,8 @@ public class FFmpegConvertService implements ConvertService {
 		FFmpegBuilder builder = new FFmpegBuilder();
 		FFmpegOutputBuilder outPutBuilder = initSetting(builder, inputFilePath, outputFolderPath);
 
-		masterSetting(outPutBuilder, outputFolderPath);
+		masterSettingWithoutCodec(outPutBuilder);
+		incodingDefaultSetting(outPutBuilder, outputFolderPath);
 		hls_1080Setting(outPutBuilder);
 		hls_720Setting(outPutBuilder);
 		hls_480Setting(outPutBuilder);
@@ -45,35 +52,39 @@ public class FFmpegConvertService implements ConvertService {
 		run(builder);
 	}
 
+	public void incodingDefaultSetting(FFmpegOutputBuilder builder, Path outputFolderPath) {
+		builder.addExtraArgs("-hls_time", chunkSize)
+			.addExtraArgs("-hls_list_size", "0")
+			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + fileFormatPolicy)
+			.addExtraArgs("-master_pl_name", "master.m3u8")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:a")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:a")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:a")
+			.addExtraArgs("-var_stream_map", "v:0,a:0,name:1080 v:1,a:1,name:720 v:2,a:2,name:480");
+	}
+
 	private FFmpegOutputBuilder initSetting(FFmpegBuilder builder, Path inputFilePath, Path outputFolderPath) {
 		return builder.setInput(inputFilePath.toAbsolutePath().toString())
 			.addExtraArgs("-y")
 			.addOutput(outputFolderPath.toAbsolutePath() + "/%v/playList.m3u8");
 	}
 
-	private void masterSetting(FFmpegOutputBuilder builder, Path outputFolderPath) {
+	private void masterSettingWithoutCodec(FFmpegOutputBuilder builder) {
 		builder.setFormat("hls")
-			.addExtraArgs("-hls_time", CHUNK_SIZE)
-			.addExtraArgs("-hls_list_size", "0")
-			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + "/%v/output_%04d.ts")
-			.addExtraArgs("-master_pl_name", "master.m3u8")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-var_stream_map", "v:0,name:1080 v:1,name:720 v:2,name:480");
+			.addExtraArgs("-c:v", "copy")
+			.addExtraArgs("-c:a", "copy");
 	}
 
-	private void masterSettingCodecVP9(FFmpegOutputBuilder builder, Path outputFolderPath) {
+	private void masterSettingWithCodecH264(FFmpegOutputBuilder builder) {
+		builder.setFormat("hls");
+	}
+
+	private void masterSettingWithCodecVP9(FFmpegOutputBuilder builder) {
 		builder.setFormat("hls")
-			.setVideoCodec("libvpx-vp9")
-			.addExtraArgs("-hls_time", CHUNK_SIZE)
-			.addExtraArgs("-hls_list_size", "0")
-			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + "/%v/output_%04d.ts")
-			.addExtraArgs("-master_pl_name", "master.m3u8")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-var_stream_map", "v:0,name:1080 v:1,name:720 v:2,name:480");
+			.setVideoCodec("libvpx-vp9");
 	}
 
 	private void hls_1080Setting(FFmpegOutputBuilder builder) {
@@ -108,7 +119,7 @@ public class FFmpegConvertService implements ConvertService {
 
 		executor.createJob(builder, progress -> {
 			if (progress.status.equals(Progress.Status.END)) {
-				//log.info("================================= JOB FINISHED =================================");
+				//System.out.println("================================= JOB FINISHED ========================");
 			}
 		}).run();
 	}
