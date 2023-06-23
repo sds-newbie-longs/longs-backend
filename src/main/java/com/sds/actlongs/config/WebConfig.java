@@ -19,6 +19,7 @@ import com.sds.actlongs.filter.LoginFilter;
 public class WebConfig {
 
 	private static final String LOCAL_URL = "http://localhost:3000";
+	private static final String CLOUD_FRONT = "https://longs.iamnew.net";
 
 	@Bean
 	@Profile("local")
@@ -31,7 +32,7 @@ public class WebConfig {
 					.allowedMethods(CorsConfiguration.ALL)
 					.allowedOrigins(LOCAL_URL)
 					.allowedHeaders(CorsConfiguration.ALL)
-					.exposedHeaders("Location", "Upload-Offset")
+					.exposedHeaders("Location", "Upload-Offset", "Upload-Length")
 					.allowCredentials(true);
 			}
 		};
@@ -46,9 +47,9 @@ public class WebConfig {
 				registry
 					.addMapping(ALL_SUB_PATHS)
 					.allowedMethods(CorsConfiguration.ALL)
-					.allowedOriginPatterns(WILDCARD)
+					.allowedOrigins(CLOUD_FRONT)
 					.allowedHeaders(CorsConfiguration.ALL)
-					.exposedHeaders("Location", "Upload-Offset")
+					.exposedHeaders("Location", "Upload-Offset", "Upload-Length")
 					.allowCredentials(true);
 			}
 		};
