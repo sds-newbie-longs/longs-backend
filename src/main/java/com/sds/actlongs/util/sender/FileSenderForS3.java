@@ -22,7 +22,7 @@ public class FileSenderForS3 implements FileSender {
 	private final FileManage fileManage;
 
 	private static final String VIDEO_START_POINT_IN_S3 = "videos/";
-	private static final String THUMBNAIL_START_POINT_IN_S3 = "thumbnails/";
+	private static final String THUMBNAIL_START_POINT_IN_S3 = "thumbnails";
 
 
 	@Value("${temp.video.hls.path}")
