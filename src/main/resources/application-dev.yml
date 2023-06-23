@@ -33,11 +33,11 @@ cloud:
 
 logging:
   level:
-    root: debug
+    root: info
     org:
       hibernate:
-        SQL: debug
-        type: trace
+        SQL: info
+        type: info
 
 ffmpeg:
   path: ${FFMPEG_PATH}
