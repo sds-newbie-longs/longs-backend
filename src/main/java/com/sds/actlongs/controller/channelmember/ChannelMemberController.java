@@ -26,13 +26,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
-import com.sds.actlongs.controller.channelmember.dto.MemberListDto;
 import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
+import com.sds.actlongs.controller.channelmember.dto.MemberListDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
+import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
-import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channelmember.ChannelMemberService;
 
@@ -59,9 +59,9 @@ public class ChannelMemberController {
 		@RequestParam @NotBlank @Size(max = 20) final String keyword,
 		@SessionAttribute(AUTHENTICATION) Authentication authentication
 	) {
-		List<Member> externalMembers = channelMemberService.searchMembersNotInChannel(channelId,
+		List<MemberSearchDto> memberSearchList = channelMemberService.searchMembersNotInChannel(channelId,
 			authentication.getMemberId(), keyword);
-		return ResponseEntity.ok(MemberSearchResponse.from(externalMembers));
+		return ResponseEntity.ok(MemberSearchResponse.from(memberSearchList));
 	}
 
 	@ApiOperation(value = "그룹원 초대 API", notes = ""

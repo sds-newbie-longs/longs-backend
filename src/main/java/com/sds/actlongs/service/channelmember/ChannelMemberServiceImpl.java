@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
 import com.sds.actlongs.controller.channelmember.dto.MemberListDto;
+import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channel.repository.ChannelRepository;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
@@ -44,7 +45,8 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	}
 
 	@Override
-	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword) {
+	public List<MemberSearchDto> searchMembersNotInChannel(final Long channelId, final Long memberId,
+		final String keyword) {
 		List<Member> membersSearched = memberRepository.findAllByUsernameStartsWith(keyword)
 			.stream()
 			.filter(m -> !m.getId().equals(memberId))
@@ -57,7 +59,11 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 			.collect(Collectors.toList());
 
 		membersSearched.removeAll(membersBelongsToChannel);
-		return membersSearched;
+
+		return membersSearched
+			.stream()
+			.map(member -> MemberSearchDto.of(member.getId(), member.getUsername()))
+			.collect(Collectors.toList());
 	}
 
 	@Override
