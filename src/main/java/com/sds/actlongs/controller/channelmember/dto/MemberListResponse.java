@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.channelmember.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +27,7 @@ public class MemberListResponse extends ResultResponse {
 	}
 
 	public static MemberListResponse from(List<MemberListDto> channelMemberList) {
-		return new MemberListResponse(ResultCode.MEMBERLIST_SUCCESS, channelMemberList);
+		return new MemberListResponse(MEMBERLIST_SUCCESS, channelMemberList);
 	}
 
 }

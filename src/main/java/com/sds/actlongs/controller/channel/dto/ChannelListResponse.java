@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.channel.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +28,7 @@ public class ChannelListResponse extends ResultResponse {
 	}
 
 	public static ChannelListResponse from(List<ChannelDto> channelList) {
-		return new ChannelListResponse(ResultCode.CHANNELLIST_SUCCESS, channelList);
+		return new ChannelListResponse(CHANNELLIST_SUCCESS, channelList);
 	}
 
 }

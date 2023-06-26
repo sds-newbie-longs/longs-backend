@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.channelmember.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import lombok.Getter;
 
 import com.sds.actlongs.model.ResultCode;
@@ -17,11 +19,11 @@ public class ChannelLeaveResponse extends ResultResponse {
 	}
 
 	private static ChannelLeaveResponse succeed() {
-		return new ChannelLeaveResponse(ResultCode.CHANNELLEAVE_SUCCESS);
+		return new ChannelLeaveResponse(CHANNELLEAVE_SUCCESS);
 	}
 
 	private static ChannelLeaveResponse fail() {
-		return new ChannelLeaveResponse(ResultCode.CHANNELLEAVE_FAILURE);
+		return new ChannelLeaveResponse(CHANNELLEAVE_FAILURE);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.member.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import java.util.Optional;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +27,7 @@ public class MemberInfoResponse extends ResultResponse {
 
 	public static MemberInfoResponse of(Optional<Member> memberOptional) {
 		Member member = memberOptional.get();
-		return new MemberInfoResponse(ResultCode.MEMBERINFO_SUCCESS, member.getId(), member.getUsername());
+		return new MemberInfoResponse(MEMBERINFO_SUCCESS, member.getId(), member.getUsername());
 	}
 
 }
