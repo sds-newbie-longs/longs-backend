@@ -26,12 +26,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.channel.dto.ChannelMemberDto;
 import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
-import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channelmember.ChannelMemberService;
@@ -48,8 +48,8 @@ public class ChannelMemberController {
 	@ApiOperation(value = "그룹원 목록 조회 API", notes = "ML001: 그룹원 목록 조회에 성공하였습니다.")
 	@GetMapping("/{groupId}")
 	public ResponseEntity<MemberListResponse> getMemberList(@PathVariable("groupId") final Long channelId) {
-		List<ChannelMember> members = channelMemberService.getMemberList(channelId);
-		return ResponseEntity.ok(MemberListResponse.from(members));
+		List<ChannelMemberDto> channelMemberList = channelMemberService.getMemberList(channelId);
+		return ResponseEntity.ok(MemberListResponse.from(channelMemberList));
 	}
 
 	@ApiOperation(value = "회원 검색 API", notes = "MS001: 회원 검색에 성공하였습니다.")
