@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
-import com.sds.actlongs.controller.channel.dto.ChannelMemberDto;
+import com.sds.actlongs.controller.channelmember.dto.MemberListDto;
 import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
@@ -48,7 +48,7 @@ public class ChannelMemberController {
 	@ApiOperation(value = "그룹원 목록 조회 API", notes = "ML001: 그룹원 목록 조회에 성공하였습니다.")
 	@GetMapping("/{groupId}")
 	public ResponseEntity<MemberListResponse> getMemberList(@PathVariable("groupId") final Long channelId) {
-		List<ChannelMemberDto> channelMemberList = channelMemberService.getMemberList(channelId);
+		List<MemberListDto> channelMemberList = channelMemberService.getMemberList(channelId);
 		return ResponseEntity.ok(MemberListResponse.from(channelMemberList));
 	}
 
