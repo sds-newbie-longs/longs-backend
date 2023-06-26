@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import com.sds.actlongs.domain.member.entity.Member;
+import com.sds.actlongs.exception.MemberNotFoundException;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -26,8 +27,9 @@ public class MemberInfoResponse extends ResultResponse {
 	}
 
 	public static MemberInfoResponse of(Optional<Member> memberOptional) {
-		Member member = memberOptional.get();
-		return new MemberInfoResponse(MEMBERINFO_SUCCESS, member.getId(), member.getUsername());
+		return memberOptional.map(member -> new MemberInfoResponse(MEMBER_INFO_SUCCESS, member.getId(),
+				member.getUsername()))
+			.orElseThrow(() -> new MemberNotFoundException());
 	}
 
 }
