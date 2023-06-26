@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.channel.dto.ChannelDto;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channel.repository.ChannelRepository;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
@@ -32,14 +33,16 @@ public class ChannelServiceImpl implements ChannelService {
 	private final ChannelMemberRepository channelMemberRepository;
 
 	@Override
-	public List<Channel> getChannelList(final Long memberId, final HttpSession session) {
+	public List<ChannelDto> getChannelList(final Long memberId, final HttpSession session) {
 		Set<Long> channelIds = ((Authentication)session.getAttribute(
 			SessionConstants.AUTHENTICATION))
 			.getChannelAuthorityMap()
 			.keySet();
 
-		return channelRepository.findByIdIn(channelIds);
-		// return channelMemberRepository.findAllFetchMemberAndChannelByMemberId(memberId);
+		return channelRepository.findByIdIn(channelIds)
+			.stream()
+			.map(channel -> ChannelDto.from(channel))
+			.collect(Collectors.toList());
 	}
 
 	@Override

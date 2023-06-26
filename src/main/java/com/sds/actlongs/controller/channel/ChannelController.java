@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import com.sds.actlongs.controller.channel.dto.ChannelCreateRequest;
 import com.sds.actlongs.controller.channel.dto.ChannelCreateResponse;
 import com.sds.actlongs.controller.channel.dto.ChannelDeleteResponse;
+import com.sds.actlongs.controller.channel.dto.ChannelDto;
 import com.sds.actlongs.controller.channel.dto.ChannelListResponse;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.model.Authentication;
@@ -42,9 +43,9 @@ public class ChannelController {
 	public ResponseEntity<ChannelListResponse> getChannelList(
 		@SessionAttribute(AUTHENTICATION) Authentication authentication,
 		final HttpServletRequest servletRequest) {
-		final List<Channel> channels = channelService.getChannelList(authentication.getMemberId(),
+		final List<ChannelDto> channelList = channelService.getChannelList(authentication.getMemberId(),
 			servletRequest.getSession());
-		return ResponseEntity.ok(ChannelListResponse.from(channels));
+		return ResponseEntity.ok(ChannelListResponse.from(channelList));
 	}
 
 	@ApiOperation(value = "그룹생성 API", notes = ""
