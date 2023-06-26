@@ -75,13 +75,19 @@ public class Board extends BaseEntity {
 	}
 
 	public void delete() {
-		if (this.status.equals(Status.CREATED)) {
+		if (this.status.equals(Status.COMPLETED)) {
 			this.status = Status.DELETED;
 		}
 	}
 
+	public void completed() {
+		if (this.status.equals(Status.CREATED)) {
+			this.status = Status.COMPLETED;
+		}
+	}
+
 	public enum Status {
-		CREATED, DELETED
+		CREATED, COMPLETED, DELETED
 	}
 
 }
