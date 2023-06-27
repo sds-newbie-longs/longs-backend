@@ -202,9 +202,9 @@ class BoardServiceImplTest {
 			Arrays.asList(channelMember1, channelMember2));
 		given(videoRepository.findByBoardChannelIdOrderByCreatedAtDesc(channel.getId())).willReturn(
 			Arrays.asList(video2, video1));
-		given(videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(member1.getId())).willReturn(
+		given(videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(member1.getId(), channel.getId())).willReturn(
 			List.of(video1));
-		given(videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(member2.getId())).willReturn(
+		given(videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(member2.getId(), channel.getId())).willReturn(
 			List.of(video2));
 
 		//when

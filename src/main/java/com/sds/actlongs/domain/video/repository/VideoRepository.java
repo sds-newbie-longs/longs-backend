@@ -24,9 +24,9 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 
 	@Query("SELECT v "
 		+ "FROM videos v "
-		+ "INNER JOIN v.board b ON b.member.id = :memberId AND b.status = 'CREATED' "
+		+ "INNER JOIN v.board b ON b.member.id = :memberId AND b.channel.id = :channelId AND b.status = 'CREATED' "
 		+ "ORDER BY v.createdAt DESC")
-	List<Video> findByBoardMemberIdOrderByCreatedAtDesc(Long memberId);
+	List<Video> findByBoardMemberIdOrderByCreatedAtDesc(Long memberId, Long channelId);
 
 	@Query("SELECT v "
 		+ "FROM videos v "
