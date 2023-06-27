@@ -35,8 +35,9 @@ public class UploadController {
 	public ResponseEntity<String> tusUpload(@PathVariable Long groupId,
 		@SessionAttribute(AUTHENTICATION) Authentication authentication,
 		HttpServletRequest request, HttpServletResponse response) {
+		Long boardId = uploadService.upload(authentication, groupId, request, response).getBoardId();
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(uploadService.upload(authentication, groupId, request, response).getBoardId().toString());
+			.body(boardId != null ? boardId.toString() : "");
 	}
 
 }
