@@ -29,7 +29,7 @@ class BoardRepositoryTest {
 			// given
 			Member member = Member.createNewMember("Harry");
 			Channel channel = Channel.createNewChannel("Knox SRE", member);
-			Board board = Board.createNewBoard(member, channel, "Title 1");
+			Board board = Board.createNewBoard(member, channel);
 
 			// when
 			Board result = subject.save(board);
@@ -38,7 +38,6 @@ class BoardRepositoryTest {
 			Assertions.assertThat(result.getId()).isNotNull();
 			Assertions.assertThat(result.getMember().getUsername()).isEqualTo("Harry");
 			Assertions.assertThat(result.getChannel().getChannelName()).isEqualTo("Knox SRE");
-			Assertions.assertThat(result.getTitle()).isEqualTo("Title 1");
 		}
 
 	}

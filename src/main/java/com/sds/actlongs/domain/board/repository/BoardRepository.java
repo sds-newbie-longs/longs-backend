@@ -11,6 +11,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 	@Query("SELECT b "
 		+ "FROM boards b "
-		+ "WHERE b.id = :boardId AND b.member.id = :memberId AND b.status = 'CREATED'")
+		+ "WHERE b.id = :boardId AND b.member.id = :memberId AND b.status = 'COMPLETED'")
 	Optional<Board> findByIdAndMemberId(Long boardId, Long memberId);
 }

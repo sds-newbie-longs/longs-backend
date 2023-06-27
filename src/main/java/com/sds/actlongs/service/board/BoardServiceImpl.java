@@ -67,7 +67,7 @@ public class BoardServiceImpl implements BoardService {
 		uploadManage.uploadProcess(request.getVideoUuid());
 
 		Board newBoard = (request.getDescription() == null
-			? Board.createNewBoard(writer, channel, request.getTitle())
+			? Board.createNewBoard(writer, channel)
 			: Board.createNewBoardWithDescription(writer, channel, request.getTitle(), request.getDescription()));
 
 		Board savedBoard = boardRepository.save(newBoard);
