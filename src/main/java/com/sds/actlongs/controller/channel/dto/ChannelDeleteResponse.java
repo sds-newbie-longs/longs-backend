@@ -10,7 +10,7 @@ import com.sds.actlongs.model.ResultResponse;
 public class ChannelDeleteResponse extends ResultResponse {
 
 	public ChannelDeleteResponse() {
-		super(CHANNELDELETE_SUCCESS);
+		super(DELETE_CHANNEL_SUCCESS);
 	}
 
 }

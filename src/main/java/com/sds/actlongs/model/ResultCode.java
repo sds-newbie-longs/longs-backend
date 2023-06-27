@@ -10,21 +10,21 @@ public enum ResultCode {
 	// Member
 	LOGIN_SUCCESS(200, "L001", "로그인에 성공하였습니다."),
 	LOGIN_FAILURE(200, "L002", "로그인에 실패하였습니다."),
-	MEMBER_INFO_SUCCESS(200, "MI001", "회원정보 조회에 성공하였습니다."),
-	MEMBERLIST_SUCCESS(200, "ML001", "그룹원 목록 조회에 성공하였습니다."),
-	MEMBERSEARCH_SUCCESS(200, "MS001", "회원 검색에 성공하였습니다."),
+	GET_MEMBER_INFO_SUCCESS(200, "MI001", "회원정보 조회에 성공하였습니다."),
+	GET_MEMBERLIST_SUCCESS(200, "ML001", "그룹원 목록 조회에 성공하였습니다."),
+	SEARCH_MEMBER_SUCCESS(200, "MS001", "회원 검색에 성공하였습니다."),
 
 	// Channel
-	CHANNELCREATE_SUCCESS(200, "CC001", "그룹 생성에 성공하였습니다."),
-	CHANNELCREATE_FAILURE(200, "CC002", "그룹 생성에 실패하였습니다."),
-	CHANNELLIST_SUCCESS(200, "CL001", "그룹목록 조회에 성공하였습니다."),
-	CHANNELDELETE_SUCCESS(200, "CD001", "그룹 삭제에 성공하였습니다."),
+	CREATE_CHANNEL_SUCCESS(200, "CC001", "그룹 생성에 성공하였습니다."),
+	CREATE_CHANNEL_FAILURE(200, "CC002", "그룹 생성에 실패하였습니다."),
+	GET_CHANNELLIST_SUCCESS(200, "CL001", "그룹목록 조회에 성공하였습니다."),
+	DELETE_CHANNEL_SUCCESS(200, "CD001", "그룹 삭제에 성공하였습니다."),
 
 	// ChannelMember
-	MEMBERINVITE_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다."),
-	MEMBERINVITE_FAILURE(200, "IV002", "그룹원 초대에 실패하였습니다."),
-	CHANNELLEAVE_SUCCESS(200, "LV001", "그룹 탈퇴에 성공하였습니다."),
-	CHANNELLEAVE_FAILURE(200, "LV002", "그룹 탈퇴에 실패하였습니다."),
+	INVITE_MEMBER_SUCCESS(200, "IV001", "그룹원 초대에 성공하였습니다."),
+	INVITE_MEMBER_FAILURE(200, "IV002", "그룹원 초대에 실패하였습니다."),
+	LEAVE_CHANNEL_SUCCESS(200, "LV001", "그룹 탈퇴에 성공하였습니다."),
+	LEAVE_CHANNEL_FAILURE(200, "LV002", "그룹 탈퇴에 실패하였습니다."),
 
 	// Board
 	GET_BOARDDETAIL_SUCCESS(200, "B001", "게시글 상세정보 조회에 성공하였습니다."),

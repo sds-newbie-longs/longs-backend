@@ -19,11 +19,11 @@ public class ChannelCreateResponse extends ResultResponse {
 	}
 
 	private static ChannelCreateResponse succeed() {
-		return new ChannelCreateResponse(CHANNELCREATE_SUCCESS);
+		return new ChannelCreateResponse(CREATE_CHANNEL_SUCCESS);
 	}
 
 	private static ChannelCreateResponse fail() {
-		return new ChannelCreateResponse(CHANNELCREATE_FAILURE);
+		return new ChannelCreateResponse(CREATE_CHANNEL_FAILURE);
 	}
 
 }

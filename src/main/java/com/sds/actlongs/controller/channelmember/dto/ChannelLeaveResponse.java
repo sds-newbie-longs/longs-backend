@@ -19,11 +19,11 @@ public class ChannelLeaveResponse extends ResultResponse {
 	}
 
 	private static ChannelLeaveResponse succeed() {
-		return new ChannelLeaveResponse(CHANNELLEAVE_SUCCESS);
+		return new ChannelLeaveResponse(LEAVE_CHANNEL_SUCCESS);
 	}
 
 	private static ChannelLeaveResponse fail() {
-		return new ChannelLeaveResponse(CHANNELLEAVE_FAILURE);
+		return new ChannelLeaveResponse(LEAVE_CHANNEL_FAILURE);
 	}
 
 }

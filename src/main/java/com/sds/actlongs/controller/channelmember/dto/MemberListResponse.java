@@ -27,7 +27,7 @@ public class MemberListResponse extends ResultResponse {
 	}
 
 	public static MemberListResponse from(List<MemberListDto> channelMemberList) {
-		return new MemberListResponse(MEMBERLIST_SUCCESS, channelMemberList);
+		return new MemberListResponse(GET_MEMBERLIST_SUCCESS, channelMemberList);
 	}
 
 }

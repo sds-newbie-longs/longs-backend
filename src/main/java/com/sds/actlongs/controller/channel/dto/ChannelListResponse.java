@@ -28,7 +28,7 @@ public class ChannelListResponse extends ResultResponse {
 	}
 
 	public static ChannelListResponse from(List<ChannelDto> channelList) {
-		return new ChannelListResponse(CHANNELLIST_SUCCESS, channelList);
+		return new ChannelListResponse(GET_CHANNELLIST_SUCCESS, channelList);
 	}
 
 }

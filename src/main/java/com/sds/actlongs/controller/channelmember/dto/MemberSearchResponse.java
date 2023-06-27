@@ -28,7 +28,7 @@ public class MemberSearchResponse extends ResultResponse {
 	}
 
 	public static MemberSearchResponse from(List<MemberSearchDto> memberSearchList) {
-		return new MemberSearchResponse(MEMBERSEARCH_SUCCESS, memberSearchList);
+		return new MemberSearchResponse(SEARCH_MEMBER_SUCCESS, memberSearchList);
 	}
 
 }

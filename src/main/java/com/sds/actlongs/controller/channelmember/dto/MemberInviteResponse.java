@@ -19,11 +19,11 @@ public class MemberInviteResponse extends ResultResponse {
 	}
 
 	private static MemberInviteResponse succeed() {
-		return new MemberInviteResponse(MEMBERINVITE_SUCCESS);
+		return new MemberInviteResponse(INVITE_MEMBER_SUCCESS);
 	}
 
 	private static MemberInviteResponse fail() {
-		return new MemberInviteResponse(MEMBERINVITE_FAILURE);
+		return new MemberInviteResponse(INVITE_MEMBER_FAILURE);
 	}
 
 }

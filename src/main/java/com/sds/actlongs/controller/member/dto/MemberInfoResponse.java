@@ -27,7 +27,7 @@ public class MemberInfoResponse extends ResultResponse {
 	}
 
 	public static MemberInfoResponse of(Optional<Member> memberOptional) {
-		return memberOptional.map(member -> new MemberInfoResponse(MEMBER_INFO_SUCCESS, member.getId(),
+		return memberOptional.map(member -> new MemberInfoResponse(GET_MEMBER_INFO_SUCCESS, member.getId(),
 				member.getUsername()))
 			.orElseThrow(() -> new MemberNotFoundException());
 	}
