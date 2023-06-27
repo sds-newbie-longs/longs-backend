@@ -13,13 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardCreateRequest {
+
 	@NotNull
 	@ApiModelProperty(value = "채널 Id", example = "1", required = true)
 	private Long channelId;
 
 	@NotNull
-	@ApiModelProperty(value = "동영상 Uuid", example = "3cc20d2df4bf4ef1b2fa6ee84913716f", required = true)
-	private String videoUuid;
+	@ApiModelProperty(value = "게시물 id", example = "1", required = true)
+	private Long boardId;
 
 	@NotBlank
 	@Size(max = 50)
@@ -29,4 +30,5 @@ public class BoardCreateRequest {
 	@Size(max = 1000)
 	@ApiModelProperty(value = "설명(최대1000자)", example = "후원 문의는 jin1997@example.com")
 	private String description;
+
 }
