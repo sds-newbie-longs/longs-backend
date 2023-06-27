@@ -49,6 +49,7 @@ public class BoardServiceImpl implements BoardService {
 
 	private final ChannelMemberRepository channelMemberRepository;
 
+	// TODO - 수정 필요 (업데이트)
 	@Override
 	public ResultCode createBoard(final BoardCreateRequest request, final Long writerId) {
 		Member writer =
