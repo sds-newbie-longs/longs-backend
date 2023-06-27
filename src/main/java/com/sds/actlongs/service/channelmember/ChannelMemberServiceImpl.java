@@ -1,7 +1,6 @@
 package com.sds.actlongs.service.channelmember;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,8 +19,7 @@ import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.member.repository.MemberRepository;
-import com.sds.actlongs.model.Authentication;
-import com.sds.actlongs.util.SessionConstants;
+import com.sds.actlongs.util.session.SessionManage;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +28,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	private final ChannelMemberRepository channelMemberRepository;
 	private final ChannelRepository channelRepository;
 	private final MemberRepository memberRepository;
+	private final SessionManage sessionManage;
 
 	@Override
 	public List<MemberListDto> getMemberList(final Long channelId) {
@@ -93,15 +92,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 
 		final ChannelMember channelMember = channelMemberOptional.get();
 		channelMemberRepository.deleteById(channelMember.getId());
-
-		Map<Long, Authentication.ChannelRoles> filteredMap = ((Authentication)session.getAttribute(
-			SessionConstants.AUTHENTICATION))
-			.getChannelAuthorityMap()
-			.entrySet()
-			.stream()
-			.filter(e -> !e.getKey().equals(channelId))
-			.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		session.setAttribute(SessionConstants.AUTHENTICATION, new Authentication(memberId, filteredMap));
+		sessionManage.deleteChannel(session, channelId, memberId);
 		return true;
 	}
 
