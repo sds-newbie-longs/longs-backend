@@ -32,11 +32,11 @@ public class UploadController {
 	// TODO - 인가필터 url 추가
 	@ApiOperation(value = "동영상 업로드 엔드포인트", notes = "동영상 업로드 성공시 동영상의 UUID response")
 	@RequestMapping(value = {"/video/upload", "/video/upload/**"})
-	public ResponseEntity<Long> tusUpload(@PathVariable Long groupId,
+	public ResponseEntity<String> tusUpload(@PathVariable Long groupId,
 		@SessionAttribute(AUTHENTICATION) Authentication authentication,
 		HttpServletRequest request, HttpServletResponse response) {
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(uploadService.upload(authentication, groupId, request, response).getBoardId());
+			.body(uploadService.upload(authentication, groupId, request, response).getBoardId().toString());
 	}
 
 }
