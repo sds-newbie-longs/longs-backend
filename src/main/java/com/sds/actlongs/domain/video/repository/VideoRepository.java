@@ -1,12 +1,11 @@
 package com.sds.actlongs.domain.video.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.sds.actlongs.domain.video.entity.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.sds.actlongs.domain.video.entity.Video;
+import java.util.List;
+import java.util.Optional;
 
 public interface VideoRepository extends JpaRepository<Video, Long> {
 
@@ -15,6 +14,12 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 		+ "INNER JOIN v.board b ON b.status IN ('UPLOADING','COMPLETED') "
 		+ "WHERE v.board.id = :boardId")
 	Optional<Video> findByBoardId(Long boardId);
+
+	@Query("SELECT v "
+		+ "FROM videos v "
+		+ "INNER JOIN v.board b ON b.status = 'CREATED' "
+		+ "WHERE v.board.id = :boardId")
+	Optional<Video> findByCreatedBoardId(Long boardId);
 
 	@Query("SELECT v "
 		+ "FROM videos v "
