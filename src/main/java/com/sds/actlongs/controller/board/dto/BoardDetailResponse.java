@@ -9,6 +9,7 @@ import java.util.Optional;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
@@ -28,6 +29,8 @@ public class BoardDetailResponse extends ResultResponse {
 	private final String videoUuid;
 	@ApiModelProperty(value = "재생시간", example = "2017-02-16 09:21:50.634")
 	private final LocalTime playingTime;
+	@ApiModelProperty(value = "상태값", example = "COMPLETED")
+	private final Board.Status boardStatus;
 
 	private BoardDetailResponse(ResultCode resultCode, Video video) {
 		super(resultCode);
@@ -38,6 +41,7 @@ public class BoardDetailResponse extends ResultResponse {
 			+ video.getThumbnailImageType().name().toLowerCase();
 		this.videoUuid = video.getVideoUuid();
 		this.playingTime = video.getPlayingTime();
+		this.boardStatus = video.getBoard().getStatus();
 	}
 
 	private BoardDetailResponse() {
@@ -48,6 +52,7 @@ public class BoardDetailResponse extends ResultResponse {
 		this.thumbnailUrl = null;
 		this.videoUuid = null;
 		this.playingTime = null;
+		this.boardStatus = null;
 	}
 
 	public static BoardDetailResponse of(Optional<Video> result) {

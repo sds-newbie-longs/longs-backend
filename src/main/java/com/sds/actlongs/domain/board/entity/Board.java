@@ -34,7 +34,7 @@ public class Board extends BaseEntity {
 	@JoinColumn(name = "channel_id")
 	private Channel channel;
 
-	@Column(nullable = false, length = 50)
+	@Column(length = 50)
 	private String title;
 
 	@Column(length = 1000)
@@ -59,8 +59,8 @@ public class Board extends BaseEntity {
 		this.description = description;
 	}
 
-	public static Board createNewBoard(Member member, Channel channel, String title) {
-		return new Board(member, channel, title, null);
+	public static Board createNewBoard(Member member, Channel channel) {
+		return new Board(member, channel, null, null);
 	}
 
 	public static Board createNewBoardWithDescription(Member member, Channel channel, String title,
@@ -74,14 +74,28 @@ public class Board extends BaseEntity {
 		return this;
 	}
 
-	public void delete() {
+	public void uploading(String title, String description) {
 		if (this.status.equals(Status.CREATED)) {
+			this.title = title;
+			this.description = description;
+			this.status = Status.UPLOADING;
+		}
+	}
+
+	public void completed() {
+		if (this.status.equals(Status.UPLOADING)) {
+			this.status = Status.COMPLETED;
+		}
+	}
+
+	public void delete() {
+		if (this.status.equals(Status.COMPLETED)) {
 			this.status = Status.DELETED;
 		}
 	}
 
 	public enum Status {
-		CREATED, DELETED
+		CREATED, UPLOADING, COMPLETED, DELETED
 	}
 
 }
