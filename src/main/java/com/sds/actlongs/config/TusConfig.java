@@ -23,7 +23,7 @@ public class TusConfig {
 			.withDownloadFeature()
 			.withUploadExpirationPeriod(dataExpiration)
 			.withThreadLocalCache(true)
-			.withUploadURI("/video/upload");
+			.withUploadURI("/groups/[0-9]+/video/upload");
 	}
 
 }

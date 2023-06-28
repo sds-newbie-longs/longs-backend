@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UploadResponseDto {
 
-	@ApiModelProperty(value = "동영상 UUID", example = "3cc20d2df4bf4ef1b2fa6ee84913716f", required = true)
-	private String videoUUid;
+	@ApiModelProperty(value = "게시글 PK", example = "1", required = true)
+	private Long boardId;
 
-	public UploadResponseDto(String videoUUid) {
-		this.videoUUid = videoUUid;
+	public UploadResponseDto(Long boardId) {
+		this.boardId = boardId;
 	}
 
 }

@@ -58,22 +58,22 @@ ALTER TABLE channel_members MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '
 CREATE TABLE IF NOT EXISTS boards
 (
     id                   BIGINT AUTO_INCREMENT,
-    title                VARCHAR(50) NOT NULL,
+    title                VARCHAR(50),
     description          VARCHAR(1000),
     member_id            BIGINT,
     channel_id           BIGINT,
-    status               ENUM('CREATED', 'DELETED') NOT NULL,
+    status               ENUM('CREATED', 'UPLOADING', 'COMPLETED', 'DELETED') NOT NULL,
     created_at           DATETIME NOT NULL,
     updated_at           DATETIME NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (member_id) REFERENCES members(id),
     FOREIGN KEY (channel_id) REFERENCES channels(id)
     );
-ALTER TABLE boards MODIFY COLUMN title VARCHAR(50) NOT NULL COMMENT '제목';
+ALTER TABLE boards MODIFY COLUMN title VARCHAR(50) COMMENT '제목';
 ALTER TABLE boards MODIFY COLUMN description VARCHAR(1000) COMMENT '설명';
 ALTER TABLE boards MODIFY COLUMN member_id BIGINT COMMENT '작성자 PK';
 ALTER TABLE boards MODIFY COLUMN channel_id BIGINT COMMENT '채널 PK';
-ALTER TABLE boards MODIFY COLUMN status ENUM('CREATED', 'DELETED') COMMENT '상태';
+ALTER TABLE boards MODIFY COLUMN status ENUM('CREATED', 'UPLOADING', 'COMPLETED', 'DELETED') COMMENT '상태';
 ALTER TABLE boards MODIFY COLUMN created_at DATETIME NOT NULL COMMENT '생성 일시';
 ALTER TABLE boards MODIFY COLUMN updated_at DATETIME NOT NULL COMMENT '수정 일시';
 CREATE TABLE IF NOT EXISTS videos
