@@ -106,7 +106,7 @@ public class BoardServiceImpl implements BoardService {
 			.stream()
 			.map(channelMember -> {
 				final List<Video> videoList = videoRepository.findByBoardMemberIdOrderByCreatedAtDesc(
-					channelMember.getMember().getId());
+					channelMember.getMember().getId(), channelId);
 				return new MemberBoardsDto(channelMember.getMember().getUsername(), videoList);
 			})
 			.collect(Collectors.toList());
