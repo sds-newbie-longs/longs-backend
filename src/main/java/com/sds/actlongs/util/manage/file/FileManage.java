@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileManage {
+
 	String createTempVideoFileInLocal(InputStream input, String fileName);
 
 	List<Path> createDirectoryForConvertedVideo(String fileName);
@@ -25,4 +26,7 @@ public interface FileManage {
 	Boolean deleteFiles(File file);
 
 	MultipartFile transFileToMultipartFile(File input);
+
+	Long getVideoSizeMB(String fileName);
+
 }

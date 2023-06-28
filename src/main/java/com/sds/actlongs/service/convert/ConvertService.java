@@ -1,5 +1,11 @@
 package com.sds.actlongs.service.convert;
 
+import com.sds.actlongs.model.IncodingStatus;
+
 public interface ConvertService {
-	void convertToHls(String fileName);
+
+	void convertToHlsWithCodec(String fileName, IncodingStatus status);
+
+	void convertToHlsWithoutCodec(String fileName);
+
 }
