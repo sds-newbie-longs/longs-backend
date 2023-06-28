@@ -31,6 +31,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.annotation.MeasureExecutionTime;
 import com.sds.actlongs.controller.board.dto.BoardCreateRequest;
 import com.sds.actlongs.controller.board.dto.BoardCreateResponse;
 import com.sds.actlongs.controller.board.dto.BoardDeleteResponse;
@@ -57,8 +58,9 @@ public class BoardController {
 	private final BoardService boardService;
 
 
+	@MeasureExecutionTime
 	@ApiOperation(value = "게시물 등록 API", notes = "B006: 게시글 등록에 성공했습니다")
-	@PostMapping("")
+	@PostMapping
 	public ResponseEntity<BoardCreateResponse> getBoardDetail(@Valid @RequestBody BoardCreateRequest request,
 		@SessionAttribute("authentication") Authentication authentication) {
 		ResultCode result = boardService.createBoard(request, authentication.getMemberId());

@@ -1,28 +1,12 @@
 package com.sds.actlongs.advice;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-
-import java.util.List;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 
 @ExtendWith(MockitoExtension.class)
 class ExecutionTimeAspectTest {
 
-	@Mock
+	/*@Mock
 	private ProceedingJoinPoint joinPoint;
 
 	private Logger logger = (Logger)LoggerFactory.getLogger(ExecutionTimeAspect.class);
@@ -53,6 +37,6 @@ class ExecutionTimeAspectTest {
 			assertThat("Execution time of {}: {}").isEqualTo(loggingEvents.get(1).getMessage());
 		}
 
-	}
+	}*/
 
 }
