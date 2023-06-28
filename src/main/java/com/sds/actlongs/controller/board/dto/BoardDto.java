@@ -30,7 +30,7 @@ public class BoardDto {
 		this.username = video.getBoard().getMember().getUsername();
 		this.title = video.getBoard().getTitle();
 		this.description = video.getBoard().getDescription();
-		this.thumbnailUrl = S3_BUCKET_HOST_THUMBNAIL_URL + CATEGORY_PREFIX + video.getThumbnailImageUuid() + DOT
+		this.thumbnailUrl = CLOUD_FRONT_HOST_THUMBNAIL_URL + CATEGORY_PREFIX + video.getThumbnailImageUuid() + DOT
 			+ video.getThumbnailImageType().name().toLowerCase();
 		this.boardStatus = video.getBoard().getStatus();
 	}

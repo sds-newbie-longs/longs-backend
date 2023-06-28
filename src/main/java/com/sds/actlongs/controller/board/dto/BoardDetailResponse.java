@@ -37,7 +37,7 @@ public class BoardDetailResponse extends ResultResponse {
 		this.title = video.getBoard().getTitle();
 		this.description = video.getBoard().getDescription();
 		this.username = video.getBoard().getMember().getUsername();
-		this.thumbnailUrl = S3_BUCKET_HOST_THUMBNAIL_URL + CATEGORY_PREFIX + video.getThumbnailImageUuid() + DOT
+		this.thumbnailUrl = CLOUD_FRONT_HOST_THUMBNAIL_URL + CATEGORY_PREFIX + video.getThumbnailImageUuid() + DOT
 			+ video.getThumbnailImageType().name().toLowerCase();
 		this.videoUuid = video.getVideoUuid();
 		this.playingTime = video.getPlayingTime();
