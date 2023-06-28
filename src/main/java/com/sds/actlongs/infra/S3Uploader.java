@@ -43,7 +43,7 @@ public class S3Uploader {
 			throw new ResponseStatusException(HttpStatus.OK, "파일 업로드에 실패했습니다.");
 		} finally {
 			final long end = System.currentTimeMillis();
-			log.info("[UPLOAD TO S3] END - {}ms.", end - start);
+			log.info("[UPLOAD TO S3] END - {}. ({}ms)", fileName, end - start);
 		}
 	}
 
