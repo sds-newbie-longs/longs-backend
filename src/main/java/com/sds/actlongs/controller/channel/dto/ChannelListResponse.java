@@ -1,12 +1,12 @@
 package com.sds.actlongs.controller.channel.dto;
 
-import java.util.ArrayList;
+import static com.sds.actlongs.model.ResultCode.*;
+
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -20,45 +20,15 @@ public class ChannelListResponse extends ResultResponse {
 		+ "{channelId: 3, ownerId: 1, name: Knox Portal},"
 		+ "]"
 	)
-	private List<JoinedChannel> channelList;
+	private final List<ChannelDto> channelList;
 
-	public ChannelListResponse(List<JoinedChannel> channelList) {
-		super(ResultCode.CHANNELLIST_SUCCESS);
+	public ChannelListResponse(ResultCode resultCode, List<ChannelDto> channelList) {
+		super(resultCode);
 		this.channelList = channelList;
 	}
 
-	public static ChannelListResponse from(List<Channel> channels) {
-		List<JoinedChannel> channelList = new ArrayList<>();
-		for (Channel channel : channels) {
-			channelList.add(JoinedChannel.of(
-				channel.getId(),
-				channel.getOwner().getId(),
-				channel.getChannelName()
-			));
-		}
-		return new ChannelListResponse(channelList);
-	}
-
-	@Getter
-	public static class JoinedChannel {
-
-		@ApiModelProperty(value = "그룹PK", example = "1")
-		private Long channelId;
-		@ApiModelProperty(value = "그룹장 회원PK", example = "11")
-		private Long ownerId;
-		@ApiModelProperty(value = "그룹명", example = "Knox SRE")
-		private String channelName;
-
-		public JoinedChannel(Long channelId, Long ownerId, String channelName) {
-			this.channelId = channelId;
-			this.ownerId = ownerId;
-			this.channelName = channelName;
-		}
-
-		public static JoinedChannel of(Long channelId, Long ownerId, String channelName) {
-			return new JoinedChannel(channelId, ownerId, channelName);
-		}
-
+	public static ChannelListResponse from(List<ChannelDto> channelList) {
+		return new ChannelListResponse(GET_CHANNELLIST_SUCCESS, channelList);
 	}
 
 }
