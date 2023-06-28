@@ -7,9 +7,9 @@ import lombok.Getter;
 public class MemberSearchDto {
 
 	@ApiModelProperty(value = "회원PK", example = "1")
-	private Long memberId;
+	private final Long memberId;
 	@ApiModelProperty(value = "아이디", example = "Harry")
-	private String username;
+	private final String username;
 
 	public MemberSearchDto(Long memberId, String username) {
 		this.memberId = memberId;

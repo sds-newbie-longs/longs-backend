@@ -12,7 +12,7 @@ import com.sds.actlongs.model.ResultResponse;
 public class MemberInfoResponse extends ResultResponse {
 
 	@ApiModelProperty(position = 4, value = "회원 정보", example = "{id: 1, username: Din}")
-	private MemberInfoDto memberInfo;
+	private final MemberInfoDto memberInfo;
 
 	public MemberInfoResponse(ResultCode resultCode, MemberInfoDto memberInfo) {
 		super(resultCode);
