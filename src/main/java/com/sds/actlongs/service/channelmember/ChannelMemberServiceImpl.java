@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
-import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channel.repository.ChannelRepository;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;

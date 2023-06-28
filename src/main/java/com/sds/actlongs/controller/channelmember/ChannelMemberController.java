@@ -29,10 +29,10 @@ import lombok.RequiredArgsConstructor;
 import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
-import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channelmember.ChannelMemberService;
 
