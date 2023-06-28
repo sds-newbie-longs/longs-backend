@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
-import com.sds.actlongs.controller.channelmember.dto.MemberListDto;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channel.repository.ChannelRepository;
@@ -31,7 +31,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	private final SessionManage sessionManage;
 
 	@Override
-	public List<MemberListDto> getMemberList(final Long channelId) {
+	public List<MemberInfoDto> getMemberList(final Long channelId) {
 		final Optional<Channel> optionalChannel = channelRepository.findById(channelId);
 		if (optionalChannel.isEmpty() || optionalChannel.get().getStatus().equals(Channel.Status.DELETED)) {
 			throw new EntityNotFoundException();
@@ -39,7 +39,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 		return channelMemberRepository.findAllFetchMemberUsernameByChannelId(channelId)
 			.stream()
 			.map(ChannelMember::getMember)
-			.map(member -> MemberListDto.of(member.getId(), member.getUsername()))
+			.map(member -> MemberInfoDto.of(member.getId(), member.getUsername()))
 			.collect(Collectors.toList());
 	}
 

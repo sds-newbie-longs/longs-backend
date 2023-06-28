@@ -1,31 +1,26 @@
 package com.sds.actlongs.controller.member.dto;
 
-import java.util.Optional;
+import static com.sds.actlongs.model.ResultCode.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
 @Getter
 public class MemberInfoResponse extends ResultResponse {
 
-	@ApiModelProperty(position = 4, value = "회원PK", example = "1")
-	private Long id;
-	@ApiModelProperty(position = 5, value = "회원 아이디", example = "Harry")
-	private String username;
+	@ApiModelProperty(position = 4, value = "회원 정보", example = "{id: 1, username: Din}")
+	private MemberInfoDto memberInfo;
 
-	private MemberInfoResponse(ResultCode resultCode, Long id, String username) {
+	public MemberInfoResponse(ResultCode resultCode, MemberInfoDto memberInfo) {
 		super(resultCode);
-		this.id = id;
-		this.username = username;
+		this.memberInfo = memberInfo;
 	}
 
-	public static MemberInfoResponse of(Optional<Member> memberOptional) {
-		Member member = memberOptional.get();
-		return new MemberInfoResponse(ResultCode.MEMBERINFO_SUCCESS, member.getId(), member.getUsername());
+	public static MemberInfoResponse from(MemberInfoDto memberInfo) {
+		return new MemberInfoResponse(GET_MEMBER_INFO_SUCCESS, memberInfo);
 	}
 
 }

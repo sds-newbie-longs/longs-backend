@@ -7,6 +7,7 @@ import java.util.List;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.model.ResultResponse;
 
@@ -19,14 +20,14 @@ public class MemberListResponse extends ResultResponse {
 		+ "{id: 2, username: Ari},"
 		+ "{id: 3, username: Kang},"
 		+ "]")
-	private List<MemberListDto> memberList;
+	private List<MemberInfoDto> memberList;
 
-	public MemberListResponse(ResultCode resultCode, List<MemberListDto> memberList) {
+	public MemberListResponse(ResultCode resultCode, List<MemberInfoDto> memberList) {
 		super(resultCode);
 		this.memberList = memberList;
 	}
 
-	public static MemberListResponse from(List<MemberListDto> channelMemberList) {
+	public static MemberListResponse from(List<MemberInfoDto> channelMemberList) {
 		return new MemberListResponse(GET_MEMBERLIST_SUCCESS, channelMemberList);
 	}
 

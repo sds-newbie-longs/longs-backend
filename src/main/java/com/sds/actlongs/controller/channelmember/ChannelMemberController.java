@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 import com.sds.actlongs.controller.channelmember.dto.ChannelLeaveResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteRequest;
 import com.sds.actlongs.controller.channelmember.dto.MemberInviteResponse;
-import com.sds.actlongs.controller.channelmember.dto.MemberListDto;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberListResponse;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
 import com.sds.actlongs.controller.channelmember.dto.MemberSearchResponse;
@@ -48,7 +48,7 @@ public class ChannelMemberController {
 	@ApiOperation(value = "그룹원 목록 조회 API", notes = "ML001: 그룹원 목록 조회에 성공하였습니다.")
 	@GetMapping("/{groupId}")
 	public ResponseEntity<MemberListResponse> getMemberList(@PathVariable("groupId") final Long channelId) {
-		List<MemberListDto> channelMemberList = channelMemberService.getMemberList(channelId);
+		List<MemberInfoDto> channelMemberList = channelMemberService.getMemberList(channelId);
 		return ResponseEntity.ok(MemberListResponse.from(channelMemberList));
 	}
 

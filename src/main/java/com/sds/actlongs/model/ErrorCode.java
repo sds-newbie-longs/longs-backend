@@ -19,9 +19,6 @@ public enum ErrorCode {
 	AUTHENTICATION_FAILURE(401, "E-G009", "인증에 실패하였습니다."),
 	AUTHORIZATION_FAILURE(403, "E-G010", "권한이 부족합니다."),
 
-	// Member
-	MEMBERINFO_FAILURE(500, "E-M001", "회원정보 조회에 실패하였습니다."),
-
 	// Board
 	BOARD_NOT_MATCHED_MEMBER_FAILURE(400, "E-B001", "게시글이 존재하지 않습니다.");
 
