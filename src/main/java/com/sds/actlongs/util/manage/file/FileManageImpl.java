@@ -19,10 +19,15 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 @PropertySource("classpath:upload.properties")
 public class FileManageImpl implements FileManage {
@@ -30,6 +35,7 @@ public class FileManageImpl implements FileManage {
 	private static final String HLS_480 = "480";
 	private static final String HLS_720 = "720";
 	private static final String HLS_1080 = "1080";
+	private static final Long MB = (long)1024 * 1024;
 	@Value("${temp.video.original.path}")
 	private String saveOriginalPath;
 	@Value("${temp.thumbnail.path}")
@@ -48,10 +54,11 @@ public class FileManageImpl implements FileManage {
 			Files.createDirectories(Paths.get(saveOriginalPath));
 			File video = new File(uploadPath + fileName + videoExtension);
 			FileUtils.copyInputStreamToFile(input, video);
+			return uploadPath + fileName + videoExtension;
 		} catch (IOException exception) {
-			//TODO THROW EXCEPTION
+			log.warn(this.getClass().getName() + "[Error]:Create Temp Video Method has Error:" + exception);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Create Temp Video has Error");
 		}
-		return uploadPath + fileName + videoExtension;
 	}
 
 	@Override
@@ -133,9 +140,10 @@ public class FileManageImpl implements FileManage {
 
 			return new CommonsMultipartFile(fileItem);
 		} catch (IOException exception) {
-
+			log.warn(this.getClass().getName() + "[Error]:Trans File to MultipartFile Method has Error:"
+				+ exception);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "S3 upload process has Error");
 		}
-		return null;
 	}
 
 	@Override
@@ -149,6 +157,17 @@ public class FileManageImpl implements FileManage {
 			}
 		}
 		return file.delete();
+	}
+
+	@Override
+	public Long getVideoSizeMB(String fileName) {
+		Path videoPath = Paths.get(saveOriginalPath + CATEGORY_PREFIX + fileName + videoExtension);
+		try {
+			return Files.size(videoPath) / MB;
+		} catch (IOException exception) {
+			log.warn(this.getClass().getName() + "[Error]:Get Video Size Method has Error:" + exception);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "File size Extract Error");
+		}
 	}
 
 }
