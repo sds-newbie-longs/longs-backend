@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.channelmember.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import lombok.Getter;
 
 import com.sds.actlongs.model.ResultCode;
@@ -17,11 +19,11 @@ public class MemberInviteResponse extends ResultResponse {
 	}
 
 	private static MemberInviteResponse succeed() {
-		return new MemberInviteResponse(ResultCode.MEMBERINVITE_SUCCESS);
+		return new MemberInviteResponse(INVITE_MEMBER_SUCCESS);
 	}
 
 	private static MemberInviteResponse fail() {
-		return new MemberInviteResponse(ResultCode.MEMBERINVITE_FAILURE);
+		return new MemberInviteResponse(INVITE_MEMBER_FAILURE);
 	}
 
 }

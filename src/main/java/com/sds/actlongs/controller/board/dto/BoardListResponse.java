@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.board.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -24,7 +26,7 @@ public class BoardListResponse extends ResultResponse {
 	}
 
 	public static BoardListResponse of(List<BoardDto> allBoardList, List<MemberBoardsDto> memberBoardList) {
-		return new BoardListResponse(ResultCode.GET_BOARDLIST_SUCCESS, allBoardList, memberBoardList);
+		return new BoardListResponse(GET_BOARDLIST_SUCCESS, allBoardList, memberBoardList);
 	}
 
 }

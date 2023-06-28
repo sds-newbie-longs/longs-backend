@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.member.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import lombok.Getter;
 
 import com.sds.actlongs.model.ResultCode;
@@ -17,11 +19,11 @@ public class LoginResponse extends ResultResponse {
 	}
 
 	private static LoginResponse succeed() {
-		return new LoginResponse(ResultCode.LOGIN_SUCCESS);
+		return new LoginResponse(LOGIN_SUCCESS);
 	}
 
 	private static LoginResponse fail() {
-		return new LoginResponse(ResultCode.LOGIN_FAILURE);
+		return new LoginResponse(LOGIN_FAILURE);
 	}
 
 }
