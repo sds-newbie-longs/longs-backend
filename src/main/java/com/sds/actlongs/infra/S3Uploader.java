@@ -16,7 +16,9 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class S3Uploader {
@@ -27,20 +29,21 @@ public class S3Uploader {
 	private String bucket;
 
 	public void uploadFile(MultipartFile multipartFile, String path) {
+		final long start = System.currentTimeMillis();
+		final String fileName = path + CATEGORY_PREFIX + multipartFile.getOriginalFilename();
+		log.info("[UPLOAD TO S3] START - {}.", fileName);
 		validateFileExists(multipartFile);
-
-		String fileName = path + CATEGORY_PREFIX + multipartFile.getOriginalFilename();
-
-		ObjectMetadata objectMetadata = new ObjectMetadata();
+		final ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(multipartFile.getSize());
 		objectMetadata.setContentType(multipartFile.getContentType());
-
 		try (InputStream inputStream = multipartFile.getInputStream()) {
-			amazonS3.putObject(
-				new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+			amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
 					.withCannedAcl(CannedAccessControlList.PublicRead));
 		} catch (IOException e) {
 			throw new ResponseStatusException(HttpStatus.OK, "파일 업로드에 실패했습니다.");
+		} finally {
+			final long end = System.currentTimeMillis();
+			log.info("[UPLOAD TO S3] END - {}ms.", end - start);
 		}
 	}
 
