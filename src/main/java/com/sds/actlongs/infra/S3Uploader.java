@@ -40,6 +40,7 @@ public class S3Uploader {
 			amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
 					.withCannedAcl(CannedAccessControlList.PublicRead));
 		} catch (IOException e) {
+			log.error("S3 upload fail : File is not Exist");
 			throw new ResponseStatusException(HttpStatus.OK, "파일 업로드에 실패했습니다.");
 		} finally {
 			final long end = System.currentTimeMillis();

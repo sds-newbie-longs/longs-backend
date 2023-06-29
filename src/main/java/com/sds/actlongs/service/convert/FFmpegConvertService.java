@@ -56,7 +56,6 @@ public class FFmpegConvertService implements ConvertService {
 			masterSettingWithCodecVP9(outPutBuilder);
 		}
 		incodingDefaultSetting(outPutBuilder, outputFolderPath);
-		hls_1080Setting(outPutBuilder);
 		hls_720Setting(outPutBuilder);
 		hls_480Setting(outPutBuilder);
 		outPutBuilder.done();
@@ -75,7 +74,6 @@ public class FFmpegConvertService implements ConvertService {
 
 		masterSettingWithoutCodec(outPutBuilder);
 		incodingDefaultSetting(outPutBuilder, outputFolderPath);
-		hls_1080Setting(outPutBuilder);
 		hls_720Setting(outPutBuilder);
 		hls_480Setting(outPutBuilder);
 		outPutBuilder.done();
@@ -92,9 +90,7 @@ public class FFmpegConvertService implements ConvertService {
 			.addExtraArgs("-map", "0:a")
 			.addExtraArgs("-map", "0:v")
 			.addExtraArgs("-map", "0:a")
-			.addExtraArgs("-map", "0:v")
-			.addExtraArgs("-map", "0:a")
-			.addExtraArgs("-var_stream_map", "v:0,a:0,name:1080 v:1,a:1,name:720 v:2,a:2,name:480");
+			.addExtraArgs("-var_stream_map", "v:0,a:0,name:720 v:1,a:1,name:480");
 	}
 
 	private FFmpegOutputBuilder initSetting(FFmpegBuilder builder, Path inputFilePath, Path outputFolderPath) {
@@ -127,21 +123,21 @@ public class FFmpegConvertService implements ConvertService {
 	}
 
 	private void hls_720Setting(FFmpegOutputBuilder builder) {
-		builder.addExtraArgs("-b:v:1", "2500k")
-			.addExtraArgs("-maxrate:v:1", "2500k")
-			.addExtraArgs("-bufsize:v:1", "5000k")
-			.addExtraArgs("-s:v:1", "1280x720")
-			.addExtraArgs("-crf:v:1", "24")
-			.addExtraArgs("-b:a:1", "96k");
+		builder.addExtraArgs("-b:v:0", "2500k")
+			.addExtraArgs("-maxrate:v:0", "2500k")
+			.addExtraArgs("-bufsize:v:0", "5000k")
+			.addExtraArgs("-s:v:0", "1280x720")
+			.addExtraArgs("-crf:v:0", "24")
+			.addExtraArgs("-b:a:0", "96k");
 	}
 
 	private void hls_480Setting(FFmpegOutputBuilder builder) {
-		builder.addExtraArgs("-b:v:2", "1000k")
-			.addExtraArgs("-maxrate:v:2", "1000k")
-			.addExtraArgs("-bufsize:v:2", "2000k")
-			.addExtraArgs("-s:v:2", "854x480")
-			.addExtraArgs("-crf:v:2", "30")
-			.addExtraArgs("-b:a:2", "64k");
+		builder.addExtraArgs("-b:v:1", "1000k")
+			.addExtraArgs("-maxrate:v:1", "1000k")
+			.addExtraArgs("-bufsize:v:1", "2000k")
+			.addExtraArgs("-s:v:1", "854x480")
+			.addExtraArgs("-crf:v:1", "30")
+			.addExtraArgs("-b:a:1", "64k");
 	}
 
 	private void run(FFmpegBuilder builder) {
