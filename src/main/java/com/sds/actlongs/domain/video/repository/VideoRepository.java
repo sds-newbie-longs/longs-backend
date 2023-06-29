@@ -18,6 +18,12 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 
 	@Query("SELECT v "
 		+ "FROM videos v "
+		+ "INNER JOIN v.board b ON b.status = 'UPLOADING' "
+		+ "WHERE v.board.id = :boardId")
+	Optional<Video> findByUploadingBoardId(Long boardId);
+
+	@Query("SELECT v "
+		+ "FROM videos v "
 		+ "INNER JOIN v.board b ON b.status = 'CREATED' "
 		+ "WHERE v.board.id = :boardId")
 	Optional<Video> findByCreatedBoardId(Long boardId);

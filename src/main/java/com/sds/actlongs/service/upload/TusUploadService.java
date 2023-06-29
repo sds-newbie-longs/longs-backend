@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import me.desair.tus.server.TusFileUploadService;
@@ -27,9 +29,12 @@ import com.sds.actlongs.domain.member.repository.MemberRepository;
 import com.sds.actlongs.domain.video.entity.Video;
 import com.sds.actlongs.domain.video.repository.VideoRepository;
 import com.sds.actlongs.model.Authentication;
+import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.service.upload.dto.UploadResponseDto;
+import com.sds.actlongs.controller.upload.dto.UploadVideoRequestDto;
 import com.sds.actlongs.util.duration.DurationExtractor;
 import com.sds.actlongs.util.manage.file.FileManage;
+import com.sds.actlongs.util.manage.upload.UploadManage;
 import com.sds.actlongs.util.thumbnail.ThumbnailExtractor;
 import com.sds.actlongs.util.uuid.UuidGenerate;
 
@@ -41,6 +46,7 @@ public class TusUploadService implements UploadService {
 	private final TusFileUploadService tusFileUploadService;
 	private final UuidGenerate uuidGenerate;
 	private final FileManage fileManage;
+	private final UploadManage uploadManage;
 	private final ThumbnailExtractor thumbnailExtractor;
 	private final DurationExtractor durationExtractor;
 	private final BoardRepository boardRepository;
@@ -71,6 +77,30 @@ public class TusUploadService implements UploadService {
 			//TODO
 		}
 		return new UploadResponseDto();
+	}
+
+	@Override
+	public ResultCode uploadVideoToS3(Long id,
+		UploadVideoRequestDto requestDto) {
+		memberRepository.findById(id)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "U002"));
+
+		Board tempBoard = boardRepository.findById(requestDto.getBoardId())
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "U003"));
+
+		Video tempVideo = videoRepository.findByUploadingBoardId(tempBoard.getId())
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "B014"));
+
+		if (!fileManage.checkFileExistVideo(tempVideo.getVideoUuid())) {
+			return ResultCode.POST_BOARD_FAILURE_BAD_REQUEST_UUID;
+		}
+
+		uploadManage.uploadProcess(tempVideo.getVideoUuid());
+
+		tempBoard.completed();
+		boardRepository.save(tempBoard);
+
+		return ResultCode.POST_BOARD_SUCCESS;
 	}
 
 }
