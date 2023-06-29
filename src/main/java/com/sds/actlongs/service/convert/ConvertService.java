@@ -8,4 +8,7 @@ public interface ConvertService {
 
 	void convertToHlsWithoutCodec(String fileName);
 
+	void firstStepIncodingWithoutCodec(String fileName);
+
+	void firstStepIncodingWithCodec(String fileName, IncodingStatus status);
 }

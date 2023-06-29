@@ -61,7 +61,7 @@ public class BoardController {
 	@MeasureExecutionTime
 	@ApiOperation(value = "게시물 등록 API", notes = "B006: 게시글 등록에 성공했습니다")
 	@PostMapping
-	public ResponseEntity<BoardCreateResponse> getBoardDetail(@Valid @RequestBody BoardCreateRequest request,
+	public ResponseEntity<BoardCreateResponse> createBoard(@Valid @RequestBody BoardCreateRequest request,
 		@SessionAttribute("authentication") Authentication authentication) {
 		ResultCode result = boardService.createBoard(request, authentication.getMemberId());
 

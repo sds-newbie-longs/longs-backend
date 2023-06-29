@@ -61,10 +61,9 @@ public class BoardServiceImpl implements BoardService {
 			return ResultCode.POST_BOARD_FAILURE_BAD_REQUEST_UUID;
 		}
 
-		uploadManage.uploadProcess(tempVideo.getVideoUuid());
+		uploadManage.uploadProcess480P(tempVideo.getVideoUuid());
 
 		tempBoard.uploading(request.getTitle(), request.getDescription());
-		tempBoard.completed();
 		boardRepository.save(tempBoard);
 
 		return ResultCode.POST_BOARD_SUCCESS;

@@ -23,16 +23,34 @@ public class UploadManageSync implements UploadManage {
 
 	@Override
 	public void uploadProcess(String vodUuid) {
-		if (fileManage.getVideoSizeMB(vodUuid) < VIDEO_SIZE_LIMITED) {
+		IncodingStatus status = (fileManage.getVideoSizeMB(vodUuid) < VIDEO_SIZE_LIMITED
+			? IncodingStatus.NEED_NOT_CODEC : IncodingStatus.NEED_CODEC_H264);
+
+		if (status == IncodingStatus.NEED_NOT_CODEC) {
 			convertService.convertToHlsWithoutCodec(vodUuid);
 		} else {
-			convertService.convertToHlsWithCodec(vodUuid, IncodingStatus.NEED_CODEC_H264);
+			convertService.convertToHlsWithCodec(vodUuid, status);
 		}
-
 		fileSender.sendHlsFiles(vodUuid);
-		fileSender.sendThumbnailFile(vodUuid);
 
 		fileManage.deleteTempVideo(vodUuid);
+		fileManage.deleteTempHls(vodUuid);
+	}
+
+	@Override
+	public void uploadProcess480P(String vodUuid) {
+		fileSender.sendThumbnailFile(vodUuid);
+
+		IncodingStatus status = (fileManage.getVideoSizeMB(vodUuid) < VIDEO_SIZE_LIMITED
+			? IncodingStatus.NEED_NOT_CODEC : IncodingStatus.NEED_CODEC_H264);
+
+		if (status == IncodingStatus.NEED_NOT_CODEC) {
+			convertService.firstStepIncodingWithoutCodec(vodUuid);
+		} else {
+			convertService.firstStepIncodingWithCodec(vodUuid, status);
+		}
+		fileSender.sendHlsFiles(vodUuid);
+
 		fileManage.deleteTempImage(vodUuid);
 		fileManage.deleteTempHls(vodUuid);
 	}

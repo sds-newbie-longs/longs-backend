@@ -56,8 +56,8 @@ public class FFmpegConvertService implements ConvertService {
 			masterSettingWithCodecVP9(outPutBuilder);
 		}
 		incodingDefaultSetting(outPutBuilder, outputFolderPath);
-		hls_720Setting(outPutBuilder);
 		hls_480Setting(outPutBuilder);
+		hls_720Setting(outPutBuilder);
 		outPutBuilder.done();
 
 		run(builder);
@@ -74,7 +74,45 @@ public class FFmpegConvertService implements ConvertService {
 
 		masterSettingWithoutCodec(outPutBuilder);
 		incodingDefaultSetting(outPutBuilder, outputFolderPath);
+		hls_480Setting(outPutBuilder);
 		hls_720Setting(outPutBuilder);
+		outPutBuilder.done();
+
+		run(builder);
+	}
+
+	@Override
+	public void firstStepIncodingWithoutCodec(String fileName) {
+		List<Path> paths = fileManage.createDirectoryForConvertedVideo(fileName);
+		Path inputFilePath = paths.get(0);
+		Path outputFolderPath = paths.get(1);
+
+		FFmpegBuilder builder = new FFmpegBuilder();
+		FFmpegOutputBuilder outPutBuilder = initSetting(builder, inputFilePath, outputFolderPath);
+		masterSettingWithoutCodec(outPutBuilder);
+		incodingDefaultSettingFor480(outPutBuilder, outputFolderPath);
+		hls_480Setting(outPutBuilder);
+		outPutBuilder.done();
+
+		run(builder);
+	}
+
+	@Override
+	public void firstStepIncodingWithCodec(String fileName, IncodingStatus incodingStatus) {
+		List<Path> paths = fileManage.createDirectoryForConvertedVideo(fileName);
+		Path inputFilePath = paths.get(0);
+		Path outputFolderPath = paths.get(1);
+
+		FFmpegBuilder builder = new FFmpegBuilder();
+		FFmpegOutputBuilder outPutBuilder = initSetting(builder, inputFilePath, outputFolderPath);
+
+		if (incodingStatus == IncodingStatus.NEED_CODEC_H264) {
+			masterSettingWithCodecH264(outPutBuilder);
+		} else {
+			masterSettingWithCodecVP9(outPutBuilder);
+		}
+
+		incodingDefaultSettingFor480(outPutBuilder, outputFolderPath);
 		hls_480Setting(outPutBuilder);
 		outPutBuilder.done();
 
@@ -90,7 +128,19 @@ public class FFmpegConvertService implements ConvertService {
 			.addExtraArgs("-map", "0:a")
 			.addExtraArgs("-map", "0:v")
 			.addExtraArgs("-map", "0:a")
-			.addExtraArgs("-var_stream_map", "v:0,a:0,name:720 v:1,a:1,name:480")
+			.addExtraArgs("-var_stream_map", "v:0,a:0,name:480 v:1,a:1,name:720")
+			.addExtraArgs("-vf",
+				"scale=1920x1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2");
+	}
+
+	private void incodingDefaultSettingFor480(FFmpegOutputBuilder builder, Path outputFolderPath) {
+		builder.addExtraArgs("-hls_time", chunkSize)
+			.addExtraArgs("-hls_list_size", "0")
+			.addExtraArgs("-hls_segment_filename", outputFolderPath.toAbsolutePath() + fileFormatPolicy)
+			.addExtraArgs("-master_pl_name", "master.m3u8")
+			.addExtraArgs("-map", "0:v")
+			.addExtraArgs("-map", "0:a")
+			.addExtraArgs("-var_stream_map", "v:0,a:0,name:480")
 			.addExtraArgs("-vf",
 				"scale=1920x1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2");
 	}
@@ -116,30 +166,30 @@ public class FFmpegConvertService implements ConvertService {
 	}
 
 	private void hls_1080Setting(FFmpegOutputBuilder builder) {
-		builder.addExtraArgs("-b:v:0", "5000k")
-			.addExtraArgs("-maxrate:v:0", "5000k")
-			.addExtraArgs("-bufsize:v:0", "10000k")
-			.addExtraArgs("-s:v:0", "1920x1080")
-			.addExtraArgs("-crf:v:0", "17")
-			.addExtraArgs("-b:a:0", "128k");
+		builder.addExtraArgs("-b:v:2", "5000k")
+			.addExtraArgs("-maxrate:v:2", "5000k")
+			.addExtraArgs("-bufsize:v:2", "10000k")
+			.addExtraArgs("-s:v:2", "1920x1080")
+			.addExtraArgs("-crf:v:2", "17")
+			.addExtraArgs("-b:a:2", "128k");
 	}
 
 	private void hls_720Setting(FFmpegOutputBuilder builder) {
-		builder.addExtraArgs("-b:v:0", "2500k")
-			.addExtraArgs("-maxrate:v:0", "2500k")
-			.addExtraArgs("-bufsize:v:0", "5000k")
-			.addExtraArgs("-s:v:0", "1280x720")
-			.addExtraArgs("-crf:v:0", "24")
-			.addExtraArgs("-b:a:0", "96k");
+		builder.addExtraArgs("-b:v:1", "2500k")
+			.addExtraArgs("-maxrate:v:1", "2500k")
+			.addExtraArgs("-bufsize:v:1", "5000k")
+			.addExtraArgs("-s:v:1", "1280x720")
+			.addExtraArgs("-crf:v:1", "24")
+			.addExtraArgs("-b:a:1", "96k");
 	}
 
 	private void hls_480Setting(FFmpegOutputBuilder builder) {
-		builder.addExtraArgs("-b:v:1", "1000k")
-			.addExtraArgs("-maxrate:v:1", "1000k")
-			.addExtraArgs("-bufsize:v:1", "2000k")
-			.addExtraArgs("-s:v:1", "854x480")
-			.addExtraArgs("-crf:v:1", "30")
-			.addExtraArgs("-b:a:1", "64k");
+		builder.addExtraArgs("-b:v:0", "1000k")
+			.addExtraArgs("-maxrate:v:0", "1000k")
+			.addExtraArgs("-bufsize:v:0", "2000k")
+			.addExtraArgs("-s:v:0", "854x480")
+			.addExtraArgs("-crf:v:0", "30")
+			.addExtraArgs("-b:a:0", "64k");
 	}
 
 	private void run(FFmpegBuilder builder) {
