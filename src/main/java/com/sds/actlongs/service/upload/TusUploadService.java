@@ -20,6 +20,7 @@ import me.desair.tus.server.TusFileUploadService;
 import me.desair.tus.server.exception.TusException;
 import me.desair.tus.server.upload.UploadInfo;
 
+import com.sds.actlongs.controller.upload.dto.UploadVideoRequestDto;
 import com.sds.actlongs.domain.board.entity.Board;
 import com.sds.actlongs.domain.board.repository.BoardRepository;
 import com.sds.actlongs.domain.channel.entity.Channel;
@@ -31,7 +32,6 @@ import com.sds.actlongs.domain.video.repository.VideoRepository;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.model.ResultCode;
 import com.sds.actlongs.service.upload.dto.UploadResponseDto;
-import com.sds.actlongs.controller.upload.dto.UploadVideoRequestDto;
 import com.sds.actlongs.util.duration.DurationExtractor;
 import com.sds.actlongs.util.manage.file.FileManage;
 import com.sds.actlongs.util.manage.upload.UploadManage;

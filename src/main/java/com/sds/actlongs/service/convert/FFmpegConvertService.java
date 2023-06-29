@@ -82,7 +82,7 @@ public class FFmpegConvertService implements ConvertService {
 	}
 
 	@Override
-	public void firstStepIncodingWithoutCodec(String fileName){
+	public void firstStepIncodingWithoutCodec(String fileName) {
 		List<Path> paths = fileManage.createDirectoryForConvertedVideo(fileName);
 		Path inputFilePath = paths.get(0);
 		Path outputFolderPath = paths.get(1);
@@ -98,7 +98,7 @@ public class FFmpegConvertService implements ConvertService {
 	}
 
 	@Override
-	public void firstStepIncodingWithCodec(String fileName, IncodingStatus incodingStatus){
+	public void firstStepIncodingWithCodec(String fileName, IncodingStatus incodingStatus) {
 		List<Path> paths = fileManage.createDirectoryForConvertedVideo(fileName);
 		Path inputFilePath = paths.get(0);
 		Path outputFolderPath = paths.get(1);
@@ -106,9 +106,9 @@ public class FFmpegConvertService implements ConvertService {
 		FFmpegBuilder builder = new FFmpegBuilder();
 		FFmpegOutputBuilder outPutBuilder = initSetting(builder, inputFilePath, outputFolderPath);
 
-		if(incodingStatus == IncodingStatus.NEED_CODEC_H264){
+		if (incodingStatus == IncodingStatus.NEED_CODEC_H264) {
 			masterSettingWithCodecH264(outPutBuilder);
-		}else{
+		} else {
 			masterSettingWithCodecVP9(outPutBuilder);
 		}
 
@@ -140,7 +140,7 @@ public class FFmpegConvertService implements ConvertService {
 			.addExtraArgs("-master_pl_name", "master.m3u8")
 			.addExtraArgs("-map", "0:v")
 			.addExtraArgs("-map", "0:a")
-			.addExtraArgs("-var_stream_map","v:0,a:0,name:480")
+			.addExtraArgs("-var_stream_map", "v:0,a:0,name:480")
 			.addExtraArgs("-vf",
 				"scale=1920x1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2");
 	}

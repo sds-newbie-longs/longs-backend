@@ -24,14 +24,12 @@ public class UploadManageSync implements UploadManage {
 	@Override
 	public void uploadProcess(String vodUuid) {
 		IncodingStatus status = (fileManage.getVideoSizeMB(vodUuid) < VIDEO_SIZE_LIMITED
-			? IncodingStatus.NEED_NOT_CODEC
-			: IncodingStatus.NEED_CODEC_H264);
+			? IncodingStatus.NEED_NOT_CODEC : IncodingStatus.NEED_CODEC_H264);
 
-		if(status == IncodingStatus.NEED_NOT_CODEC) {
+		if (status == IncodingStatus.NEED_NOT_CODEC) {
 			convertService.convertToHlsWithoutCodec(vodUuid);
-		}
-		else {
-			convertService.convertToHlsWithCodec(vodUuid , status);
+		} else {
+			convertService.convertToHlsWithCodec(vodUuid, status);
 		}
 		fileSender.sendHlsFiles(vodUuid);
 
@@ -44,18 +42,17 @@ public class UploadManageSync implements UploadManage {
 		fileSender.sendThumbnailFile(vodUuid);
 
 		IncodingStatus status = (fileManage.getVideoSizeMB(vodUuid) < VIDEO_SIZE_LIMITED
-			? IncodingStatus.NEED_NOT_CODEC
-			: IncodingStatus.NEED_CODEC_H264);
+			? IncodingStatus.NEED_NOT_CODEC : IncodingStatus.NEED_CODEC_H264);
 
-		if(status == IncodingStatus.NEED_NOT_CODEC) {
+		if (status == IncodingStatus.NEED_NOT_CODEC) {
 			convertService.firstStepIncodingWithoutCodec(vodUuid);
-		}
-		else {
-			convertService.firstStepIncodingWithCodec(vodUuid , status);
+		} else {
+			convertService.firstStepIncodingWithCodec(vodUuid, status);
 		}
 		fileSender.sendHlsFiles(vodUuid);
 
 		fileManage.deleteTempImage(vodUuid);
 		fileManage.deleteTempHls(vodUuid);
 	}
+
 }
