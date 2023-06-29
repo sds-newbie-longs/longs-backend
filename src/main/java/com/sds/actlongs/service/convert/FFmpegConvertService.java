@@ -91,7 +91,8 @@ public class FFmpegConvertService implements ConvertService {
 			.addExtraArgs("-map", "0:v")
 			.addExtraArgs("-map", "0:a")
 			.addExtraArgs("-var_stream_map", "v:0,a:0,name:720 v:1,a:1,name:480")
-			.addExtraArgs("-vf","scale=1920x1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2");
+			.addExtraArgs("-vf",
+				"scale=1920x1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2");
 	}
 
 	private FFmpegOutputBuilder initSetting(FFmpegBuilder builder, Path inputFilePath, Path outputFolderPath) {
