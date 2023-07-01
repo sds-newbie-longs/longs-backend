@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.sds.actlongs.domain.channel.entity.Channel;
+import com.sds.actlongs.controller.channel.dto.ChannelDto;
 
 public interface ChannelService {
 
-	List<Channel> getChannelList(final Long memberId, final HttpSession session);
+	List<ChannelDto> getChannelList(final HttpSession session);
 
 	boolean createChannel(final String channelName, final Long ownerId, final HttpSession session);
 

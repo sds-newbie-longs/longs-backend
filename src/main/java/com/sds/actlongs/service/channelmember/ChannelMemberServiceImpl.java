@@ -1,7 +1,6 @@
 package com.sds.actlongs.service.channelmember;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,14 +11,15 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channel.repository.ChannelRepository;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
 import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.domain.member.repository.MemberRepository;
-import com.sds.actlongs.model.Authentication;
-import com.sds.actlongs.util.SessionConstants;
+import com.sds.actlongs.util.session.SessionManage;
 
 @Service
 @RequiredArgsConstructor
@@ -28,18 +28,24 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 	private final ChannelMemberRepository channelMemberRepository;
 	private final ChannelRepository channelRepository;
 	private final MemberRepository memberRepository;
+	private final SessionManage sessionManage;
 
 	@Override
-	public List<ChannelMember> getMemberList(final Long channelId) {
+	public List<MemberInfoDto> getMemberList(final Long channelId) {
 		final Optional<Channel> optionalChannel = channelRepository.findById(channelId);
 		if (optionalChannel.isEmpty() || optionalChannel.get().getStatus().equals(Channel.Status.DELETED)) {
 			throw new EntityNotFoundException();
 		}
-		return channelMemberRepository.findAllFetchMemberUsernameByChannelId(channelId);
+		return channelMemberRepository.findAllFetchMemberUsernameByChannelId(channelId)
+			.stream()
+			.map(ChannelMember::getMember)
+			.map(member -> MemberInfoDto.of(member.getId(), member.getUsername()))
+			.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword) {
+	public List<MemberSearchDto> searchMembersNotInChannel(final Long channelId, final Long memberId,
+		final String keyword) {
 		List<Member> membersSearched = memberRepository.findAllByUsernameStartsWith(keyword)
 			.stream()
 			.filter(m -> !m.getId().equals(memberId))
@@ -52,7 +58,11 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 			.collect(Collectors.toList());
 
 		membersSearched.removeAll(membersBelongsToChannel);
-		return membersSearched;
+
+		return membersSearched
+			.stream()
+			.map(member -> MemberSearchDto.of(member.getId(), member.getUsername()))
+			.collect(Collectors.toList());
 	}
 
 	@Override
@@ -82,15 +92,7 @@ public class ChannelMemberServiceImpl implements ChannelMemberService {
 
 		final ChannelMember channelMember = channelMemberOptional.get();
 		channelMemberRepository.deleteById(channelMember.getId());
-
-		Map<Long, Authentication.ChannelRoles> filteredMap = ((Authentication)session.getAttribute(
-			SessionConstants.AUTHENTICATION))
-			.getChannelAuthorityMap()
-			.entrySet()
-			.stream()
-			.filter(e -> !e.getKey().equals(channelId))
-			.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		session.setAttribute(SessionConstants.AUTHENTICATION, new Authentication(memberId, filteredMap));
+		sessionManage.deleteChannel(session, channelId, memberId);
 		return true;
 	}
 

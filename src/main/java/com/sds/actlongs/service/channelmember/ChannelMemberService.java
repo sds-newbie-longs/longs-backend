@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
-import com.sds.actlongs.domain.member.entity.Member;
+import com.sds.actlongs.controller.channelmember.dto.MemberSearchDto;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 
 public interface ChannelMemberService {
 
-	List<ChannelMember> getMemberList(final Long channelId);
+	List<MemberInfoDto> getMemberList(final Long channelId);
 
-	List<Member> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword);
+	List<MemberSearchDto> searchMembersNotInChannel(final Long channelId, final Long memberId, final String keyword);
 
 	boolean inviteMember(final Long channelId, final Long memberId);
 

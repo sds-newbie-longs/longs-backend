@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.board.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -22,7 +24,7 @@ public class BoardUpdateResponse extends ResultResponse {
 	}
 
 	public static BoardUpdateResponse of(Board board) {
-		return new BoardUpdateResponse(ResultCode.UPDATE_BOARD_SUCCESS, board);
+		return new BoardUpdateResponse(UPDATE_BOARD_SUCCESS, board);
 	}
 
 }

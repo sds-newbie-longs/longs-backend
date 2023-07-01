@@ -24,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 import com.sds.actlongs.controller.channel.dto.ChannelCreateRequest;
 import com.sds.actlongs.controller.channel.dto.ChannelCreateResponse;
 import com.sds.actlongs.controller.channel.dto.ChannelDeleteResponse;
+import com.sds.actlongs.controller.channel.dto.ChannelDto;
 import com.sds.actlongs.controller.channel.dto.ChannelListResponse;
-import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.channel.ChannelService;
 
@@ -40,11 +40,9 @@ public class ChannelController {
 	@ApiOperation(value = "그룹목록 조회 API", notes = "CL001: 그룹목록 조회에 성공하였습니다.")
 	@GetMapping
 	public ResponseEntity<ChannelListResponse> getChannelList(
-		@SessionAttribute(AUTHENTICATION) Authentication authentication,
 		final HttpServletRequest servletRequest) {
-		final List<Channel> channels = channelService.getChannelList(authentication.getMemberId(),
-			servletRequest.getSession());
-		return ResponseEntity.ok(ChannelListResponse.from(channels));
+		final List<ChannelDto> channelList = channelService.getChannelList(servletRequest.getSession());
+		return ResponseEntity.ok(ChannelListResponse.from(channelList));
 	}
 
 	@ApiOperation(value = "그룹생성 API", notes = ""

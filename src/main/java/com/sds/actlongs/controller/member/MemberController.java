@@ -2,8 +2,6 @@ package com.sds.actlongs.controller.member;
 
 import static com.sds.actlongs.util.SessionConstants.*;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -19,11 +17,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-import com.sds.actlongs.annotation.MeasureExecutionTime;
 import com.sds.actlongs.controller.member.dto.LoginRequest;
 import com.sds.actlongs.controller.member.dto.LoginResponse;
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.controller.member.dto.MemberInfoResponse;
-import com.sds.actlongs.domain.member.entity.Member;
 import com.sds.actlongs.model.Authentication;
 import com.sds.actlongs.service.member.MemberService;
 
@@ -50,8 +47,8 @@ public class MemberController {
 	@GetMapping("/info")
 	public ResponseEntity<MemberInfoResponse> memberInfo(
 		@SessionAttribute(AUTHENTICATION) Authentication authentication) {
-		final Optional<Member> memberOptional = memberService.getMember(authentication.getMemberId());
-		return ResponseEntity.ok(MemberInfoResponse.of(memberOptional));
+		final MemberInfoDto memberInfo = memberService.getMember(authentication.getMemberId());
+		return ResponseEntity.ok(MemberInfoResponse.from(memberInfo));
 	}
 
 }

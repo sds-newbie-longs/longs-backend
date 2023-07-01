@@ -1,5 +1,7 @@
 package com.sds.actlongs.controller.board.dto;
 
+import static com.sds.actlongs.model.ResultCode.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,7 @@ public class BoardListSearchResponse extends ResultResponse {
 	}
 
 	public static BoardListSearchResponse of(List<Video> videoList) {
-		return new BoardListSearchResponse(ResultCode.SEARCH_BOARDLIST_SUCCESS, videoList);
+		return new BoardListSearchResponse(SEARCH_BOARDLIST_SUCCESS, videoList);
 	}
 
 }

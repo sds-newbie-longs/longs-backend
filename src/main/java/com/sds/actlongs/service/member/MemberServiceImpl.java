@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sds.actlongs.controller.member.dto.MemberInfoDto;
 import com.sds.actlongs.domain.channel.entity.Channel;
 import com.sds.actlongs.domain.channelmember.entity.ChannelMember;
 import com.sds.actlongs.domain.channelmember.repository.ChannelMemberRepository;
@@ -42,8 +44,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Optional<Member> getMember(final Long id) {
-		return memberRepository.findById(id);
+	public MemberInfoDto getMember(final Long id) {
+		Optional<Member> memberOptional = memberRepository.findById(id);
+		return memberOptional.map(member -> new MemberInfoDto(member.getId(), member.getUsername()))
+			.orElseThrow(EntityNotFoundException::new);
 	}
 
 }
